@@ -3,6 +3,7 @@
         "home": "Home",
         "properties": "Properties",
         "neighborhoods": "Neighborhoods",
+        "about": "About Us",
         "services": "Services",
         "blog": "Blog",
         "contact": "Contact"
@@ -68,17 +69,17 @@
     "NeighborhoodSpotlight": {
         "title": "Explore Istanbul's Finest Neighborhoods",
         "items": {
-            "beyoglu": {
-                "name": "Beyoğlu",
+            "bebek": {
+                "name": "Bebek",
+                "desc": "The crown jewel of the Bosphorus"
+            },
+            "nisantasi": {
+                "name": "Nişantaşı",
+                "desc": "Istanbul's fashion and luxury center"
+            },
+            "galata": {
+                "name": "Galata",
                 "desc": "Historic charm meets modern lifestyle"
-            },
-            "besiktas": {
-                "name": "Beşiktaş",
-                "desc": "Waterfront luxury with urban energy"
-            },
-            "kadikoy": {
-                "name": "Kadıköy",
-                "desc": "Asian side bohemian elegance"
             },
             "sariyer": {
                 "name": "Sarıyer",

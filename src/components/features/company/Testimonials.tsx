@@ -5,22 +5,25 @@ import { Quote } from 'lucide-react';
 
 const testimonials = [
     {
+        id: 1,
         name: 'Sarah Johnson',
         location: 'London, UK',
-        text: 'Maison d\'Orient made buying our dream home in Istanbul incredibly easy. Their team was professional, knowledgeable, and supported us every step of the way.',
-        image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574&auto=format&fit=crop',
+        text: 'Maison d\'Orient made our dream of owning a home in Istanbul a reality. Their team was incredibly professional and guided us through every step of the process.'
     },
     {
+        id: 2,
         name: 'Michael Chen',
         location: 'Singapore',
-        text: 'I was impressed by their deep understanding of the market and their ability to find properties that perfectly matched my investment criteria. Highly recommended.',
-        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2574&auto=format&fit=crop',
+        text: 'The level of service provided by the team was exceptional. They understood exactly what I was looking for and found the perfect investment property for me.'
     },
     {
+        id: 3,
         name: 'Elena Petrova',
         location: 'Moscow, Russia',
-        text: 'The level of service provided by Maison d\'Orient is unmatched. They handled all the legal aspects seamlessly, making the process stress-free.',
-        image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2576&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop',
+        text: 'I was impressed by their deep knowledge of the Istanbul real estate market. They helped me find a beautiful apartment in a historic neighborhood.'
     }
 ];
 

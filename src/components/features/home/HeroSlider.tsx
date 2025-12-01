@@ -9,16 +9,22 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const slides = [
     {
         id: 1,
-        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2598&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
+        title: 'Experience Bosphorus Luxury',
+        subtitle: 'Exclusive waterfront mansions in the heart of Istanbul'
     },
     {
         id: 2,
-        image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2670&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop',
+        title: 'Modern Living in Nişantaşı',
+        subtitle: 'Contemporary apartments in Istanbul\'s fashion district'
     },
     {
         id: 3,
-        image: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
-    },
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2700&auto=format&fit=crop',
+        title: 'Historic Charm in Galata',
+        subtitle: 'Restored penthouses with panoramic city views'
+    }
 ];
 
 export function HeroSlider() {

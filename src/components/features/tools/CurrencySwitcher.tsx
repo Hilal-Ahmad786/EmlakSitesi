@@ -4,12 +4,16 @@ import { useCurrency } from '@/context/CurrencyContext';
 import { Select } from '@/components/ui/Select';
 import { useTranslations } from 'next-intl';
 
-export function CurrencySwitcher() {
+interface CurrencySwitcherProps {
+    className?: string;
+}
+
+export function CurrencySwitcher({ className }: CurrencySwitcherProps) {
     const { currency, setCurrency } = useCurrency();
     const t = useTranslations('Tools.currency');
 
     return (
-        <div className="w-32">
+        <div className={className || "w-32"}>
             <Select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value as any)}

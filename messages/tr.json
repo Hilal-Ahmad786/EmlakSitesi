@@ -3,6 +3,7 @@
         "home": "Anasayfa",
         "properties": "Portföy",
         "neighborhoods": "Mahalleler",
+        "about": "Hakkımızda",
         "services": "Hizmetler",
         "blog": "Blog",
         "contact": "İletişim"
@@ -69,17 +70,17 @@
     "NeighborhoodSpotlight": {
         "title": "İstanbul'un En Seçkin Semtlerini Keşfedin",
         "items": {
-            "beyoglu": {
-                "name": "Beyoğlu",
+            "bebek": {
+                "name": "Bebek",
+                "desc": "Boğaz'ın incisi, lüks ve tarih"
+            },
+            "nisantasi": {
+                "name": "Nişantaşı",
+                "desc": "Moda ve lüksün merkezi"
+            },
+            "galata": {
+                "name": "Galata",
                 "desc": "Tarihi doku ve modern yaşam"
-            },
-            "besiktas": {
-                "name": "Beşiktaş",
-                "desc": "Şehir enerjisiyle boğaz lüksü"
-            },
-            "kadikoy": {
-                "name": "Kadıköy",
-                "desc": "Anadolu yakasının bohem şıklığı"
             },
             "sariyer": {
                 "name": "Sarıyer",

@@ -1,17 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, ChevronRight, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname, useRouter } from '@/i18n/routing';
+import { CurrencySwitcher } from '@/components/features/tools/CurrencySwitcher';
+import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 export function MobileMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const t = useTranslations('Navigation');
+    const tTools = useTranslations('Tools');
     const pathname = usePathname();
     const router = useRouter();
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -32,62 +47,121 @@ export function MobileMenu() {
 
     return (
         <div className="md:hidden">
-            <button onClick={toggleMenu} className="p-2 text-primary">
+            <button onClick={toggleMenu} className="p-2 text-primary hover:text-accent-gold transition-colors">
                 <Menu size={24} />
             </button>
 
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, x: '100%' }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: '100%' }}
-                        transition={{ type: 'tween', duration: 0.3 }}
-                        className="fixed inset-0 bg-white z-50 flex flex-col"
-                    >
-                        <div className="flex justify-between items-center p-4 border-b border-border">
-                            <span className="font-serif text-xl font-bold text-primary">Maison d'Orient</span>
-                            <button onClick={toggleMenu} className="p-2 text-primary">
-                                <X size={24} />
-                            </button>
-                        </div>
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+                            onClick={toggleMenu}
+                        />
 
-                        <div className="flex-grow overflow-y-auto py-8 px-6">
-                            <nav className="flex flex-col gap-6">
-                                {menuItems.map((item) => (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className="text-2xl font-serif text-primary hover:text-accent-gold transition-colors"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
-                            </nav>
+                        {/* Menu Panel */}
+                        <motion.div
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                            className="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-white z-50 flex flex-col shadow-2xl h-screen h-dvh"
+                            style={{ backgroundColor: '#ffffff' }}
+                        >
+                            {/* Header */}
+                            <div className="flex justify-between items-center p-6 border-b border-border">
+                                <span className="font-serif text-2xl font-bold text-primary">Maison d'Orient</span>
+                                <button onClick={toggleMenu} className="p-2 text-primary hover:text-accent-gold transition-colors">
+                                    <X size={24} />
+                                </button>
+                            </div>
 
-                            <div className="mt-12 border-t border-border pt-8">
-                                <div className="flex items-center gap-2 mb-4 text-text-secondary">
-                                    <Globe size={20} />
-                                    <span>Language</span>
-                                </div>
-                                <div className="flex gap-4">
-                                    <button
-                                        onClick={() => handleLanguageChange('en')}
-                                        className="px-4 py-2 border border-border rounded hover:bg-primary hover:text-white transition-colors"
-                                    >
-                                        English
-                                    </button>
-                                    <button
-                                        onClick={() => handleLanguageChange('tr')}
-                                        className="px-4 py-2 border border-border rounded hover:bg-primary hover:text-white transition-colors"
-                                    >
-                                        Türkçe
-                                    </button>
+                            {/* Scrollable Content */}
+                            <div className="flex-grow overflow-y-auto py-6 px-6">
+                                <nav className="flex flex-col gap-2">
+                                    {menuItems.map((item, index) => (
+                                        <motion.div
+                                            key={item.href}
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: index * 0.05 + 0.1 }}
+                                        >
+                                            <Link
+                                                href={item.href}
+                                                className={cn(
+                                                    "flex items-center justify-between text-lg font-serif py-3 border-b border-border/40 transition-colors",
+                                                    pathname === item.href
+                                                        ? 'text-accent-gold'
+                                                        : 'text-primary hover:text-accent-gold'
+                                                )}
+                                                onClick={() => setIsOpen(false)}
+                                            >
+                                                {item.label}
+                                                <ChevronRight size={16} className="opacity-30" />
+                                            </Link>
+                                        </motion.div>
+                                    ))}
+                                </nav>
+
+                                <div className="mt-8 space-y-6">
+                                    {/* Currency */}
+                                    <div className="space-y-3">
+                                        <label className="text-xs font-bold text-text-secondary uppercase tracking-wider">
+                                            {tTools('currency.label')}
+                                        </label>
+                                        <CurrencySwitcher className="w-full" />
+                                    </div>
+
+                                    {/* Language */}
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2 text-text-secondary uppercase tracking-wider text-xs font-bold">
+                                            <Globe size={14} />
+                                            <span>Language</span>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <button
+                                                onClick={() => handleLanguageChange('en')}
+                                                className={cn(
+                                                    "px-4 py-2.5 border rounded-lg transition-all text-center font-medium text-sm",
+                                                    pathname.startsWith('/en') || !pathname.startsWith('/tr') // Simple check, ideally use locale hook
+                                                        ? "bg-primary text-white border-primary"
+                                                        : "border-border hover:border-primary text-text-secondary"
+                                                )}
+                                            >
+                                                English
+                                            </button>
+                                            <button
+                                                onClick={() => handleLanguageChange('tr')}
+                                                className={cn(
+                                                    "px-4 py-2.5 border rounded-lg transition-all text-center font-medium text-sm",
+                                                    pathname.startsWith('/tr')
+                                                        ? "bg-primary text-white border-primary"
+                                                        : "border-border hover:border-primary text-text-secondary"
+                                                )}
+                                            >
+                                                Türkçe
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
+
+                            {/* Footer CTA */}
+                            <div className="p-6 border-t border-border bg-background-alt/50">
+                                <Link href="/contact" onClick={() => setIsOpen(false)}>
+                                    <Button variant="primary" className="w-full justify-center gap-2" size="lg">
+                                        <Phone size={18} />
+                                        {t('contact')}
+                                    </Button>
+                                </Link>
+                            </div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </div>

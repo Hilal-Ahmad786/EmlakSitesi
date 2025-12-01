@@ -16,21 +16,21 @@ const neighborhoods = [
         name: 'Galata',
         slug: 'galata',
         description: 'A historic district blending Genoese heritage with modern art, culture, and stunning Golden Horn views.',
-        image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2660&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1634552367503-686738994784?q=80&w=2670&auto=format&fit=crop'
     },
     {
         id: '3',
         name: 'Nişantaşı',
         slug: 'nisantasi',
         description: 'Istanbul\'s fashion and luxury center, home to designer boutiques, fine dining, and elegant apartments.',
-        image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2660&auto=format&fit=crop'
     },
     {
         id: '4',
         name: 'Sarıyer',
         slug: 'sariyer',
         description: 'Where the Bosphorus meets the Black Sea, offering a peaceful retreat with lush nature and seafood restaurants.',
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1622587853578-dd1bf9608d26?q=80&w=2671&auto=format&fit=crop'
     },
     {
         id: '5',

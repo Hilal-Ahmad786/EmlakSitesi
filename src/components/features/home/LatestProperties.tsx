@@ -13,7 +13,7 @@ const properties = [
         title: 'Historic Yalı Mansion on the Bosphorus',
         location: 'Bebek, Istanbul',
         price: '€12,500,000',
-        image: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?q=80&w=2675&auto=format&fit=crop',
         beds: 6,
         baths: 5,
         size: 450,
@@ -42,6 +42,17 @@ const properties = [
         beds: 2,
         baths: 2,
         size: 120,
+        type: 'sale' as const
+    },
+    {
+        id: '4',
+        title: 'Seaside Villa in Sarıyer',
+        location: 'Sarıyer, Istanbul',
+        price: '€4,500,000',
+        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop',
+        beds: 5,
+        baths: 4,
+        size: 350,
         type: 'sale' as const
     }
 ];

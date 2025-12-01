@@ -7,23 +7,31 @@ import { motion } from 'framer-motion';
 const collections = [
     {
         id: 'mansions',
-        image: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
-        link: '/properties?type=yali'
+        title: 'Waterfront Mansions',
+        image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2670&auto=format&fit=crop',
+        count: 12,
+        link: '/properties?type=yali' // Retaining link for functionality
     },
     {
         id: 'galata',
-        image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2660&auto=format&fit=crop',
-        link: '/properties?view=galata'
+        title: 'Historic Apartments',
+        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2700&auto=format&fit=crop',
+        count: 8,
+        link: '/properties?view=galata' // Retaining link for functionality
     },
     {
         id: 'bosphorus',
-        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2598&auto=format&fit=crop',
-        link: '/properties?view=bosphorus'
+        title: 'Modern Penthouses',
+        image: 'https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?q=80&w=2670&auto=format&fit=crop',
+        count: 15,
+        link: '/properties?view=bosphorus' // Retaining link for functionality
     },
     {
         id: 'investment',
+        title: 'Investment Properties', // Added title for consistency
         image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=2670&auto=format&fit=crop',
-        link: '/properties?type=investment'
+        link: '/properties?type=investment',
+        count: 10 // Added count for consistency
     }
 ];
 
