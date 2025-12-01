@@ -16,7 +16,7 @@ const neighborhoods = [
         name: 'Galata',
         slug: 'galata',
         description: 'A historic district blending Genoese heritage with modern art, culture, and stunning Golden Horn views.',
-        image: 'https://images.unsplash.com/photo-1634552367503-686738994784?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2670&auto=format&fit=crop'
     },
     {
         id: '3',
@@ -44,7 +44,7 @@ const neighborhoods = [
         name: 'Cihangir',
         slug: 'cihangir',
         description: 'A bohemian enclave popular with artists and expats, featuring antique shops and panoramic city views.',
-        image: 'https://images.unsplash.com/photo-1502005229762-cf1e2da0c542?q=80&w=2700&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2660&auto=format&fit=crop'
     }
 ];
 

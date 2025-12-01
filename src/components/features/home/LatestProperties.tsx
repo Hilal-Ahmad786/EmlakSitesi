@@ -26,7 +26,7 @@ const properties = [
         title: 'Luxury Penthouse with Galata View',
         location: 'Galata, Istanbul',
         price: '€2,850,000',
-        image: 'https://images.unsplash.com/photo-1634552367503-686738994784?q=80&w=2670&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2670&auto=format&fit=crop',
         beds: 3,
         baths: 2,
         size: 180,

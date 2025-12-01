@@ -20,7 +20,7 @@ const neighborhoods = [
     {
         id: 'galata',
         name: 'Galata',
-        image: 'https://images.unsplash.com/photo-1634552367503-686738994784?q=80&w=2670&auto=format&fit=crop', // 2gxniwtyytg -> using reliable Galata/Istanbul image
+        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2670&auto=format&fit=crop', // 2gxniwtyytg -> using reliable Galata/Istanbul image
         propertyCount: 28
     },
     {

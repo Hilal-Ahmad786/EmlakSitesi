@@ -82,7 +82,7 @@ export default function NeighborhoodDetailPage({ params }: { params: { slug: str
                             title: 'Historic Yalı Mansion on the Bosphorus',
                             location: 'Bebek, Istanbul',
                             price: '€12,500,000',
-                            image: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
+                            image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2675&auto=format&fit=crop',
                             beds: 6,
                             baths: 5,
                             size: 450,
