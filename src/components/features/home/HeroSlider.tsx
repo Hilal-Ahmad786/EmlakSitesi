@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -87,12 +88,16 @@ export function HeroSlider() {
                         transition={{ duration: 0.8, delay: 0.6 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
-                        <Button size="lg" variant="secondary">
-                            {t('cta')}
-                        </Button>
-                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                            {t('ctaSecondary')}
-                        </Button>
+                        <Link href="/properties">
+                            <Button size="lg" variant="secondary">
+                                {t('cta')}
+                            </Button>
+                        </Link>
+                        <Link href="/contact">
+                            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
+                                {t('ctaSecondary')}
+                            </Button>
+                        </Link>
                     </motion.div>
                 </div>
             </div>

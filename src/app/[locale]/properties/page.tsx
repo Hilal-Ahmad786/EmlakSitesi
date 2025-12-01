@@ -21,7 +21,7 @@ const properties = [
         title: 'Historic Yalı Mansion on the Bosphorus',
         location: 'Bebek, Istanbul',
         price: '€12,500,000',
-        image: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2598&auto=format&fit=crop', // WA1u0scVLZU
         beds: 6,
         baths: 5,
         size: 450,
@@ -36,7 +36,7 @@ const properties = [
         title: 'Luxury Penthouse with Galata View',
         location: 'Galata, Istanbul',
         price: '€2,850,000',
-        image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2670&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1634552367503-686738994784?q=80&w=2670&auto=format&fit=crop', // 2gxniwtyytg
         beds: 3,
         baths: 2,
         size: 180,
@@ -50,7 +50,7 @@ const properties = [
         title: 'Modern Apartment in Nişantaşı',
         location: 'Nişantaşı, Istanbul',
         price: '€1,200,000',
-        image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2670&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2700&auto=format&fit=crop', // mR1CIDduGLc
         beds: 2,
         baths: 2,
         size: 120,
@@ -63,7 +63,7 @@ const properties = [
         title: 'Seaside Villa in Sarıyer',
         location: 'Sarıyer, Istanbul',
         price: '€4,500,000',
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1622587853578-dd1bf9608d26?q=80&w=2671&auto=format&fit=crop', // RKdLlTyjm5g
         beds: 5,
         baths: 4,
         size: 350,
@@ -76,7 +76,7 @@ const properties = [
         title: 'Renovated Historic Apartment',
         location: 'Cihangir, Istanbul',
         price: '€850,000',
-        image: 'https://images.unsplash.com/photo-1502005229762-cf1e2da0c542?q=80&w=2700&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2660&auto=format&fit=crop', // c6qF_lYvu2I
         beds: 2,
         baths: 1,
         size: 95,
@@ -89,7 +89,7 @@ const properties = [
         title: 'Exclusive Bosphorus View Residence',
         location: 'Arnavutköy, Istanbul',
         price: '€3,200,000',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2700&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2670&auto=format&fit=crop', // ZBuRngZnfjE
         beds: 4,
         baths: 3,
         size: 220,

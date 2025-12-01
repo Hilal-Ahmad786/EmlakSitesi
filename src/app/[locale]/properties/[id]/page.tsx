@@ -17,7 +17,7 @@ const property = {
     location: 'Bebek, Istanbul',
     price: '€12,500,000',
     images: [
-        'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=2675&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2675&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2670&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2574&auto=format&fit=crop',

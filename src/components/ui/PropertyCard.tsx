@@ -30,7 +30,10 @@ export function PropertyCard({ property }: PropertyCardProps) {
     const priceValue = parseInt(property.price.replace(/[^0-9]/g, ''));
 
     return (
-        <div className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border/50">
+        <Link
+            href={`/properties/${property.id}`}
+            className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border/50 block"
+        >
             {/* Image Container */}
             <div className="relative h-64 overflow-hidden">
                 <div
@@ -39,7 +42,13 @@ export function PropertyCard({ property }: PropertyCardProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
+                <div
+                    className="absolute top-4 right-4 z-10 flex flex-col gap-2"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }}
+                >
                     <FavoriteButton propertyId={property.id} />
                     <CompareButton propertyId={property.id} />
                 </div>
@@ -73,9 +82,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
                 </div>
 
                 <h3 className="font-serif text-xl text-primary mb-4 line-clamp-2 group-hover:text-accent-gold transition-colors">
-                    <Link href={`/properties/${property.id}`}>
-                        {property.title}
-                    </Link>
+                    {property.title}
                 </h3>
 
                 {/* Features */}
@@ -98,6 +105,6 @@ export function PropertyCard({ property }: PropertyCardProps) {
                     View Details
                 </Button>
             </div>
-        </div>
+        </Link>
     );
 }
