@@ -1,0 +1,274 @@
+{
+    "Navigation": {
+        "home": "Home",
+        "properties": "Properties",
+        "neighborhoods": "Neighborhoods",
+        "services": "Services",
+        "blog": "Blog",
+        "contact": "Contact"
+    },
+    "Hero": {
+        "title": "Discover Historic Istanbul",
+        "subtitle": "Luxury Properties with a Story",
+        "cta": "Explore Properties",
+        "ctaSecondary": "Schedule Consultation",
+        "slides": {
+            "1": {
+                "title": "Bosphorus Waterfront Mansions",
+                "subtitle": "Experience the timeless elegance of the Bosphorus"
+            },
+            "2": {
+                "title": "Historic Galata Apartments",
+                "subtitle": "Live in the heart of history with modern luxury"
+            },
+            "3": {
+                "title": "Exclusive Penthouses",
+                "subtitle": "Breathtaking views of the Golden Horn"
+            }
+        }
+    },
+    "Search": {
+        "placeholder": "Search by location, property type...",
+        "tabs": {
+            "buy": "Buy",
+            "rent": "Rent"
+        },
+        "filters": {
+            "location": "Location",
+            "type": "Property Type",
+            "price": "Price Range",
+            "bedrooms": "Bedrooms",
+            "search": "Search Properties",
+            "view": {
+                "grid": "Grid View",
+                "map": "Map View"
+            }
+        }
+    },
+    "FeaturedCollections": {
+        "title": "Curated Collections",
+        "subtitle": "Discover properties by unique characteristics",
+        "items": {
+            "mansions": "Historic Yalı Mansions",
+            "galata": "Galata Tower View",
+            "bosphorus": "Bosphorus Waterfront",
+            "investment": "Investment Opportunities"
+        }
+    },
+    "LatestProperties": {
+        "title": "Recently Listed",
+        "viewAll": "View All Properties",
+        "badges": {
+            "new": "New",
+            "featured": "Featured",
+            "sale": "For Sale",
+            "rent": "For Rent"
+        }
+    },
+    "NeighborhoodSpotlight": {
+        "title": "Explore Istanbul's Finest Neighborhoods",
+        "items": {
+            "beyoglu": {
+                "name": "Beyoğlu",
+                "desc": "Historic charm meets modern lifestyle"
+            },
+            "besiktas": {
+                "name": "Beşiktaş",
+                "desc": "Waterfront luxury with urban energy"
+            },
+            "kadikoy": {
+                "name": "Kadıköy",
+                "desc": "Asian side bohemian elegance"
+            },
+            "sariyer": {
+                "name": "Sarıyer",
+                "desc": "Bosphorus serenity and nature"
+            }
+        }
+    },
+    "Properties": {
+        "title": "Luxury Properties",
+        "subtitle": "Find your dream home in Istanbul",
+        "filters": {
+            "title": "Filters",
+            "location": "Location",
+            "type": "Property Type",
+            "priceRange": "Price Range",
+            "bedrooms": "Bedrooms",
+            "bathrooms": "Bathrooms",
+            "features": "Features",
+            "apply": "Apply Filters",
+            "reset": "Reset"
+        },
+        "sort": {
+            "label": "Sort by:",
+            "newest": "Newest",
+            "priceAsc": "Price: Low to High",
+            "priceDesc": "Price: High to Low"
+        },
+        "results": "{count} properties found"
+    },
+    "PropertyDetail": {
+        "features": "Property Features",
+        "description": "Description",
+        "location": "Location",
+        "agent": {
+            "title": "Interested in this property?",
+            "subtitle": "Contact our agent for more information",
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "message": "Message",
+            "send": "Send Message"
+        },
+        "specs": {
+            "bedrooms": "Bedrooms",
+            "bathrooms": "Bathrooms",
+            "size": "Size",
+            "type": "Type",
+            "status": "Status",
+            "built": "Year Built"
+        },
+        "similar": "Similar Properties You Might Like",
+        "share": {
+            "title": "Share this Property",
+            "copy": "Copy Link",
+            "copied": "Copied!",
+            "whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "twitter": "Twitter"
+        },
+        "video": {
+            "title": "Property Video Tour"
+        }
+    },
+    "Neighborhoods": {
+        "title": "Istanbul Neighborhoods",
+        "subtitle": "Discover the unique character of Istanbul's most prestigious districts",
+        "detail": {
+            "about": "About {name}",
+            "highlights": "Neighborhood Highlights",
+            "lifestyle": "Lifestyle & Culture",
+            "location": "Location",
+            "properties": "Properties in {name}"
+        }
+    },
+    "Services": {
+        "title": "Our Services",
+        "subtitle": "Comprehensive real estate solutions tailored to your needs",
+        "items": {
+            "consultancy": {
+                "title": "Investment Consultancy",
+                "desc": "Expert advice on high-return property investments in Istanbul."
+            },
+            "citizenship": {
+                "title": "Citizenship by Investment",
+                "desc": "Complete legal and procedural support for Turkish citizenship."
+            },
+            "management": {
+                "title": "Property Management",
+                "desc": "Hassle-free management of your rental properties and assets."
+            },
+            "legal": {
+                "title": "Legal Support",
+                "desc": "Full legal assistance for property transfers and contracts."
+            }
+        }
+    },
+    "Blog": {
+        "title": "Market Insights",
+        "subtitle": "Latest news, trends, and analysis from the Istanbul real estate market",
+        "readMore": "Read Article",
+        "published": "Published on {date}"
+    },
+    "Contact": {
+        "title": "Contact Us",
+        "subtitle": "Get in touch with our expert team",
+        "info": {
+            "address": "Address",
+            "phone": "Phone",
+            "email": "Email",
+            "hours": "Working Hours"
+        },
+        "form": {
+            "name": "Full Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "subject": "Subject",
+            "message": "Message",
+            "send": "Send Message",
+            "success": "Message sent successfully!"
+        }
+    },
+    "Static": {
+        "privacy": {
+            "title": "Privacy Policy",
+            "lastUpdated": "Last Updated: {date}"
+        },
+        "terms": {
+            "title": "Terms of Service",
+            "lastUpdated": "Last Updated: {date}"
+        }
+    },
+    "Tools": {
+        "mortgage": {
+            "title": "Mortgage Calculator",
+            "price": "Property Price",
+            "deposit": "Down Payment",
+            "rate": "Interest Rate (%)",
+            "years": "Loan Term (Years)",
+            "calculate": "Calculate",
+            "result": "Monthly Payment"
+        },
+        "currency": {
+            "label": "Currency"
+        },
+        "favorites": {
+            "title": "My Favorites",
+            "subtitle": "Your saved properties",
+            "empty": "You haven't saved any properties yet.",
+            "browse": "Browse Properties"
+        },
+        "compare": {
+            "title": "Compare Properties",
+            "subtitle": "Compare features side by side",
+            "empty": "Select properties to compare.",
+            "add": "Add to Compare",
+            "remove": "Remove",
+            "clear": "Clear All",
+            "view": "View Comparison",
+            "features": {
+                "price": "Price",
+                "location": "Location",
+                "type": "Type",
+                "size": "Size",
+                "beds": "Bedrooms",
+                "baths": "Bathrooms"
+            }
+        }
+    },
+    "Company": {
+        "about": {
+            "title": "About Maison d'Orient",
+            "subtitle": "Your trusted partner in Istanbul luxury real estate.",
+            "story": "Our Story",
+            "mission": "Our Mission"
+        },
+        "team": {
+            "title": "Meet Our Team",
+            "subtitle": "Experts dedicated to finding your dream home."
+        },
+        "testimonials": {
+            "title": "Client Testimonials",
+            "subtitle": "What our clients say about us."
+        },
+        "faq": {
+            "title": "Frequently Asked Questions",
+            "subtitle": "Answers to common questions about buying property in Turkey."
+        }
+    },
+    "Common": {
+        "loading": "Loading...",
+        "error": "Something went wrong"
+    }
+}

@@ -1,0 +1,275 @@
+{
+    "Navigation": {
+        "home": "Anasayfa",
+        "properties": "Portföy",
+        "neighborhoods": "Mahalleler",
+        "services": "Hizmetler",
+        "blog": "Blog",
+        "contact": "İletişim"
+    },
+    "Hero": {
+        "title": "Tarihi İstanbul'u Keşfedin",
+        "subtitle": "Hikayesi Olan Lüks Gayrimenkuller",
+        "cta": "Portföyü İncele",
+        "ctaSecondary": "Danışmanlık Alın",
+        "slides": {
+            "1": {
+                "title": "Boğaz'da Yalı Daireleri",
+                "subtitle": "Boğaz'ın zamansız şıklığını yaşayın"
+            },
+            "2": {
+                "title": "Tarihi Galata Daireleri",
+                "subtitle": "Tarihin kalbinde modern lüks"
+            },
+            "3": {
+                "title": "Özel Teraslı Daireler",
+                "subtitle": "Haliç'in nefes kesen manzarası"
+            }
+        }
+    },
+    "Search": {
+        "placeholder": "Konum, emlak tipi ara...",
+        "tabs": {
+            "buy": "Satılık",
+            "rent": "Kiralık"
+        },
+        "filters": {
+            "location": "Konum",
+            "type": "Emlak Tipi",
+            "price": "Fiyat Aralığı",
+            "bedrooms": "Yatak Odası",
+            "search": "Emlak Ara",
+            "view": {
+                "grid": "Liste Görünümü",
+                "map": "Harita Görünümü"
+            }
+        },
+        "sort": {}
+    },
+    "FeaturedCollections": {
+        "title": "Özel Koleksiyonlar",
+        "subtitle": "Benzersiz özelliklere göre gayrimenkulleri keşfedin",
+        "items": {
+            "mansions": "Tarihi Yalılar",
+            "galata": "Galata Kulesi Manzaralı",
+            "bosphorus": "Boğaz Manzaralı",
+            "investment": "Yatırım Fırsatları"
+        }
+    },
+    "LatestProperties": {
+        "title": "Son Eklenenler",
+        "viewAll": "Tüm İlanları Gör",
+        "badges": {
+            "new": "Yeni",
+            "featured": "Öne Çıkan",
+            "sale": "Satılık",
+            "rent": "Kiralık"
+        }
+    },
+    "NeighborhoodSpotlight": {
+        "title": "İstanbul'un En Seçkin Semtlerini Keşfedin",
+        "items": {
+            "beyoglu": {
+                "name": "Beyoğlu",
+                "desc": "Tarihi doku ve modern yaşam"
+            },
+            "besiktas": {
+                "name": "Beşiktaş",
+                "desc": "Şehir enerjisiyle boğaz lüksü"
+            },
+            "kadikoy": {
+                "name": "Kadıköy",
+                "desc": "Anadolu yakasının bohem şıklığı"
+            },
+            "sariyer": {
+                "name": "Sarıyer",
+                "desc": "Boğaz huzuru ve doğa"
+            }
+        }
+    },
+    "Properties": {
+        "title": "Lüks Gayrimenkuller",
+        "subtitle": "İstanbul'daki hayalinizdeki evi bulun",
+        "filters": {
+            "title": "Filtreler",
+            "location": "Konum",
+            "type": "Emlak Tipi",
+            "priceRange": "Fiyat Aralığı",
+            "bedrooms": "Yatak Odası",
+            "bathrooms": "Banyo",
+            "features": "Özellikler",
+            "apply": "Filtreleri Uygula",
+            "reset": "Sıfırla"
+        },
+        "sort": {
+            "label": "Sıralama:",
+            "newest": "En Yeni",
+            "priceAsc": "Fiyat: Artan",
+            "priceDesc": "Fiyat: Azalan"
+        },
+        "results": "{count} ilan bulundu"
+    },
+    "PropertyDetail": {
+        "features": "Özellikler",
+        "description": "Açıklama",
+        "location": "Konum",
+        "agent": {
+            "title": "Bu portföyle ilgileniyor musunuz?",
+            "subtitle": "Detaylı bilgi için iletişime geçin",
+            "name": "Ad Soyad",
+            "email": "E-posta",
+            "phone": "Telefon",
+            "message": "Mesajınız",
+            "send": "Mesaj Gönder"
+        },
+        "specs": {
+            "bedrooms": "Yatak Odası",
+            "bathrooms": "Banyo",
+            "size": "Metrekare",
+            "type": "Tip",
+            "status": "Durum",
+            "built": "Yapım Yılı"
+        },
+        "similar": "İlginizi Çekebilecek Benzer İlanlar",
+        "share": {
+            "title": "Bu İlanı Paylaş",
+            "copy": "Linki Kopyala",
+            "copied": "Kopyalandı!",
+            "whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "twitter": "Twitter"
+        },
+        "video": {
+            "title": "Emlak Video Turu"
+        }
+    },
+    "Neighborhoods": {
+        "title": "İstanbul Semtleri",
+        "subtitle": "İstanbul'un en prestijli semtlerinin benzersiz karakterini keşfedin",
+        "detail": {
+            "about": "{name} Hakkında",
+            "highlights": "Semtin Öne Çıkanları",
+            "lifestyle": "Yaşam & Kültür",
+            "location": "Konum",
+            "properties": "{name} Satılık Emlaklar"
+        }
+    },
+    "Services": {
+        "title": "Hizmetlerimiz",
+        "subtitle": "İhtiyaçlarınıza özel kapsamlı gayrimenkul çözümleri",
+        "items": {
+            "consultancy": {
+                "title": "Yatırım Danışmanlığı",
+                "desc": "İstanbul'da yüksek getirili gayrimenkul yatırımları için uzman tavsiyesi."
+            },
+            "citizenship": {
+                "title": "Yatırım Yoluyla Vatandaşlık",
+                "desc": "Türk vatandaşlığı için tam yasal ve prosedürel destek."
+            },
+            "management": {
+                "title": "Mülk Yönetimi",
+                "desc": "Kiralık mülklerinizin ve varlıklarınızın sorunsuz yönetimi."
+            },
+            "legal": {
+                "title": "Hukuki Destek",
+                "desc": "Tapu devirleri ve sözleşmeler için tam hukuki yardım."
+            }
+        }
+    },
+    "Blog": {
+        "title": "Piyasa Analizleri",
+        "subtitle": "İstanbul emlak piyasasından en son haberler, trendler ve analizler",
+        "readMore": "Devamını Oku",
+        "published": "{date} tarihinde yayınlandı"
+    },
+    "Contact": {
+        "title": "İletişim",
+        "subtitle": "Uzman ekibimizle iletişime geçin",
+        "info": {
+            "address": "Adres",
+            "phone": "Telefon",
+            "email": "E-posta",
+            "hours": "Çalışma Saatleri"
+        },
+        "form": {
+            "name": "Ad Soyad",
+            "email": "E-posta Adresi",
+            "phone": "Telefon Numarası",
+            "subject": "Konu",
+            "message": "Mesajınız",
+            "send": "Mesaj Gönder",
+            "success": "Mesajınız başarıyla gönderildi!"
+        }
+    },
+    "Static": {
+        "privacy": {
+            "title": "Gizlilik Politikası",
+            "lastUpdated": "Son Güncelleme: {date}"
+        },
+        "terms": {
+            "title": "Kullanım Koşulları",
+            "lastUpdated": "Son Güncelleme: {date}"
+        }
+    },
+    "Tools": {
+        "mortgage": {
+            "title": "Kredi Hesaplama",
+            "price": "Emlak Fiyatı",
+            "deposit": "Peşinat",
+            "rate": "Faiz Oranı (%)",
+            "years": "Vade (Yıl)",
+            "calculate": "Hesapla",
+            "result": "Aylık Taksit"
+        },
+        "currency": {
+            "label": "Para Birimi"
+        },
+        "favorites": {
+            "title": "Favorilerim",
+            "subtitle": "Kaydettiğiniz emlaklar",
+            "empty": "Henüz hiç emlak kaydetmediniz.",
+            "browse": "Emlaklara Göz At"
+        },
+        "compare": {
+            "title": "Emlak Karşılaştırma",
+            "subtitle": "Özellikleri yan yana karşılaştırın",
+            "empty": "Karşılaştırmak için emlak seçin.",
+            "add": "Karşılaştır",
+            "remove": "Kaldır",
+            "clear": "Temizle",
+            "view": "Karşılaştırmayı Gör",
+            "features": {
+                "price": "Fiyat",
+                "location": "Konum",
+                "type": "Tip",
+                "size": "Alan",
+                "beds": "Yatak Odası",
+                "baths": "Banyo"
+            }
+        }
+    },
+    "Company": {
+        "about": {
+            "title": "Maison d'Orient Hakkında",
+            "subtitle": "İstanbul lüks gayrimenkulünde güvenilir ortağınız.",
+            "story": "Hikayemiz",
+            "mission": "Misyonumuz"
+        },
+        "team": {
+            "title": "Ekibimizle Tanışın",
+            "subtitle": "Hayalinizdeki evi bulmaya adanmış uzmanlar."
+        },
+        "testimonials": {
+            "title": "Müşteri Yorumları",
+            "subtitle": "Müşterilerimiz bizim hakkımızda ne söylüyor."
+        },
+        "faq": {
+            "title": "Sıkça Sorulan Sorular",
+            "subtitle": "Türkiye'de gayrimenkul satın alma hakkında sık sorulan soruların cevapları."
+        }
+    },
+    "Common": {
+        "loading": "Yükleniyor...",
+        "error": "Bir hata oluştu"
+    }
+}
