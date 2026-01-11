@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
+import { useLocale } from 'next-intl';
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
 import { CurrencySwitcher } from '@/components/features/tools/CurrencySwitcher';
@@ -15,6 +16,12 @@ export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
+    const locale = useLocale();
+
+    const toggleLanguage = () => {
+        const newLocale = locale === 'en' ? 'tr' : 'en';
+        router.replace(pathname, { locale: newLocale });
+    };
 
     const navLinks = [
         { href: '/', label: t('home') },
@@ -25,9 +32,7 @@ export function Header() {
         { href: '/contact', label: t('contact') },
     ];
 
-    const switchLocale = (locale: string) => {
-        router.replace(pathname, { locale });
-    };
+
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -50,9 +55,14 @@ export function Header() {
                 {/* Actions */}
                 <div className="hidden md:flex items-center gap-4">
                     <CurrencySwitcher />
-                    <div className="flex items-center gap-2 text-primary hover:text-accent-gold transition-colors cursor-pointer">
+
+                    // ... inside render
+                    <div
+                        onClick={toggleLanguage}
+                        className="flex items-center gap-2 text-primary hover:text-accent-gold transition-colors cursor-pointer"
+                    >
                         <Globe size={20} />
-                        <span className="text-sm font-medium">EN</span>
+                        <span className="text-sm font-medium uppercase">{locale}</span>
                     </div>
                     <Link href="/contact">
                         <Button variant="primary" size="sm">

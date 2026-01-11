@@ -8,30 +8,44 @@ const collections = [
     {
         id: 'mansions',
         title: 'Waterfront Mansions',
-        image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2670&auto=format&fit=crop', // RKdLlTyjm5g (Daniel Barnes) -> using a known working ID for mansion
+        image: '/images/home/collection-mansions.jpg', // Scraped from Maison d'Orient
         count: 12,
         link: '/properties?type=yali'
     },
     {
         id: 'galata',
         title: 'Historic Apartments',
-        image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2660&auto=format&fit=crop', // 2gxniwtyytg (Polina Kuzovkova) -> using a known working ID for Istanbul
+        image: '/images/home/collection-galata.jpg', // Scraped from Maison d'Orient
         count: 8,
         link: '/properties?view=galata'
     },
     {
         id: 'bosphorus',
         title: 'Modern Penthouses',
-        image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2598&auto=format&fit=crop', // WA1u0scVLZU (Engin Yapici) -> using a known working ID for Bosphorus
+        image: '/images/home/collection-bosphorus.jpg', // Scraped from Maison d'Orient
         count: 15,
         link: '/properties?view=bosphorus'
     },
     {
         id: 'investment',
         title: 'Investment Properties',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2700&auto=format&fit=crop', // mR1CIDduGLc (Frames For Your Heart) -> using a known working ID for interior
+        image: '/images/home/collection-investment.jpg', // Scraped from Maison d'Orient
         link: '/properties?type=investment',
         count: 10
+    },
+    {
+        id: 'cihangir',
+        title: 'Historic Cihangir Buildings',
+        image: '/images/home/collection-cihangir.jpg', // Scraped from Maison d'Orient
+        link: '/properties?view=cihangir',
+        count: 5
+    },
+    {
+        id: 'levent',
+        title: 'Luxury Levent Villas',
+        image: '/images/home/collection-levent.jpg', // Scraped from Maison d'Orient
+        link: '/properties?view=levent',
+        count: 3
     }
 ];
 

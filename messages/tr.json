@@ -54,11 +54,13 @@
             "mansions": "Tarihi Yalılar",
             "galata": "Galata Kulesi Manzaralı",
             "bosphorus": "Boğaz Manzaralı",
-            "investment": "Yatırım Fırsatları"
+            "investment": "Yatırım Fırsatları",
+            "cihangir": "Tarihi Cihangir Binaları",
+            "levent": "Lüks Levent Villaları"
         }
     },
     "LatestProperties": {
-        "title": "Son Eklenenler",
+        "title": "Öne Çıkan Mülkler",
         "viewAll": "Tüm İlanları Gör",
         "badges": {
             "new": "Yeni",

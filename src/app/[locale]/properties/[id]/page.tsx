@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { ImageGallery } from '@/components/features/property-detail/ImageGallery';
 import { PropertyInfo } from '@/components/features/property-detail/PropertyInfo';
-import { AgentContact } from '@/components/features/property-detail/AgentContact';
+
 import { MortgageCalculator } from '@/components/features/tools/MortgageCalculator';
 import { SimilarProperties } from '@/components/features/property-detail/SimilarProperties';
 import { ShareButtons } from '@/components/features/property-detail/ShareButtons';
@@ -101,7 +101,7 @@ export default function PropertyDetailPage() {
                     {/* Sidebar */}
                     <div className="lg:col-span-1 space-y-8">
                         <MortgageCalculator propertyPrice={12500000} />
-                        <AgentContact />
+
                     </div>
                 </div>
 

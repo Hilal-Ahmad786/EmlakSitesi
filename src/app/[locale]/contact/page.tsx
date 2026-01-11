@@ -32,8 +32,8 @@ export default function ContactPage() {
                                     <div>
                                         <h4 className="font-medium text-primary mb-1">{t('info.address')}</h4>
                                         <p className="text-text-secondary">
-                                            Bebek, Cevdet Paşa Cd. No: 123<br />
-                                            34342 Beşiktaş/İstanbul, Turkey
+                                            Meşrutiyet Caddesi No: 79A<br />
+                                            Beyoğlu / İSTANBUL
                                         </p>
                                     </div>
                                 </div>
@@ -44,7 +44,10 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-medium text-primary mb-1">{t('info.phone')}</h4>
-                                        <p className="text-text-secondary">+90 212 123 45 67</p>
+                                        <p className="text-text-secondary">
+                                            +90 532 461 05 74<br />
+                                            +90 212 245 15 16
+                                        </p>
                                     </div>
                                 </div>
 
@@ -54,7 +57,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-medium text-primary mb-1">{t('info.email')}</h4>
-                                        <p className="text-text-secondary">info@maisondorient.com</p>
+                                        <p className="text-text-secondary">info@maison-dorient.com</p>
                                     </div>
                                 </div>
 
@@ -65,8 +68,7 @@ export default function ContactPage() {
                                     <div>
                                         <h4 className="font-medium text-primary mb-1">{t('info.hours')}</h4>
                                         <p className="text-text-secondary">
-                                            Mon - Fri: 09:00 - 18:00<br />
-                                            Sat: 10:00 - 15:00
+                                            Contact us for an appointment
                                         </p>
                                     </div>
                                 </div>

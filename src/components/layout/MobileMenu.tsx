@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/routing';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Menu, X, Globe, ChevronRight, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname, useRouter } from '@/i18n/routing';
@@ -16,6 +16,7 @@ export function MobileMenu() {
     const tTools = useTranslations('Tools');
     const pathname = usePathname();
     const router = useRouter();
+    const locale = useLocale();
 
     useEffect(() => {
         if (isOpen) {
@@ -128,7 +129,7 @@ export function MobileMenu() {
                                                 onClick={() => handleLanguageChange('en')}
                                                 className={cn(
                                                     "px-4 py-2.5 border rounded-lg transition-all text-center font-medium text-sm",
-                                                    pathname.startsWith('/en') || !pathname.startsWith('/tr') // Simple check, ideally use locale hook
+                                                    locale === 'en'
                                                         ? "bg-primary text-white border-primary"
                                                         : "border-border hover:border-primary text-text-secondary"
                                                 )}
@@ -139,7 +140,7 @@ export function MobileMenu() {
                                                 onClick={() => handleLanguageChange('tr')}
                                                 className={cn(
                                                     "px-4 py-2.5 border rounded-lg transition-all text-center font-medium text-sm",
-                                                    pathname.startsWith('/tr')
+                                                    locale === 'tr'
                                                         ? "bg-primary text-white border-primary"
                                                         : "border-border hover:border-primary text-text-secondary"
                                                 )}

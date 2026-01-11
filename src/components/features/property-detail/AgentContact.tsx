@@ -27,7 +27,7 @@ export function AgentContact() {
             <div className="space-y-4 mb-6">
                 <Button variant="outline" className="w-full gap-2">
                     <Phone size={16} />
-                    +90 532 123 45 67
+                    +90 532 461 05 74
                 </Button>
                 <Button variant="outline" className="w-full gap-2">
                     <Mail size={16} />

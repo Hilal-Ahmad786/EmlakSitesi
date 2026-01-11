@@ -10,21 +10,33 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const slides = [
     {
         id: 1,
-        image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2675&auto=format&fit=crop',
+        image: '/images/home/hero-1.jpg',
         title: 'Experience Bosphorus Luxury',
         subtitle: 'Exclusive waterfront mansions in the heart of Istanbul'
     },
     {
         id: 2,
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop',
+        image: '/images/home/hero-2.jpg',
         title: 'Modern Living in Nişantaşı',
         subtitle: 'Contemporary apartments in Istanbul\'s fashion district'
     },
     {
         id: 3,
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2700&auto=format&fit=crop',
+        image: '/images/home/hero-3.jpg',
         title: 'Historic Charm in Galata',
         subtitle: 'Restored penthouses with panoramic city views'
+    },
+    {
+        id: 4,
+        image: '/images/home/hero-4.jpg',
+        title: 'Investment Opportunities',
+        subtitle: 'Prime real estate with high ROI potential'
+    },
+    {
+        id: 5,
+        image: '/images/home/hero-5.jpg',
+        title: 'Elite Bosphorus Villas',
+        subtitle: 'Private residences with breathtaking sea views'
     }
 ];
 

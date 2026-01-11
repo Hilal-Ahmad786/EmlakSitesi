@@ -57,9 +57,10 @@ export function Footer() {
                     <div>
                         <h3 className="font-serif text-lg mb-6">Contact</h3>
                         <ul className="space-y-3 text-sm text-gray-400">
-                            <li>Bebek, Istanbul, Turkey</li>
-                            <li>+90 212 123 45 67</li>
-                            <li>info@maisondorient.com</li>
+                            <li>Meşrutiyet Caddesi No: 79A, Beyoğlu / İSTANBUL</li>
+                            <li>+90 532 461 05 74</li>
+                            <li>+90 212 245 15 16</li>
+                            <li>info@maison-dorient.com</li>
                         </ul>
                     </div>
                 </div>
