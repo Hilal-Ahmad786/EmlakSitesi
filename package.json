@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.1",
+    "@auth/prisma-adapter": "^2.11.1",
+    "@prisma/client": "5.22.0",
     "@types/leaflet": "^1.9.21",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.23.25",
@@ -21,6 +24,7 @@
     "next-intl": "^4.5.6",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.67.0",
     "react-leaflet": "^5.0.0",
     "sharp": "^0.34.5",
@@ -37,7 +41,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "^16.1.1",
-    "prisma": "^7.0.1",
+    "prisma": "5.22.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

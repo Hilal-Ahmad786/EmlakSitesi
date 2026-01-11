@@ -1,0 +1,521 @@
+// Maison d'Orient - Advanced Admin Panel Database Schema
+// This extends the existing schema with comprehensive models for property management
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USER & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  name          String
+  phone         String?
+  avatar        String?
+  role          UserRole  @default(AGENT)
+  status        UserStatus @default(ACTIVE)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+  
+  // Relations
+  properties    Property[]
+  blogPosts     BlogPost[]
+  leads         Lead[]
+  activities    ActivityLog[]
+  sessions      Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  ipAddress String?
+  userAgent String?
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  AGENT
+  EDITOR
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+// ============================================================================
+// PROPERTY MANAGEMENT
+// ============================================================================
+
+model Property {
+  id              String          @id @default(cuid())
+  
+  // Basic Info
+  title           Json            // { en: string, tr: string }
+  slug            String          @unique
+  description     Json            // { en: string, tr: string }
+  shortDescription Json?          // { en: string, tr: string }
+  
+  // Location
+  address         String
+  neighborhood    String
+  neighborhoodId  String?
+  district        String?
+  city            String          @default("Istanbul")
+  country         String          @default("Turkey")
+  latitude        Float?
+  longitude       Float?
+  
+  // Pricing
+  price           Float
+  currency        String          @default("EUR")
+  pricePerSqm     Float?
+  
+  // Property Details
+  propertyType    PropertyType
+  listingType     ListingType
+  status          PropertyStatus  @default(DRAFT)
+  
+  // Specifications
+  bedrooms        Int
+  bathrooms       Int
+  size            Float           // Square meters
+  landSize        Float?          // For villas/houses
+  floors          Int?
+  floor           Int?            // Which floor
+  yearBuilt       Int?
+  
+  // Features (JSON for flexibility)
+  features        Json?           // Array of feature strings
+  amenities       Json?           // Array of amenity strings
+  
+  // Media
+  images          PropertyImage[]
+  videoUrl        String?
+  virtualTourUrl  String?
+  
+  // SEO
+  seo             PropertySeo?
+  
+  // Flags
+  isFeatured      Boolean         @default(false)
+  isNew           Boolean         @default(true)
+  isExclusive     Boolean         @default(false)
+  showPrice       Boolean         @default(true)
+  
+  // Analytics
+  viewCount       Int             @default(0)
+  inquiryCount    Int             @default(0)
+  
+  // Relations
+  agentId         String?
+  agent           User?           @relation(fields: [agentId], references: [id])
+  neighborhoodRef Neighborhood?   @relation(fields: [neighborhoodId], references: [id])
+  leads           Lead[]
+  
+  // Timestamps
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  publishedAt     DateTime?
+  
+  @@index([status])
+  @@index([propertyType])
+  @@index([listingType])
+  @@index([isFeatured])
+  @@index([neighborhoodId])
+}
+
+model PropertyImage {
+  id          String   @id @default(cuid())
+  propertyId  String
+  url         String
+  publicId    String?  // Cloudinary public ID
+  alt         Json?    // { en: string, tr: string }
+  caption     Json?    // { en: string, tr: string }
+  order       Int      @default(0)
+  isPrimary   Boolean  @default(false)
+  width       Int?
+  height      Int?
+  createdAt   DateTime @default(now())
+  
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  @@index([propertyId])
+}
+
+model PropertySeo {
+  id              String   @id @default(cuid())
+  propertyId      String   @unique
+  
+  metaTitle       Json?    // { en: string, tr: string }
+  metaDescription Json?    // { en: string, tr: string }
+  keywords        Json?    // { en: string[], tr: string[] }
+  canonicalUrl    String?
+  ogImage         String?
+  noIndex         Boolean  @default(false)
+  noFollow        Boolean  @default(false)
+  
+  // Schema.org
+  schemaMarkup    Json?
+  
+  property        Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}
+
+enum PropertyType {
+  APARTMENT
+  VILLA
+  YALI
+  PENTHOUSE
+  DUPLEX
+  OFFICE
+  RETAIL
+  LAND
+  BUILDING
+  OTHER
+}
+
+enum ListingType {
+  SALE
+  RENT
+  BOTH
+}
+
+enum PropertyStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  SOLD
+  RENTED
+  ARCHIVED
+}
+
+// ============================================================================
+// NEIGHBORHOOD MANAGEMENT
+// ============================================================================
+
+model Neighborhood {
+  id              String   @id @default(cuid())
+  name            Json     // { en: string, tr: string }
+  slug            String   @unique
+  description     Json?    // { en: string, tr: string }
+  shortDescription Json?   // { en: string, tr: string }
+  
+  // Location
+  district        String?
+  city            String   @default("Istanbul")
+  latitude        Float?
+  longitude       Float?
+  
+  // Media
+  image           String?
+  images          Json?    // Array of image URLs
+  
+  // Content
+  highlights      Json?    // Array of { icon, title, description }
+  lifestyle       Json?    // { en: string, tr: string }
+  
+  // SEO
+  seo             NeighborhoodSeo?
+  
+  // Stats
+  propertyCount   Int      @default(0)
+  
+  // Status
+  isActive        Boolean  @default(true)
+  isFeatured      Boolean  @default(false)
+  order           Int      @default(0)
+  
+  // Relations
+  properties      Property[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([isActive])
+  @@index([isFeatured])
+}
+
+model NeighborhoodSeo {
+  id              String       @id @default(cuid())
+  neighborhoodId  String       @unique
+  
+  metaTitle       Json?        // { en: string, tr: string }
+  metaDescription Json?        // { en: string, tr: string }
+  keywords        Json?        // { en: string[], tr: string[] }
+  canonicalUrl    String?
+  ogImage         String?
+  noIndex         Boolean      @default(false)
+  
+  neighborhood    Neighborhood @relation(fields: [neighborhoodId], references: [id], onDelete: Cascade)
+}
+
+// ============================================================================
+// BLOG MANAGEMENT
+// ============================================================================
+
+model BlogPost {
+  id              String         @id @default(cuid())
+  title           Json           // { en: string, tr: string }
+  slug            String         @unique
+  excerpt         Json?          // { en: string, tr: string }
+  content         Json           // { en: string, tr: string }
+  
+  // Media
+  featuredImage   String?
+  images          Json?          // Array of image URLs
+  
+  // Categorization
+  category        String?
+  tags            Json?          // Array of strings
+  
+  // Author
+  authorId        String
+  author          User           @relation(fields: [authorId], references: [id])
+  
+  // SEO
+  seo             BlogPostSeo?
+  
+  // Status
+  status          PostStatus     @default(DRAFT)
+  
+  // Analytics
+  viewCount       Int            @default(0)
+  
+  // Timestamps
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  publishedAt     DateTime?
+  
+  @@index([status])
+  @@index([category])
+}
+
+model BlogPostSeo {
+  id              String    @id @default(cuid())
+  postId          String    @unique
+  
+  metaTitle       Json?     // { en: string, tr: string }
+  metaDescription Json?     // { en: string, tr: string }
+  keywords        Json?     // { en: string[], tr: string[] }
+  canonicalUrl    String?
+  ogImage         String?
+  noIndex         Boolean   @default(false)
+  
+  post            BlogPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+enum PostStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  ARCHIVED
+}
+
+// ============================================================================
+// LEADS / INQUIRIES
+// ============================================================================
+
+model Lead {
+  id            String      @id @default(cuid())
+  
+  // Contact Info
+  name          String
+  email         String
+  phone         String?
+  
+  // Inquiry Details
+  subject       String?
+  message       String
+  source        LeadSource  @default(WEBSITE)
+  
+  // Property Reference (optional)
+  propertyId    String?
+  property      Property?   @relation(fields: [propertyId], references: [id])
+  
+  // Assignment
+  assignedToId  String?
+  assignedTo    User?       @relation(fields: [assignedToId], references: [id])
+  
+  // Status
+  status        LeadStatus  @default(NEW)
+  priority      LeadPriority @default(MEDIUM)
+  
+  // Notes
+  notes         Json?       // Array of { text, date, userId }
+  
+  // Follow-up
+  followUpDate  DateTime?
+  
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  closedAt      DateTime?
+  
+  @@index([status])
+  @@index([assignedToId])
+  @@index([propertyId])
+}
+
+enum LeadSource {
+  WEBSITE
+  PHONE
+  EMAIL
+  REFERRAL
+  SOCIAL_MEDIA
+  WALK_IN
+  OTHER
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  VIEWING_SCHEDULED
+  NEGOTIATING
+  CLOSED_WON
+  CLOSED_LOST
+  ARCHIVED
+}
+
+enum LeadPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+// ============================================================================
+// SEO MANAGEMENT
+// ============================================================================
+
+model GlobalSeo {
+  id              String   @id @default(cuid())
+  page            String   @unique // 'home', 'properties', 'contact', etc.
+  
+  // Meta Tags
+  metaTitle       Json?    // { en: string, tr: string }
+  metaDescription Json?    // { en: string, tr: string }
+  keywords        Json?    // { en: string[], tr: string[] }
+  
+  // Open Graph
+  ogTitle         Json?    // { en: string, tr: string }
+  ogDescription   Json?    // { en: string, tr: string }
+  ogImage         String?
+  ogType          String?
+  
+  // Twitter
+  twitterCard     String?  @default("summary_large_image")
+  twitterTitle    Json?    // { en: string, tr: string }
+  twitterDescription Json? // { en: string, tr: string }
+  twitterImage    String?
+  
+  // Other
+  canonicalUrl    String?
+  robots          String?  @default("index, follow")
+  
+  // Schema.org
+  schemaMarkup    Json?
+  
+  updatedAt       DateTime @updatedAt
+}
+
+model Redirect {
+  id          String   @id @default(cuid())
+  source      String   @unique
+  destination String
+  type        Int      @default(301) // 301 or 302
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model SitemapConfig {
+  id            String   @id @default(cuid())
+  entityType    String   @unique // 'properties', 'neighborhoods', 'blog'
+  changefreq    String   @default("weekly")
+  priority      Float    @default(0.5)
+  isEnabled     Boolean  @default(true)
+  updatedAt     DateTime @updatedAt
+}
+
+// ============================================================================
+// MEDIA LIBRARY
+// ============================================================================
+
+model Media {
+  id          String    @id @default(cuid())
+  filename    String
+  originalName String
+  url         String
+  publicId    String?   // Cloudinary public ID
+  mimeType    String
+  size        Int       // bytes
+  width       Int?
+  height      Int?
+  alt         Json?     // { en: string, tr: string }
+  folder      String?
+  tags        Json?     // Array of strings
+  uploadedById String?
+  createdAt   DateTime  @default(now())
+  
+  @@index([folder])
+  @@index([mimeType])
+}
+
+// ============================================================================
+// SETTINGS
+// ============================================================================
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  group     String   @default("general")
+  updatedAt DateTime @updatedAt
+}
+
+// Settings groups:
+// - general: Company name, logo, favicon
+// - contact: Address, phone, email, working hours
+// - social: Social media links
+// - analytics: GA ID, GTM ID, etc.
+// - email: SMTP settings, templates
+// - currency: Rates, default currency
+
+// ============================================================================
+// ACTIVITY LOG
+// ============================================================================
+
+model ActivityLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  action      String   // CREATE, UPDATE, DELETE, LOGIN, etc.
+  entityType  String   // Property, Lead, User, etc.
+  entityId    String?
+  details     Json?    // Additional context
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+}

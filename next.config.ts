@@ -17,7 +17,17 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
       }
     ]
-  }
+  },
+  async redirects() {
+    return [
+      {
+        source: '/:locale/admin',
+        destination: '/:locale/admin/dashboard',
+        permanent: true,
+      },
+    ];
+  },
+
 };
 
 export default withNextIntl(nextConfig);

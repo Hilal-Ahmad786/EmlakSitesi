@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
 
 export default async function RootLayout({
   children,
@@ -49,7 +50,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${inter.variable} ${playfair.variable} antialiased font-sans flex flex-col min-h-screen`}
       >
@@ -57,12 +58,10 @@ export default async function RootLayout({
           <CurrencyProvider>
             <FavoritesProvider>
               <CompareProvider>
-                <Header />
-                <main className="flex-grow">
+                <ConditionalLayout>
                   {children}
-                </main>
+                </ConditionalLayout>
                 <CompareBar />
-                <Footer />
               </CompareProvider>
             </FavoritesProvider>
           </CurrencyProvider>
