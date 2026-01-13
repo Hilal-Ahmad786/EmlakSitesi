@@ -73,8 +73,8 @@ export function LeadList({
     { value: 'QUALIFIED', label: 'Qualified' },
     { value: 'VIEWING_SCHEDULED', label: 'Viewing Scheduled' },
     { value: 'NEGOTIATING', label: 'Negotiating' },
-    { value: 'WON', label: 'Won' },
-    { value: 'LOST', label: 'Lost' },
+    { value: 'CLOSED_WON', label: 'Won' },
+    { value: 'CLOSED_LOST', label: 'Lost' },
   ];
 
   const priorityOptions: { value: string; label: string }[] = [
@@ -290,8 +290,8 @@ export function LeadDetail({
     { value: 'QUALIFIED', label: 'Qualified' },
     { value: 'VIEWING_SCHEDULED', label: 'Viewing Scheduled' },
     { value: 'NEGOTIATING', label: 'Negotiating' },
-    { value: 'WON', label: 'Won' },
-    { value: 'LOST', label: 'Lost' },
+    { value: 'CLOSED_WON', label: 'Won' },
+    { value: 'CLOSED_LOST', label: 'Lost' },
   ];
 
   return (
@@ -392,7 +392,9 @@ export function LeadDetail({
                 <h4 className="font-medium text-gray-900">
                   {lead.property.title?.en || lead.property.title?.tr}
                 </h4>
-                <p className="text-sm text-gray-500">{lead.property.location}</p>
+                <p className="text-sm text-gray-500">
+                  {lead.property.city}, {lead.property.district}
+                </p>
               </div>
               <ChevronRight className="text-gray-400" />
             </Link>
@@ -428,16 +430,16 @@ export function LeadDetail({
               {lead.notes?.map((note, index) => (
                 <div key={index} className="flex gap-3">
                   <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-sm flex-shrink-0">
-                    {note.user?.name?.charAt(0) || 'A'}
+                    {note.userName?.charAt(0) || 'A'}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-sm">{note.user?.name || 'Admin'}</span>
+                      <span className="font-medium text-sm">{note.userName || 'Admin'}</span>
                       <span className="text-xs text-gray-400">
-                        {formatRelativeTime(note.createdAt)}
+                        {formatRelativeTime(note.date)}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{note.content}</p>
+                    <p className="text-sm text-gray-600 mt-1">{note.text}</p>
                   </div>
                 </div>
               ))}

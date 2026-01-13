@@ -116,7 +116,7 @@ export function UserList({
                   <RoleBadge role={user.role} />
                 </TableCell>
                 <TableCell>
-                  {user.isActive ? (
+                  {user.status === 'ACTIVE' ? (
                     <Badge className="bg-green-100 text-green-800">Active</Badge>
                   ) : (
                     <Badge className="bg-gray-100 text-gray-800">Inactive</Badge>
@@ -144,9 +144,9 @@ export function UserList({
                       variant="ghost"
                       size="sm"
                       onClick={() => onToggleActive(user.id)}
-                      title={user.isActive ? 'Deactivate' : 'Activate'}
+                      title={user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
                     >
-                      {user.isActive ? (
+                      {user.status === 'ACTIVE' ? (
                         <UserX size={16} className="text-orange-500" />
                       ) : (
                         <UserCheck size={16} className="text-green-500" />
@@ -186,7 +186,7 @@ export function UserForm({ initialData, onSubmit, onCancel, loading }: UserFormP
     email: initialData?.email || '',
     phone: initialData?.phone || '',
     role: initialData?.role || 'AGENT',
-    isActive: initialData?.isActive ?? true,
+    status: initialData?.status || 'ACTIVE',
     password: '',
     confirmPassword: '',
   });
@@ -261,8 +261,8 @@ export function UserForm({ initialData, onSubmit, onCancel, loading }: UserFormP
 
       <Switch
         label="Active"
-        checked={formData.isActive}
-        onChange={(checked) => setFormData({ ...formData, isActive: checked })}
+        checked={formData.status === 'ACTIVE'}
+        onChange={(checked) => setFormData({ ...formData, status: checked ? 'ACTIVE' : 'INACTIVE' })}
       />
 
       <div className="flex items-center justify-end gap-4 pt-4 border-t">
@@ -325,7 +325,7 @@ export function SettingsPage({ settings, onSave, loading }: SettingsPageProps) {
         </div>
       </div>
 
-      <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+      <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
       {/* Company Info */}
       {activeTab === 'company' && (

@@ -342,17 +342,22 @@ export interface Setting {
 }
 
 export interface CompanySettings {
-  name: string;
+  name: LocalizedString;
   logo: string;
   favicon: string;
   description: LocalizedString;
+  about?: LocalizedString;
 }
 
 export interface ContactSettings {
-  address: string;
+  address: LocalizedString;
   phone: string[];
+  phone1?: string;
+  phone2?: string;
   email: string;
-  workingHours: LocalizedString;
+  whatsapp?: string;
+  workingHours: string;
+  mapUrl?: string;
   googleMapsUrl?: string;
   latitude?: number;
   longitude?: number;
@@ -369,9 +374,32 @@ export interface SocialSettings {
 
 export interface AnalyticsSettings {
   googleAnalyticsId?: string;
+  ga4Id?: string;
   googleTagManagerId?: string;
+  gtmId?: string;
   facebookPixelId?: string;
+  fbPixelId?: string;
   hotjarId?: string;
+  searchConsoleId?: string;
+  customHeadScripts?: string;
+}
+
+export interface EmailSettings {
+  smtpHost?: string;
+  smtpPort?: number;
+  smtpSecure?: string;
+  smtpUser?: string;
+  smtpPass?: string;
+  fromEmail?: string;
+  fromName?: string;
+}
+
+export interface Settings {
+  company?: CompanySettings;
+  contact?: ContactSettings;
+  social?: SocialSettings;
+  analytics?: AnalyticsSettings;
+  email?: EmailSettings;
 }
 
 // Activity Log Types

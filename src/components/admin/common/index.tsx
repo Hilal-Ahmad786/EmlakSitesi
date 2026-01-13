@@ -402,35 +402,41 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
 // TABLE
 // ============================================================================
 
-interface TableProps {
+interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   children: React.ReactNode;
   className?: string;
 }
 
-export function Table({ children, className }: TableProps) {
+export function Table({ children, className, ...props }: TableProps) {
   return (
     <div className="overflow-x-auto">
-      <table className={cn('w-full text-sm', className)}>
+      <table className={cn('w-full text-sm', className)} {...props}>
         {children}
       </table>
     </div>
   );
 }
 
-export function TableHeader({ children, className }: TableProps) {
+// Separate interface for parts that might be div/thead/tbody/tr
+interface TablePartProps extends React.HTMLAttributes<HTMLElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function TableHeader({ children, className, ...props }: TablePartProps) {
   return (
-    <thead className={cn('bg-gray-50 border-b border-gray-200', className)}>
+    <thead className={cn('bg-gray-50 border-b border-gray-200', className)} {...props}>
       {children}
     </thead>
   );
 }
 
-export function TableBody({ children, className }: TableProps) {
-  return <tbody className={cn('divide-y divide-gray-200', className)}>{children}</tbody>;
+export function TableBody({ children, className, ...props }: TablePartProps) {
+  return <tbody className={cn('divide-y divide-gray-200', className)} {...props}>{children}</tbody>;
 }
 
-export function TableRow({ children, className }: TableProps) {
-  return <tr className={cn('hover:bg-gray-50 transition-colors', className)}>{children}</tr>;
+export function TableRow({ children, className, ...props }: TablePartProps) {
+  return <tr className={cn('hover:bg-gray-50 transition-colors', className)} {...props}>{children}</tr>;
 }
 
 export function TableHead({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -545,10 +551,10 @@ interface PaginationProps {
 export function Pagination({ currentPage, totalPages, onPageChange, className }: PaginationProps) {
   const pages = [];
   const maxVisiblePages = 5;
-  
+
   let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
   let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-  
+
   if (endPage - startPage + 1 < maxVisiblePages) {
     startPage = Math.max(1, endPage - maxVisiblePages + 1);
   }
@@ -567,7 +573,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
       >
         Previous
       </Button>
-      
+
       {startPage > 1 && (
         <>
           <Button
@@ -580,7 +586,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
           {startPage > 2 && <span className="px-2 text-gray-400">...</span>}
         </>
       )}
-      
+
       {pages.map(page => (
         <Button
           key={page}
@@ -591,7 +597,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
           {page}
         </Button>
       ))}
-      
+
       {endPage < totalPages && (
         <>
           {endPage < totalPages - 1 && <span className="px-2 text-gray-400">...</span>}
@@ -604,7 +610,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
           </Button>
         </>
       )}
-      
+
       <Button
         variant="outline"
         size="sm"

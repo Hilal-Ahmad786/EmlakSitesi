@@ -28,7 +28,7 @@ interface MediaItemProps {
 function MediaItem({ file, selected, onSelect, onDelete, onEdit, viewMode }: MediaItemProps) {
   const [showActions, setShowActions] = useState(false);
 
-  const isImage = file.type.startsWith('image/');
+  const isImage = file.mimeType.startsWith('image/');
 
   if (viewMode === 'list') {
     return (
@@ -47,16 +47,16 @@ function MediaItem({ file, selected, onSelect, onDelete, onEdit, viewMode }: Med
         </div>
         <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center overflow-hidden">
           {isImage ? (
-            <Image src={file.url} alt={file.name} width={48} height={48} className="object-cover" />
+            <Image src={file.url} alt={file.filename} width={48} height={48} className="object-cover" />
           ) : (
             <File size={24} className="text-gray-400" />
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-sm truncate">{file.name}</p>
+          <p className="font-medium text-sm truncate">{file.filename}</p>
           <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
         </div>
-        <div className="text-xs text-gray-500">{file.type}</div>
+        <div className="text-xs text-gray-500">{file.mimeType}</div>
         <div className="text-xs text-gray-500">{formatDate(file.createdAt)}</div>
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); onEdit(); }}>
@@ -82,7 +82,7 @@ function MediaItem({ file, selected, onSelect, onDelete, onEdit, viewMode }: Med
     >
       <div className="aspect-square bg-gray-100 flex items-center justify-center">
         {isImage ? (
-          <Image src={file.url} alt={file.name} fill className="object-cover" />
+          <Image src={file.url} alt={file.filename} fill className="object-cover" />
         ) : (
           <File size={48} className="text-gray-400" />
         )}
@@ -118,7 +118,7 @@ function MediaItem({ file, selected, onSelect, onDelete, onEdit, viewMode }: Med
 
       {/* Info */}
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 pt-8">
-        <p className="text-white text-sm truncate">{file.name}</p>
+        <p className="text-white text-sm truncate">{file.filename}</p>
         <p className="text-white/70 text-xs">{formatFileSize(file.size)}</p>
       </div>
     </div>
@@ -267,7 +267,7 @@ export function MediaLibrary({
   };
 
   const filteredFiles = files.filter(file =>
-    file.name.toLowerCase().includes(searchQuery.toLowerCase())
+    file.filename.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -383,7 +383,7 @@ export function MediaLibrary({
                   setSelectedIds([file.id]);
                   setShowDeleteModal(true);
                 }}
-                onEdit={() => {}}
+                onEdit={() => { }}
                 viewMode="grid"
               />
             ))}
@@ -400,7 +400,7 @@ export function MediaLibrary({
                   setSelectedIds([file.id]);
                   setShowDeleteModal(true);
                 }}
-                onEdit={() => {}}
+                onEdit={() => { }}
                 viewMode="list"
               />
             ))}
@@ -478,10 +478,10 @@ export function MediaPicker({ isOpen, onClose, onSelect, multiple = false }: Med
       <MediaLibrary
         files={files}
         folders={[]}
-        onNavigate={() => {}}
-        onUpload={async () => {}}
-        onDelete={async () => {}}
-        onCreateFolder={async () => {}}
+        onNavigate={() => { }}
+        onUpload={async () => { }}
+        onDelete={async () => { }}
+        onCreateFolder={async () => { }}
         onSelect={onSelect}
         selectionMode={multiple ? 'multiple' : 'single'}
       />
