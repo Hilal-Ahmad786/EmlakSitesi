@@ -457,3 +457,13 @@ export interface ApiResponse<T> {
 
 export type PropertyFormData = CreatePropertyInput;
 export type GlobalSeoSettings = GlobalSeo;
+
+export type MediaFile = Media;
+
+export interface MediaFolder {
+  id: string;
+  name: string;
+  path: string;
+  itemCount?: number;
+  createdAt: string;
+}
