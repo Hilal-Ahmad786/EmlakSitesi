@@ -86,9 +86,6 @@ export default function LeadsPage(props: LeadsPageProps) {
                     leads={leads}
                     loading={loading}
                     pagination={pagination}
-                    page={pagination.page}
-                    totalPages={pagination.totalPages}
-                    onPageChange={pagination.onPageChange}
                     onView={(id) => {
                         const lead = leads.find(l => l.id === id);
                         if (lead) setSelectedLead(lead);
