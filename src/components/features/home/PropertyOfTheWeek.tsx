@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { Star, MapPin, Bed, Bath, Square, ChevronRight, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -19,6 +20,9 @@ interface FeaturedProperty {
   featuredUntil: string;
 }
 
+// Fixed end date - 5 days from a fixed point (avoids hydration mismatch)
+const FEATURED_END_DATE = '2026-01-20T00:00:00.000Z';
+
 // Mock featured property
 const mockFeaturedProperty: FeaturedProperty = {
   id: 'featured-1',
@@ -35,7 +39,7 @@ const mockFeaturedProperty: FeaturedProperty = {
     'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
   ],
   description: 'A rare opportunity to own this magnificent waterfront villa with breathtaking Bosphorus views. Features include private dock, infinity pool, and landscaped gardens.',
-  featuredUntil: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+  featuredUntil: FEATURED_END_DATE,
 };
 
 function formatPrice(price: number, currency: string): string {
@@ -60,18 +64,28 @@ interface PropertyOfTheWeekProps {
 }
 
 export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
+  const t = useTranslations('PropertyOfTheWeek');
   const [property] = useState<FeaturedProperty>(mockFeaturedProperty);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(property.featuredUntil));
+  const [isMounted, setIsMounted] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0, minutes: 0 });
+
+  // Set mounted state and initial time on client only (avoids hydration mismatch)
+  useEffect(() => {
+    setIsMounted(true);
+    setTimeRemaining(getTimeRemaining(property.featuredUntil));
+  }, [property.featuredUntil]);
 
   // Update countdown every minute
   useEffect(() => {
+    if (!isMounted) return;
+
     const timer = setInterval(() => {
       setTimeRemaining(getTimeRemaining(property.featuredUntil));
     }, 60000);
 
     return () => clearInterval(timer);
-  }, [property.featuredUntil]);
+  }, [property.featuredUntil, isMounted]);
 
   // Auto-rotate images
   useEffect(() => {
@@ -90,9 +104,9 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
           <div>
             <div className="flex items-center gap-2 text-accent-gold mb-2">
               <Star size={20} className="fill-current" />
-              <span className="font-medium">Featured Property</span>
+              <span className="font-medium">{t('badge')}</span>
             </div>
-            <h2 className="text-3xl font-serif text-primary">Property of the Week</h2>
+            <h2 className="text-3xl font-serif text-primary">{t('title')}</h2>
           </div>
 
           {/* Countdown */}
@@ -101,17 +115,17 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
             <div className="flex items-center gap-3">
               <div className="text-center">
                 <span className="text-2xl font-bold text-primary">{timeRemaining.days}</span>
-                <p className="text-xs text-gray-500">Days</p>
+                <p className="text-xs text-gray-500">{t('countdown.days')}</p>
               </div>
               <span className="text-primary">:</span>
               <div className="text-center">
                 <span className="text-2xl font-bold text-primary">{timeRemaining.hours}</span>
-                <p className="text-xs text-gray-500">Hours</p>
+                <p className="text-xs text-gray-500">{t('countdown.hours')}</p>
               </div>
               <span className="text-primary">:</span>
               <div className="text-center">
                 <span className="text-2xl font-bold text-primary">{timeRemaining.minutes}</span>
-                <p className="text-xs text-gray-500">Mins</p>
+                <p className="text-xs text-gray-500">{t('countdown.mins')}</p>
               </div>
             </div>
           </div>
@@ -141,7 +155,7 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
               {/* Featured Badge */}
               <div className="absolute top-4 left-4 px-4 py-2 bg-accent-gold text-white font-medium rounded-full flex items-center gap-2">
                 <Star size={16} className="fill-current" />
-                Property of the Week
+                {t('title')}
               </div>
 
               {/* Image Indicators */}
@@ -187,12 +201,12 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
                 <div className="flex items-center gap-2">
                   <Bed size={20} className="text-primary" />
                   <span className="font-medium">{property.bedrooms}</span>
-                  <span className="text-gray-500 text-sm">Beds</span>
+                  <span className="text-gray-500 text-sm">{t('features.beds')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Bath size={20} className="text-primary" />
                   <span className="font-medium">{property.bathrooms}</span>
-                  <span className="text-gray-500 text-sm">Baths</span>
+                  <span className="text-gray-500 text-sm">{t('features.baths')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Square size={20} className="text-primary" />
@@ -207,14 +221,14 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
                   href={`/properties/${property.id}`}
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors"
                 >
-                  View Property
+                  {t('viewProperty')}
                   <ChevronRight size={18} />
                 </Link>
                 <Link
                   href="/contact"
                   className="flex-1 flex items-center justify-center px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary/5 transition-colors"
                 >
-                  Schedule Viewing
+                  {t('scheduleViewing')}
                 </Link>
               </div>
             </div>

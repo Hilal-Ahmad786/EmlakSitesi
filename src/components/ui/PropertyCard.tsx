@@ -1,10 +1,11 @@
+'use client';
+
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useCurrency } from '@/context/CurrencyContext';
 import { FavoriteButton } from '@/components/features/tools/FavoriteButton';
 import { CompareButton } from '@/components/features/tools/CompareButton';
-import { Bed, Bath, Ruler, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { Bed, Bath, Ruler, MapPin, ArrowRight } from 'lucide-react';
 
 interface PropertyCardProps {
     property: {
@@ -32,16 +33,21 @@ export function PropertyCard({ property }: PropertyCardProps) {
     return (
         <Link
             href={`/properties/${property.id}`}
-            className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border/50 block"
+            className="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/30 hover:border-accent-gold/30 block"
         >
             {/* Image Container */}
             <div className="relative h-64 overflow-hidden">
                 <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                     style={{ backgroundImage: `url(${property.image})` }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
+                {/* Gold accent line on hover */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-accent-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
+
+                {/* Action buttons */}
                 <div
                     className="absolute top-4 right-4 z-10 flex flex-col gap-2"
                     onClick={(e) => {
@@ -53,57 +59,59 @@ export function PropertyCard({ property }: PropertyCardProps) {
                     <CompareButton propertyId={property.id} />
                 </div>
 
+                {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
-                    <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="bg-primary/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
                         {t(property.type)}
                     </span>
                     {property.isNew && (
-                        <span className="bg-accent-gold text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span className="bg-accent-gold text-white text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
                             {t('new')}
                         </span>
                     )}
                 </div>
 
-                {/* Price Overlay (Mobile/Compact) */}
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-primary font-bold md:hidden">
-                    {formatPrice(priceValue)}
+                {/* Price on image */}
+                <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-serif text-2xl font-medium drop-shadow-lg">
+                        {formatPrice(priceValue)}
+                    </p>
                 </div>
             </div>
 
             {/* Content */}
             <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                    <p className="text-accent-gold text-sm font-medium uppercase tracking-wide">
-                        {property.location}
-                    </p>
-                    <p className="text-xl font-bold text-primary hidden md:block">
-                        {formatPrice(priceValue)}
-                    </p>
-                </div>
+                {/* Location with icon */}
+                <p className="text-accent-gold text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <MapPin size={12} />
+                    {property.location}
+                </p>
 
-                <h3 className="font-serif text-xl text-primary mb-4 line-clamp-2 group-hover:text-accent-gold transition-colors">
+                {/* Title */}
+                <h3 className="font-serif text-xl text-primary mb-4 line-clamp-2 group-hover:text-accent-gold transition-colors duration-300">
                     {property.title}
                 </h3>
 
-                {/* Features */}
-                <div className="flex items-center gap-4 text-text-secondary text-sm mb-6 border-t border-border pt-4">
-                    <div className="flex items-center gap-1">
-                        <Bed size={16} />
+                {/* Features with gold-tinted icons */}
+                <div className="flex items-center gap-6 text-text-secondary text-sm pt-4 border-t border-border/50">
+                    <div className="flex items-center gap-1.5">
+                        <Bed size={16} className="text-accent-gold/70" />
                         <span>{property.beds}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                        <Bath size={16} />
+                    <div className="flex items-center gap-1.5">
+                        <Bath size={16} className="text-accent-gold/70" />
                         <span>{property.baths}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                        <Ruler size={16} />
+                    <div className="flex items-center gap-1.5">
+                        <Ruler size={16} className="text-accent-gold/70" />
                         <span>{property.size} m²</span>
                     </div>
-                </div>
 
-                <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
-                    View Details
-                </Button>
+                    {/* View arrow on hover */}
+                    <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <ArrowRight size={18} className="text-accent-gold" />
+                    </div>
+                </div>
             </div>
         </Link>
     );

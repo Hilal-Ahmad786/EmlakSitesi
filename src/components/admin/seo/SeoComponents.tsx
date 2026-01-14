@@ -910,3 +910,271 @@ export function SitemapSettings({ locale }: { locale: string }) {
     </div>
   );
 }
+
+// ============================================================================
+// ROBOTS.TXT EDITOR COMPONENT
+// ============================================================================
+
+export function RobotsTxtEditor({ locale }: { locale: string }) {
+  const [robotsTxt, setRobotsTxt] = useState(`# robots.txt for Maison d'Orient
+# https://maisondorient.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /_next/
+
+# Sitemaps
+Sitemap: https://maisondorient.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10
+
+# Block specific bots (optional)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+`);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [testResult, setTestResult] = useState<{ url: string; allowed: boolean } | null>(null);
+  const [testUrl, setTestUrl] = useState('');
+
+  const templates = [
+    {
+      name: 'Default (Recommended)',
+      content: `User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+
+Sitemap: https://maisondorient.com/sitemap.xml`,
+    },
+    {
+      name: 'Block All Bots',
+      content: `User-agent: *
+Disallow: /`,
+    },
+    {
+      name: 'Allow All',
+      content: `User-agent: *
+Allow: /
+
+Sitemap: https://maisondorient.com/sitemap.xml`,
+    },
+  ];
+
+  const handleSave = async () => {
+    setSaving(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const handleTest = () => {
+    if (!testUrl.trim()) return;
+    // Simple test logic - check if URL matches any Disallow rule
+    const disallowRules = robotsTxt
+      .split('\n')
+      .filter((line) => line.toLowerCase().startsWith('disallow:'))
+      .map((line) => line.replace(/^disallow:\s*/i, '').trim());
+
+    const isAllowed = !disallowRules.some(
+      (rule) => rule && testUrl.startsWith(rule)
+    );
+    setTestResult({ url: testUrl, allowed: isAllowed });
+  };
+
+  const applyTemplate = (template: typeof templates[0]) => {
+    if (confirm(`Apply the "${template.name}" template? This will replace your current robots.txt content.`)) {
+      setRobotsTxt(template.content);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Robots.txt Editor</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Control how search engine bots crawl your website
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" icon={<ExternalLink size={18} />}>
+            View Live
+          </Button>
+          <Button onClick={handleSave} loading={saving} icon={<Save size={18} />}>
+            {saved ? 'Saved!' : 'Save Changes'}
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Editor */}
+        <div className="lg:col-span-2 space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText size={20} />
+                robots.txt Content
+              </CardTitle>
+              <CardDescription>
+                Edit your robots.txt file directly. Changes will be applied after saving.
+              </CardDescription>
+            </CardHeader>
+            <textarea
+              value={robotsTxt}
+              onChange={(e) => setRobotsTxt(e.target.value)}
+              className="w-full h-96 px-4 py-3 font-mono text-sm bg-gray-900 text-green-400 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+              spellCheck={false}
+            />
+          </Card>
+
+          {/* URL Tester */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Search size={20} />
+                URL Tester
+              </CardTitle>
+              <CardDescription>
+                Test if a specific URL is allowed or blocked by your robots.txt rules
+              </CardDescription>
+            </CardHeader>
+            <div className="flex gap-2">
+              <Input
+                value={testUrl}
+                onChange={(e) => setTestUrl(e.target.value)}
+                placeholder="/admin/dashboard"
+                onKeyDown={(e) => e.key === 'Enter' && handleTest()}
+              />
+              <Button onClick={handleTest}>Test URL</Button>
+            </div>
+            {testResult && (
+              <div
+                className={cn(
+                  'mt-4 p-4 rounded-lg flex items-center gap-3',
+                  testResult.allowed
+                    ? 'bg-green-50 border border-green-200'
+                    : 'bg-red-50 border border-red-200'
+                )}
+              >
+                {testResult.allowed ? (
+                  <CheckCircle2 className="text-green-600" size={24} />
+                ) : (
+                  <AlertCircle className="text-red-600" size={24} />
+                )}
+                <div>
+                  <p
+                    className={cn(
+                      'font-medium',
+                      testResult.allowed ? 'text-green-800' : 'text-red-800'
+                    )}
+                  >
+                    {testResult.allowed ? 'URL is ALLOWED' : 'URL is BLOCKED'}
+                  </p>
+                  <p
+                    className={cn(
+                      'text-sm',
+                      testResult.allowed ? 'text-green-600' : 'text-red-600'
+                    )}
+                  >
+                    {testResult.url}
+                  </p>
+                </div>
+              </div>
+            )}
+          </Card>
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Templates */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Templates</CardTitle>
+              <CardDescription>
+                Apply a pre-configured template
+              </CardDescription>
+            </CardHeader>
+            <div className="space-y-2">
+              {templates.map((template) => (
+                <button
+                  key={template.name}
+                  onClick={() => applyTemplate(template)}
+                  className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-primary/5 transition-colors"
+                >
+                  <p className="font-medium text-gray-900">{template.name}</p>
+                  <p className="text-xs text-gray-500 mt-1 line-clamp-2 font-mono">
+                    {template.content.split('\n')[0]}...
+                  </p>
+                </button>
+              ))}
+            </div>
+          </Card>
+
+          {/* Common Directives */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Common Directives</CardTitle>
+            </CardHeader>
+            <div className="space-y-3 text-sm">
+              <div>
+                <code className="text-primary font-mono">User-agent: *</code>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Applies to all search engines
+                </p>
+              </div>
+              <div>
+                <code className="text-primary font-mono">Allow: /path/</code>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Allow crawling of specified path
+                </p>
+              </div>
+              <div>
+                <code className="text-primary font-mono">Disallow: /path/</code>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Block crawling of specified path
+                </p>
+              </div>
+              <div>
+                <code className="text-primary font-mono">Sitemap: URL</code>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Specify sitemap location
+                </p>
+              </div>
+              <div>
+                <code className="text-primary font-mono">Crawl-delay: 10</code>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Delay between requests (seconds)
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Tips */}
+          <Card className="bg-blue-50 border-blue-200">
+            <div className="flex gap-3">
+              <AlertCircle className="text-blue-600 flex-shrink-0" size={20} />
+              <div>
+                <p className="font-medium text-blue-900">Important</p>
+                <p className="text-sm text-blue-700 mt-1">
+                  Changes to robots.txt may take time to be recognized by search engines.
+                  Use Google Search Console to request re-crawling.
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}

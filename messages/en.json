@@ -25,6 +25,14 @@
             "3": {
                 "title": "Exclusive Penthouses",
                 "subtitle": "Breathtaking views of the Golden Horn"
+            },
+            "4": {
+                "title": "Investment Opportunities",
+                "subtitle": "Prime real estate with high ROI potential"
+            },
+            "5": {
+                "title": "Elite Bosphorus Villas",
+                "subtitle": "Private residences with breathtaking sea views"
             }
         }
     },
@@ -44,6 +52,13 @@
                 "grid": "Grid View",
                 "map": "Map View"
             }
+        },
+        "sort": {
+            "label": "Sort by:",
+            "newest": "Newest",
+            "priceAsc": "Price: Low to High",
+            "priceDesc": "Price: High to Low",
+            "featured": "Featured"
         }
     },
     "FeaturedCollections": {
@@ -67,6 +82,21 @@
             "sale": "For Sale",
             "rent": "For Rent"
         }
+    },
+    "PropertyOfTheWeek": {
+        "badge": "Featured Property",
+        "title": "Property of the Week",
+        "countdown": {
+            "days": "Days",
+            "hours": "Hours",
+            "mins": "Mins"
+        },
+        "features": {
+            "beds": "Beds",
+            "baths": "Baths"
+        },
+        "viewProperty": "View Property",
+        "scheduleViewing": "Schedule Viewing"
     },
     "NeighborhoodSpotlight": {
         "title": "Explore Istanbul's Finest Neighborhoods",
@@ -886,5 +916,39 @@
         "updateAvailable": "Update Available",
         "updateDesc": "A new version is available",
         "updateNow": "Update Now"
+    },
+    "Footer": {
+        "brand": {
+            "description": "Specializing in historic and waterfront properties in Istanbul. We provide exceptional service for international buyers and investors."
+        },
+        "quickLinks": {
+            "title": "Quick Links",
+            "properties": "Properties",
+            "neighborhoods": "Neighborhoods",
+            "services": "Services",
+            "blog": "Blog",
+            "contact": "Contact"
+        },
+        "collections": {
+            "title": "Collections",
+            "yali": "Bosphorus Yali",
+            "historic": "Historic Apartments",
+            "penthouse": "Luxury Penthouses",
+            "investment": "Investment Opportunities"
+        },
+        "contact": {
+            "title": "Contact",
+            "address": "Mesrutiyet Caddesi No: 79A, Beyoglu / ISTANBUL"
+        },
+        "newsletter": {
+            "badge": "Newsletter",
+            "title": "Stay Updated with Exclusive Listings",
+            "subtitle": "Be the first to know about new luxury properties and market insights",
+            "placeholder": "Enter your email",
+            "subscribe": "Subscribe"
+        },
+        "copyright": "All rights reserved.",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
     }
 }

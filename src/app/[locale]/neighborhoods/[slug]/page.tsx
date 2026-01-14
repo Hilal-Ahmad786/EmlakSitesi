@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { PropertyGrid } from '@/components/features/properties/PropertyGrid';
+import { NeighborhoodGuide } from '@/components/features/neighborhoods/NeighborhoodGuide';
 import { MapPin, Coffee, School, TreePine } from 'lucide-react';
 
 // Mock Data
@@ -17,6 +18,46 @@ const neighborhoodData = {
         { icon: MapPin, title: 'Location', desc: 'Prime Bosphorus location' }
     ],
     image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2598&auto=format&fit=crop'
+};
+
+// Neighborhood Guide Data
+const neighborhoodGuideData = {
+    walkabilityScore: 85,
+    transitScore: 78,
+    safetyScore: 92,
+    averagePrice: 15000,
+    priceChange: 12.5,
+    amenities: {
+        schools: [
+            { id: '1', name: 'Robert College', type: 'International School', distance: '1.2 km', rating: 4.9, walkTime: '15 min' },
+            { id: '2', name: 'Boğaziçi University', type: 'University', distance: '0.8 km', rating: 4.8, walkTime: '10 min' },
+        ],
+        restaurants: [
+            { id: '1', name: 'Bebek Balıkçı', type: 'Seafood Restaurant', distance: '200 m', rating: 4.7, walkTime: '3 min' },
+            { id: '2', name: 'Mangerie Bebek', type: 'International Cuisine', distance: '150 m', rating: 4.6, walkTime: '2 min' },
+            { id: '3', name: 'Bebek Kahve', type: 'Café', distance: '100 m', rating: 4.5, walkTime: '1 min' },
+        ],
+        transport: [
+            { id: '1', name: 'Bebek Bus Stop', type: 'Bus Station', distance: '100 m', walkTime: '1 min' },
+            { id: '2', name: 'Bebek Ferry Terminal', type: 'Ferry Pier', distance: '300 m', walkTime: '4 min' },
+        ],
+        parks: [
+            { id: '1', name: 'Bebek Park', type: 'Public Park', distance: '50 m', rating: 4.6, walkTime: '1 min' },
+            { id: '2', name: 'Bebek Sahili', type: 'Waterfront Promenade', distance: '100 m', rating: 4.8, walkTime: '1 min' },
+        ],
+        healthcare: [
+            { id: '1', name: 'Acıbadem Hospital', type: 'Private Hospital', distance: '2.5 km', rating: 4.7 },
+            { id: '2', name: 'Bebek Medical Center', type: 'Clinic', distance: '400 m', walkTime: '5 min' },
+        ],
+        shopping: [
+            { id: '1', name: 'Bebek Shops', type: 'Boutiques', distance: '100 m', walkTime: '1 min' },
+            { id: '2', name: 'Akmerkez Mall', type: 'Shopping Mall', distance: '3 km' },
+        ],
+        fitness: [
+            { id: '1', name: 'Bebek Gym', type: 'Fitness Center', distance: '300 m', rating: 4.4, walkTime: '4 min' },
+            { id: '2', name: 'Bebek Running Track', type: 'Outdoor Fitness', distance: '200 m', walkTime: '3 min' },
+        ],
+    }
 };
 
 export default function NeighborhoodDetailPage({ params }: { params: { slug: string } }) {
@@ -69,6 +110,11 @@ export default function NeighborhoodDetailPage({ params }: { params: { slug: str
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Neighborhood Guide */}
+                <div className="mb-12">
+                    <NeighborhoodGuide neighborhoodName={neighborhoodData.name} data={neighborhoodGuideData} />
                 </div>
 
                 {/* Properties */}

@@ -25,6 +25,14 @@
             "3": {
                 "title": "Özel Teraslı Daireler",
                 "subtitle": "Haliç'in nefes kesen manzarası"
+            },
+            "4": {
+                "title": "Yatırım Fırsatları",
+                "subtitle": "Yüksek getiri potansiyeli ile birinci sınıf gayrimenkul"
+            },
+            "5": {
+                "title": "Seçkin Boğaz Villaları",
+                "subtitle": "Nefes kesen deniz manzaralı özel konutlar"
             }
         }
     },
@@ -45,7 +53,13 @@
                 "map": "Harita Görünümü"
             }
         },
-        "sort": {}
+        "sort": {
+            "label": "Sıralama:",
+            "newest": "En Yeni",
+            "priceAsc": "Fiyat: Artan",
+            "priceDesc": "Fiyat: Azalan",
+            "featured": "Öne Çıkan"
+        }
     },
     "FeaturedCollections": {
         "title": "Özel Koleksiyonlar",
@@ -68,6 +82,21 @@
             "sale": "Satılık",
             "rent": "Kiralık"
         }
+    },
+    "PropertyOfTheWeek": {
+        "badge": "Öne Çıkan Emlak",
+        "title": "Haftanın Mülkü",
+        "countdown": {
+            "days": "Gün",
+            "hours": "Saat",
+            "mins": "Dakika"
+        },
+        "features": {
+            "beds": "Yatak",
+            "baths": "Banyo"
+        },
+        "viewProperty": "Emlakı İncele",
+        "scheduleViewing": "Görüşme Planla"
     },
     "NeighborhoodSpotlight": {
         "title": "İstanbul'un En Seçkin Semtlerini Keşfedin",
@@ -887,5 +916,39 @@
         "updateAvailable": "Güncelleme Mevcut",
         "updateDesc": "Yeni bir sürüm mevcut",
         "updateNow": "Şimdi Güncelle"
+    },
+    "Footer": {
+        "brand": {
+            "description": "İstanbul'un tarihi ve sahil mülklerinde uzmanlaşmış, uluslararası alıcılar ve yatırımcılar için olağanüstü hizmet sunuyoruz."
+        },
+        "quickLinks": {
+            "title": "Hızlı Bağlantılar",
+            "properties": "Emlaklar",
+            "neighborhoods": "Mahalleler",
+            "services": "Hizmetler",
+            "blog": "Blog",
+            "contact": "İletişim"
+        },
+        "collections": {
+            "title": "Koleksiyonlar",
+            "yali": "Boğaz Yalıları",
+            "historic": "Tarihi Daireler",
+            "penthouse": "Lüks Çatı Katları",
+            "investment": "Yatırım Fırsatları"
+        },
+        "contact": {
+            "title": "İletişim",
+            "address": "Meşrutiyet Caddesi No: 79A, Beyoğlu / İSTANBUL"
+        },
+        "newsletter": {
+            "badge": "Bülten",
+            "title": "Özel İlanlardan Haberdar Olun",
+            "subtitle": "Yeni lüks mülkler ve pazar analizleri hakkında ilk siz bilgilenin",
+            "placeholder": "E-posta adresiniz",
+            "subscribe": "Abone Ol"
+        },
+        "copyright": "Tüm hakları saklıdır.",
+        "privacy": "Gizlilik Politikası",
+        "terms": "Kullanım Koşulları"
     }
 }

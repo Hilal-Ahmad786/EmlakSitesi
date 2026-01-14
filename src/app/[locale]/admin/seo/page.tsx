@@ -6,7 +6,8 @@ import { AdminLayout } from '@/components/admin/layout/AdminLayout';
 import {
   GlobalSeoSettings,
   RedirectsManager,
-  SitemapSettings
+  SitemapSettings,
+  RobotsTxtEditor
 } from '@/components/admin/seo/SeoComponents';
 import { Tabs } from '@/components/admin/common';
 interface SeoPageProps {
@@ -67,10 +68,7 @@ export default function SeoPage(props: SeoPageProps) {
         )}
 
         {activeTab === 'robots' && (
-          <div className="p-8 text-center text-gray-500 bg-gray-50 rounded-lg border border-dashed border-gray-200">
-            <p className="text-lg font-medium">Robots.txt Editor</p>
-            <p>Coming soon...</p>
-          </div>
+          <RobotsTxtEditor locale={locale} />
         )}
       </div>
     </AdminLayout>

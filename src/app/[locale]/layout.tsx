@@ -16,6 +16,7 @@ import { CompareBar } from '@/components/features/tools/CompareBar';
 import { WhatsAppButton } from '@/components/features/whatsapp/WhatsAppButton';
 import { NewsletterPopup } from '@/components/features/newsletter/NewsletterPopup';
 import { InstallPrompt, OfflineBanner, UpdatePrompt } from '@/components/pwa/InstallPrompt';
+import { ChatWidget } from '@/components/features/chat/ChatWidget';
 import "../globals.css";
 
 const inter = Inter({
@@ -88,6 +89,8 @@ export default async function RootLayout({
                           <InstallPrompt />
                           <OfflineBanner />
                           <UpdatePrompt />
+                          {/* Live Chat Widget */}
+                          <ChatWidget />
                         </AnalyticsProvider>
                       </RecentlyViewedProvider>
                     </SavedSearchProvider>

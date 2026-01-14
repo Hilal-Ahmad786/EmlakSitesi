@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, forwardRef } from 'react';
+import { AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -12,22 +13,39 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         return (
             <div className="w-full">
                 {label && (
-                    <label className="block text-sm font-medium text-text-primary mb-1">
+                    <label className="block text-sm font-medium text-primary mb-2 tracking-wide">
                         {label}
                     </label>
                 )}
-                <div className="relative">
+                <div className="relative group">
                     {icon && (
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-gold transition-colors duration-300 pointer-events-none">
                             {icon}
                         </div>
                     )}
                     <input
                         type={type}
                         className={cn(
-                            "flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-                            icon && "pl-10",
-                            error && "border-error focus-visible:ring-error",
+                            // Base
+                            "flex h-12 w-full rounded-xl border bg-white px-4 py-3",
+                            "text-sm text-primary placeholder:text-text-muted",
+
+                            // Focus states with gold accent
+                            "focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:border-accent-gold",
+                            "transition-all duration-300",
+
+                            // Border
+                            "border-border hover:border-primary/30",
+
+                            // Disabled
+                            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50",
+
+                            // Icon padding
+                            icon && "pl-12",
+
+                            // Error state
+                            error && "border-error focus:ring-error/20 focus:border-error",
+
                             className
                         )}
                         ref={ref}
@@ -35,7 +53,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                     />
                 </div>
                 {error && (
-                    <p className="mt-1 text-xs text-error">{error}</p>
+                    <p className="mt-2 text-xs text-error flex items-center gap-1.5">
+                        <AlertCircle size={12} />
+                        {error}
+                    </p>
                 )}
             </div>
         );
