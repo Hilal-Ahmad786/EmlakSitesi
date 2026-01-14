@@ -28,6 +28,7 @@
     "react-hook-form": "^7.67.0",
     "react-leaflet": "^5.0.0",
     "sharp": "^0.34.5",
+    "swiper": "^12.0.3",
     "tailwind-merge": "^3.4.0",
     "yet-another-react-lightbox": "^3.25.0",
     "zod": "^4.1.13",

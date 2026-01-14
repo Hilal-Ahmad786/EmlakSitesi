@@ -1,13 +1,34 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { PropertyCard } from '@/components/ui/PropertyCard';
 import { Button } from '@/components/ui/Button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-// Mock Data
-const properties = [
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+interface Property {
+    id: string;
+    title: string;
+    location: string;
+    price: string;
+    image: string;
+    beds: number;
+    baths: number;
+    size: number;
+    type: 'sale' | 'rent';
+    isNew?: boolean;
+    isFeatured?: boolean;
+}
+
+// Fallback properties for when API is not available
+const fallbackProperties: Property[] = [
     {
         id: '1',
         title: '7 Storey Historical Building in Pera',
@@ -17,7 +38,7 @@ const properties = [
         beds: 7,
         baths: 5,
         size: 450,
-        type: 'sale' as const,
+        type: 'sale',
         isNew: true,
         isFeatured: true
     },
@@ -30,7 +51,7 @@ const properties = [
         beds: 12,
         baths: 10,
         size: 800,
-        type: 'sale' as const,
+        type: 'sale',
         isNew: true
     },
     {
@@ -42,7 +63,7 @@ const properties = [
         beds: 3,
         baths: 2,
         size: 140,
-        type: 'sale' as const
+        type: 'sale'
     },
     {
         id: '4',
@@ -53,12 +74,72 @@ const properties = [
         beds: 5,
         baths: 4,
         size: 350,
-        type: 'sale' as const
+        type: 'sale'
+    },
+    {
+        id: '5',
+        title: 'Luxury Penthouse in Bebek',
+        location: 'Bebek, Istanbul',
+        price: '€4,200,000',
+        image: '/images/home/property-5.jpg',
+        beds: 4,
+        baths: 3,
+        size: 280,
+        type: 'sale',
+        isNew: true
+    },
+    {
+        id: '6',
+        title: 'Modern Villa in Etiler',
+        location: 'Etiler, Istanbul',
+        price: '€5,800,000',
+        image: '/images/home/property-6.jpg',
+        beds: 6,
+        baths: 5,
+        size: 520,
+        type: 'sale',
+        isFeatured: true
     }
 ];
 
 export function LatestProperties() {
     const t = useTranslations('LatestProperties');
+    const [properties, setProperties] = useState<Property[]>(fallbackProperties);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchProperties() {
+            try {
+                const response = await fetch('/api/properties?limit=10&sort=newest');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.properties && data.properties.length > 0) {
+                        // Transform API data to match component interface
+                        const transformed = data.properties.map((p: any) => ({
+                            id: p.id,
+                            title: typeof p.title === 'object' ? p.title.en : p.title,
+                            location: `${p.neighborhood}, ${p.city}`,
+                            price: `€${p.price.toLocaleString()}`,
+                            image: p.images?.[0]?.url || '/images/placeholder-property.jpg',
+                            beds: p.bedrooms,
+                            baths: p.bathrooms,
+                            size: p.size,
+                            type: p.listingType === 'RENT' ? 'rent' : 'sale',
+                            isNew: p.isNew,
+                            isFeatured: p.isFeatured
+                        }));
+                        setProperties(transformed);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch properties:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchProperties();
+    }, []);
 
     return (
         <section className="py-20 bg-background">
@@ -79,13 +160,54 @@ export function LatestProperties() {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {properties.map((property) => (
-                        <PropertyCard key={property.id} property={property} />
-                    ))}
+                <div className="relative px-12">
+                    {/* Navigation Buttons */}
+                    <button
+                        className="latest-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg text-primary hover:text-accent-gold hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        aria-label="Previous"
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+                    <button
+                        className="latest-next absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg text-primary hover:text-accent-gold hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        aria-label="Next"
+                    >
+                        <ChevronRight size={24} />
+                    </button>
+
+                    <Swiper
+                        modules={[Navigation, Pagination, Autoplay]}
+                        spaceBetween={32}
+                        slidesPerView={1}
+                        navigation={{
+                            prevEl: '.latest-prev',
+                            nextEl: '.latest-next',
+                        }}
+                        pagination={{
+                            clickable: true,
+                            dynamicBullets: true,
+                        }}
+                        autoplay={{
+                            delay: 6000,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: true,
+                        }}
+                        breakpoints={{
+                            640: { slidesPerView: 1 },
+                            768: { slidesPerView: 2 },
+                            1024: { slidesPerView: 3 },
+                        }}
+                        className="latest-swiper !pb-12"
+                    >
+                        {properties.map((property) => (
+                            <SwiperSlide key={property.id}>
+                                <PropertyCard property={property} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
 
-                <div className="mt-12 text-center md:hidden">
+                <div className="mt-8 text-center md:hidden">
                     <Link href="/properties">
                         <Button variant="outline" className="w-full">
                             {t('viewAll')}

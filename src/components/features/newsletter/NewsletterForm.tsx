@@ -24,22 +24,32 @@ export function NewsletterForm({ variant = 'inline', className }: NewsletterForm
     }
 
     setStatus('loading');
+    setErrorMessage('');
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
-    // Store in localStorage for demo
-    const subscribers = JSON.parse(localStorage.getItem('newsletter_subscribers') || '[]');
-    if (!subscribers.includes(email)) {
-      subscribers.push(email);
-      localStorage.setItem('newsletter_subscribers', JSON.stringify(subscribers));
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to subscribe');
+      }
+
+      setStatus('success');
+      setEmail('');
+
+      // Reset after 3 seconds
+      setTimeout(() => setStatus('idle'), 3000);
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to subscribe. Please try again.');
     }
-
-    setStatus('success');
-    setEmail('');
-
-    // Reset after 3 seconds
-    setTimeout(() => setStatus('idle'), 3000);
   };
 
   if (variant === 'minimal') {

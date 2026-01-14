@@ -64,6 +64,7 @@
     "FeaturedCollections": {
         "title": "Özel Koleksiyonlar",
         "subtitle": "Benzersiz özelliklere göre gayrimenkulleri keşfedin",
+        "properties": "mülk",
         "items": {
             "mansions": "Tarihi Yalılar",
             "galata": "Galata Kulesi Manzaralı",

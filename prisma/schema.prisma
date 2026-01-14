@@ -480,6 +480,32 @@ model Media {
 }
 
 // ============================================================================
+// COLLECTIONS (Curated Property Collections)
+// ============================================================================
+
+model Collection {
+  id              String   @id @default(cuid())
+  title           Json     // { en: string, tr: string }
+  slug            String   @unique
+  description     Json?    // { en: string, tr: string }
+  image           String?
+  link            String   // URL to filter properties
+  propertyCount   Int      @default(0)
+
+  // Display options
+  isActive        Boolean  @default(true)
+  isFeatured      Boolean  @default(false)
+  order           Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([order])
+}
+
+// ============================================================================
 // SETTINGS
 // ============================================================================
 

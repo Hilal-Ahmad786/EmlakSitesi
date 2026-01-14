@@ -23,6 +23,7 @@ import {
   Link2,
   FileSearch,
   BarChart3,
+  LayoutGrid,
 } from 'lucide-react';
 
 interface NavItem {
@@ -48,6 +49,11 @@ const navItems: NavItem[] = [
     label: 'Neighborhoods',
     href: '/admin/neighborhoods',
     icon: <MapPin size={20} />,
+  },
+  {
+    label: 'Collections',
+    href: '/admin/collections',
+    icon: <LayoutGrid size={20} />,
   },
   {
     label: 'Blog',
@@ -132,12 +138,12 @@ export function AdminSidebar({ isOpen, onClose, locale }: AdminSidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-50 h-full w-64 bg-primary-dark text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0',
+          'fixed top-0 left-0 z-50 h-full w-64 bg-primary-dark text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
+        <div className="flex-shrink-0 flex items-center justify-between h-16 px-4 border-b border-white/10">
           <Link href={`/${locale}/admin/dashboard`} className="flex items-center gap-2">
             <div className="w-8 h-8 bg-accent-gold rounded-lg flex items-center justify-center font-bold text-primary-dark">
               M
@@ -228,7 +234,7 @@ export function AdminSidebar({ isOpen, onClose, locale }: AdminSidebarProps) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/10">
+        <div className="flex-shrink-0 p-4 border-t border-white/10">
           <Link
             href={`/${locale}`}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-white/5 hover:text-white transition-colors"

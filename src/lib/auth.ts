@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  // adapter: PrismaAdapter(prisma) as any, // Disabled for dummy mode
+  adapter: PrismaAdapter(prisma) as any,
   session: {
     strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24 hours
@@ -23,32 +23,51 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid credentials');
+          throw new Error('Email and password are required');
         }
 
-        // MOCK AUTHENTICATION
-        // Accept any email/password for demo purposes, or specific one
-        // Simulating delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+          // Find user in database
+          const user = await prisma.user.findUnique({
+            where: { email: String(credentials.email) },
+          });
 
-        const isAdmin = String(credentials.email).includes('admin');
+          if (!user) {
+            throw new Error('No user found with this email');
+          }
 
-        if (isAdmin) {
+          if (user.status !== 'ACTIVE') {
+            throw new Error('Account is deactivated');
+          }
+
+          // Verify password
+          const isValidPassword = await bcrypt.compare(
+            String(credentials.password),
+            user.password
+          );
+
+          if (!isValidPassword) {
+            throw new Error('Invalid password');
+          }
+
+          // Update last login
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { lastLoginAt: new Date() },
+          });
+
           return {
-            id: 'dummy-admin-id',
-            email: String(credentials.email),
-            name: 'Dummy Admin',
-            role: 'SUPER_ADMIN',
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            image: user.avatar,
           };
+        } catch (error) {
+          // Log error for debugging but don't expose details
+          console.error('Auth error:', error);
+          throw error;
         }
-
-        // Default dummy user
-        return {
-          id: 'dummy-user-id',
-          email: String(credentials.email),
-          name: 'Dummy User',
-          role: 'USER',
-        };
       },
     }),
   ],
@@ -65,7 +84,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.id = token.id as string;
         // @ts-ignore
-        session.user.role = token.role as string || 'USER'; // Fallback
+        session.user.role = token.role as string || 'USER';
       }
       return session;
     },

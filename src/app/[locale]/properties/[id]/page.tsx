@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { ImageGallery } from '@/components/features/property-detail/ImageGallery';
 import { PropertyInfo } from '@/components/features/property-detail/PropertyInfo';
-import { AgentContact } from '@/components/features/property-detail/AgentContact';
 import { MortgageCalculator } from '@/components/features/tools/MortgageCalculator';
 import { ROICalculator } from '@/components/features/tools/ROICalculator';
 import { SimilarProperties } from '@/components/features/property-detail/SimilarProperties';
@@ -157,12 +156,6 @@ export default function PropertyDetailPage() {
 
                     {/* Sidebar */}
                     <div className="lg:col-span-1 space-y-6">
-                        {/* Agent Contact */}
-                        <AgentContact
-                            propertyId={property.id}
-                            propertyTitle={property.title}
-                        />
-
                         {/* Calculator Tabs */}
                         <div className="bg-white rounded-lg shadow-sm border border-border overflow-hidden">
                             <div className="flex border-b border-border">

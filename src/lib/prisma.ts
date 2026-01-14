@@ -4,27 +4,31 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// MOCK PRISMA CLIENT FOR DETACHED/BUILD MODE
-// This prevents "PrismaClientInitializationError" during build when DB is not available
-const prismaMock = new Proxy({}, {
-  get: (target, prop) => {
-    // Return a function that returns a promise for any method call (findMany, create, etc.)
-    return new Proxy(() => Promise.resolve([]), {
-      get: (target, prop) => {
-        return () => Promise.resolve([]);
+// Check if we're in a build environment without database
+const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL;
+
+// Create a mock client for build time only
+const createMockClient = () => {
+  return new Proxy({} as PrismaClient, {
+    get: (target, prop) => {
+      if (prop === '$connect' || prop === '$disconnect') {
+        return () => Promise.resolve();
       }
-    });
-  }
-}) as unknown as PrismaClient;
-
-export const prisma = prismaMock;
-
-/* ORIGINAL IMPLEMENTATION - RESTORE WHEN CONNECTING TO REAL DB
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+      return new Proxy(() => Promise.resolve(null), {
+        get: () => () => Promise.resolve([]),
+      });
+    },
   });
+};
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-*/
+// Use real Prisma client in runtime, mock only during build without DB
+export const prisma: PrismaClient = isBuildTime
+  ? createMockClient()
+  : globalForPrisma.prisma ??
+    new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    });
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}

@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { MapPin, Phone, Mail, Clock, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { captureLeadFromForm } from '@/lib/crm';
 
 interface FormData {
     firstName: string;
@@ -83,14 +82,25 @@ export default function ContactPage() {
         setSubmitStatus('idle');
 
         try {
-            await captureLeadFromForm({
-                email: formData.email,
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                phone: formData.phone || undefined,
-                message: `Subject: ${formData.subject}\n\n${formData.message}`,
-                source: 'contact_form',
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    phone: formData.phone || undefined,
+                    subject: formData.subject,
+                    message: formData.message,
+                    source: 'contact_form',
+                }),
             });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit form');
+            }
 
             setSubmitStatus('success');
             // Reset form

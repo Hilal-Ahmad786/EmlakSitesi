@@ -64,6 +64,7 @@
     "FeaturedCollections": {
         "title": "Curated Collections",
         "subtitle": "Discover properties by unique characteristics",
+        "properties": "properties",
         "items": {
             "mansions": "Historic Yalı Mansions",
             "galata": "Galata Tower View",

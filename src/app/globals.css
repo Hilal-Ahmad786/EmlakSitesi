@@ -150,3 +150,42 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
 }
+
+/* Swiper Custom Styles */
+.swiper {
+  padding-bottom: 48px !important;
+}
+
+.swiper-pagination {
+  bottom: 0 !important;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: var(--color-accent-gold);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+}
+
+/* Collection Swiper specific styles */
+.collections-swiper .swiper-slide {
+  height: auto;
+}
+
+/* Latest Properties Swiper specific styles */
+.latest-swiper .swiper-slide {
+  height: auto;
+}
