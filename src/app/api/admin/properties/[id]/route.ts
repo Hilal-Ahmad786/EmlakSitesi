@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
-
-// Force update check
+import { rateLimit, getClientIdentifier, createRateLimitResponse } from '@/lib/rateLimit';
 
 // GET /api/admin/properties/[id] - Get a single property
 export async function GET(
@@ -11,6 +10,13 @@ export async function GET(
 ) {
     const params = await props.params;
     try {
+        // Apply rate limiting
+        const identifier = getClientIdentifier(request);
+        const rateLimitResult = rateLimit(identifier, '/api/admin');
+        if (!rateLimitResult.success) {
+            return createRateLimitResponse(rateLimitResult);
+        }
+
         const session = await auth();
         if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -46,6 +52,13 @@ export async function PATCH(
 ) {
     const params = await props.params;
     try {
+        // Apply rate limiting
+        const identifier = getClientIdentifier(request);
+        const rateLimitResult = rateLimit(identifier, '/api/admin');
+        if (!rateLimitResult.success) {
+            return createRateLimitResponse(rateLimitResult);
+        }
+
         const session = await auth();
         if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -143,6 +156,13 @@ export async function DELETE(
 ) {
     const params = await props.params;
     try {
+        // Apply rate limiting
+        const identifier = getClientIdentifier(request);
+        const rateLimitResult = rateLimit(identifier, '/api/admin');
+        if (!rateLimitResult.success) {
+            return createRateLimitResponse(rateLimitResult);
+        }
+
         const session = await auth();
         if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

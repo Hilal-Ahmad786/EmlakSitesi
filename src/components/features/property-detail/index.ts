@@ -1,0 +1,10 @@
+// Barrel exports for property-detail components
+export { AgentContact } from './AgentContact';
+export { DocumentRequest } from './DocumentRequest';
+export { ImageGallery } from './ImageGallery';
+export { PrintView } from './PrintView';
+export { PropertyInfo } from './PropertyInfo';
+export { PropertyVideo } from './PropertyVideo';
+export { ShareButtons } from './ShareButtons';
+export { SimilarProperties } from './SimilarProperties';
+export { VirtualTourViewer } from './VirtualTourViewer';

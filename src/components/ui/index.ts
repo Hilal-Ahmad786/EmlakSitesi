@@ -1,0 +1,9 @@
+// Barrel exports for UI components
+export { Button } from './Button';
+export { ErrorBoundary } from './ErrorBoundary';
+export { ImageModal } from './ImageModal';
+export { Input } from './Input';
+export { Logo } from './Logo';
+export { OptimizedImage } from './OptimizedImage';
+export { PropertyCard } from './PropertyCard';
+export { Select } from './Select';

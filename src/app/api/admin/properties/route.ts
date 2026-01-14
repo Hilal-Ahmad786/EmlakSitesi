@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
+import { rateLimit, getClientIdentifier, getRateLimitHeaders, createRateLimitResponse } from '@/lib/rateLimit';
 
 // GET /api/admin/properties - List all properties
 export async function GET(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const identifier = getClientIdentifier(request);
+    const rateLimitResult = rateLimit(identifier, '/api/admin');
+    if (!rateLimitResult.success) {
+      return createRateLimitResponse(rateLimitResult);
+    }
+
     const session = await auth();
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -68,6 +76,13 @@ export async function GET(request: NextRequest) {
 // POST /api/admin/properties - Create a new property
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const identifier = getClientIdentifier(request);
+    const rateLimitResult = rateLimit(identifier, '/api/admin');
+    if (!rateLimitResult.success) {
+      return createRateLimitResponse(rateLimitResult);
+    }
+
     const session = await auth();
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

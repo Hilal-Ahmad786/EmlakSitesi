@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -10,7 +11,38 @@ import { cn } from '@/lib/utils';
 
 export function SearchBar() {
     const t = useTranslations('Search');
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState<'buy' | 'rent'>('buy');
+    const [location, setLocation] = useState('');
+    const [propertyType, setPropertyType] = useState('');
+    const [priceRange, setPriceRange] = useState('');
+
+    const handleSearch = () => {
+        const params = new URLSearchParams();
+
+        // Add status based on tab
+        params.append('status', activeTab === 'buy' ? 'sale' : 'rent');
+
+        // Add filters if selected
+        if (location.trim()) {
+            params.append('location', location.trim());
+        }
+        if (propertyType) {
+            params.append('type', propertyType);
+        }
+        if (priceRange) {
+            params.append('priceRange', priceRange);
+        }
+
+        // Navigate to properties page with filters
+        router.push(`/properties?${params.toString()}`);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
     return (
         <div className="relative -mt-8 z-30 container mx-auto px-4">
@@ -49,12 +81,17 @@ export function SearchBar() {
                         <Input
                             placeholder={t('placeholder')}
                             label={t('filters.location')}
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
 
                     <div className="md:col-span-1">
                         <Select
                             label={t('filters.type')}
+                            value={propertyType}
+                            onChange={(e) => setPropertyType(e.target.value)}
                             options={[
                                 { value: '', label: 'All Types' },
                                 { value: 'apartment', label: 'Apartment' },
@@ -67,6 +104,8 @@ export function SearchBar() {
                     <div className="md:col-span-1">
                         <Select
                             label={t('filters.price')}
+                            value={priceRange}
+                            onChange={(e) => setPriceRange(e.target.value)}
                             options={[
                                 { value: '', label: 'Any Price' },
                                 { value: '0-500000', label: 'Up to €500k' },
@@ -77,7 +116,7 @@ export function SearchBar() {
                     </div>
 
                     <div className="md:col-span-1">
-                        <Button className="w-full h-10 gap-2">
+                        <Button onClick={handleSearch} className="w-full h-10 gap-2">
                             <Search size={18} />
                             {t('filters.search')}
                         </Button>

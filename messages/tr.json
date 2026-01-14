@@ -123,7 +123,15 @@
             "email": "E-posta",
             "phone": "Telefon",
             "message": "Mesajınız",
-            "send": "Mesaj Gönder"
+            "send": "Mesaj Gönder",
+            "sending": "Gönderiliyor...",
+            "success": "Mesajınız gönderildi. En kısa sürede size ulaşacağız.",
+            "error": "Mesaj gönderilemedi. Lütfen tekrar deneyin.",
+            "errors": {
+                "nameRequired": "Ad zorunludur",
+                "emailRequired": "E-posta zorunludur",
+                "emailInvalid": "Lütfen geçerli bir e-posta girin"
+            }
         },
         "specs": {
             "bedrooms": "Yatak Odası",
@@ -195,13 +203,29 @@
             "hours": "Çalışma Saatleri"
         },
         "form": {
-            "name": "Ad Soyad",
+            "firstName": "Ad",
+            "lastName": "Soyad",
             "email": "E-posta Adresi",
             "phone": "Telefon Numarası",
             "subject": "Konu",
             "message": "Mesajınız",
             "send": "Mesaj Gönder",
-            "success": "Mesajınız başarıyla gönderildi!"
+            "sending": "Gönderiliyor...",
+            "errors": {
+                "firstNameRequired": "Ad zorunludur",
+                "lastNameRequired": "Soyad zorunludur",
+                "emailRequired": "E-posta zorunludur",
+                "emailInvalid": "Lütfen geçerli bir e-posta adresi girin",
+                "messageRequired": "Mesaj zorunludur"
+            },
+            "success": {
+                "title": "Mesaj Gönderildi!",
+                "message": "Bizimle iletişime geçtiğiniz için teşekkürler. En kısa sürede size dönüş yapacağız."
+            },
+            "error": {
+                "title": "Bir hata oluştu",
+                "message": "Lütfen daha sonra tekrar deneyin veya doğrudan bizimle iletişime geçin."
+            }
         }
     },
     "Static": {
@@ -274,5 +298,594 @@
     "Common": {
         "loading": "Yükleniyor...",
         "error": "Bir hata oluştu"
+    },
+    "Dashboard": {
+        "title": "Panelim",
+        "welcome": "Tekrar hoş geldiniz, {name}",
+        "welcomeDefault": "Tekrar hoş geldiniz",
+        "overview": "İşte aktivite özetiniz",
+        "nav": {
+            "overview": "Genel Bakış",
+            "favorites": "Favorilerim",
+            "searches": "Kayıtlı Aramalar",
+            "alerts": "Emlak Uyarıları",
+            "appointments": "Randevular"
+        },
+        "stats": {
+            "favorites": "Kaydedilen Favoriler",
+            "searches": "Kayıtlı Aramalar",
+            "alerts": "Aktif Uyarılar",
+            "appointments": "Randevular"
+        },
+        "quickActions": {
+            "title": "Hızlı İşlemler",
+            "browse": "Emlakları İncele",
+            "search": "Emlak Ara",
+            "compare": "Emlakları Karşılaştır",
+            "contact": "Bize Ulaşın"
+        },
+        "recentlyViewed": {
+            "title": "Son Görüntülenenler",
+            "empty": "Henüz görüntülenen emlak yok",
+            "browseNow": "Şimdi İncele",
+            "viewAll": "Tümünü Gör"
+        },
+        "favorites": {
+            "title": "Favorilerim",
+            "subtitle": "Daha sonra için kaydettiğiniz emlaklar",
+            "empty": "Henüz emlak kaydetmediniz",
+            "emptyDesc": "Emlakları kaydetmek için kalp simgesine tıklayın",
+            "browse": "Emlakları İncele",
+            "removeConfirm": "Favorilerden kaldırılsın mı?"
+        },
+        "searches": {
+            "title": "Kayıtlı Aramalar",
+            "subtitle": "Kaydettiğiniz arama kriterleri",
+            "empty": "Henüz kayıtlı arama yok",
+            "emptyDesc": "Emlakları hızlı bulmak için arama kriterlerinizi kaydedin",
+            "startSearch": "Aramaya Başla",
+            "delete": "Sil",
+            "run": "Aramayı Çalıştır",
+            "created": "{date} tarihinde oluşturuldu",
+            "filters": "{count} filtre"
+        },
+        "alerts": {
+            "title": "Emlak Uyarıları",
+            "subtitle": "Yeni emlaklar hakkında bildirim alın",
+            "empty": "Henüz uyarı kurulmadı",
+            "emptyDesc": "Kriterlerinize uyan yeni emlaklar için uyarı oluşturun",
+            "createFirst": "İlk Uyarıyı Oluştur",
+            "createNew": "Uyarı Oluştur"
+        },
+        "appointments": {
+            "title": "Randevularım",
+            "subtitle": "Planlanmış emlak gezileriniz",
+            "empty": "Planlanmış randevu yok",
+            "emptyDesc": "Emlakları yerinde görmek için bir gezi planlayın",
+            "browse": "Emlakları İncele",
+            "upcoming": "Yaklaşan",
+            "past": "Geçmiş",
+            "cancel": "İptal Et",
+            "reschedule": "Yeniden Planla",
+            "status": {
+                "pending": "Beklemede",
+                "confirmed": "Onaylandı",
+                "cancelled": "İptal Edildi",
+                "completed": "Tamamlandı"
+            }
+        }
+    },
+    "Alerts": {
+        "title": "Emlak Uyarıları",
+        "createTitle": "Yeni Uyarı Oluştur",
+        "editTitle": "Uyarıyı Düzenle",
+        "name": "Uyarı Adı",
+        "namePlaceholder": "örn. Boğaz Manzaralı Daireler",
+        "location": "Konum",
+        "locationPlaceholder": "Konum seçin",
+        "propertyType": "Emlak Tipi",
+        "typePlaceholder": "Tip seçin",
+        "minPrice": "Min Fiyat",
+        "maxPrice": "Max Fiyat",
+        "bedrooms": "Min Yatak Odası",
+        "frequency": "Bildirim Sıklığı",
+        "frequencies": {
+            "instant": "Anında",
+            "daily": "Günlük Özet",
+            "weekly": "Haftalık Özet"
+        },
+        "active": "Aktif",
+        "inactive": "Pasif",
+        "save": "Uyarıyı Kaydet",
+        "cancel": "İptal",
+        "delete": "Uyarıyı Sil",
+        "deleteConfirm": "Bu uyarıyı silmek istediğinizden emin misiniz?",
+        "toggleOn": "Uyarı etkinleştirildi",
+        "toggleOff": "Uyarı devre dışı bırakıldı",
+        "lastTriggered": "Son tetiklenme: {date}",
+        "neverTriggered": "Hiç tetiklenmedi",
+        "matchingProperties": "{count} eşleşen emlak"
+    },
+    "Reviews": {
+        "title": "Yorumlar",
+        "noReviews": "Henüz Yorum Yok",
+        "beFirst": "İlk yorumu yapan siz olun",
+        "basedOn": "{count} yoruma göre",
+        "showingRating": "{rating} yıldızlı yorumlar gösteriliyor ({count})",
+        "showingAll": "Tüm {count} yorum gösteriliyor",
+        "sortBy": "Sırala:",
+        "mostRecent": "En Yeni",
+        "highestRating": "En Yüksek Puan",
+        "mostHelpful": "En Faydalı",
+        "showMore": "{count} yorum daha göster",
+        "verified": "Doğrulanmış",
+        "helpful": "{count} kişi bunu faydalı buldu",
+        "writeReview": "Yorum Yaz",
+        "yourRating": "Puanınız",
+        "reviewTitle": "Yorum Başlığı",
+        "reviewTitlePlaceholder": "Deneyiminizi özetleyin",
+        "reviewContent": "Yorumunuz",
+        "reviewContentPlaceholder": "Bu emlakla ilgili deneyiminizi paylaşın...",
+        "submit": "Yorumu Gönder",
+        "thankYou": "Yorumunuz için teşekkürler!"
+    },
+    "Appointment": {
+        "title": "Gezi Randevusu Al",
+        "subtitle": "Bu emlağı ziyaret etmek için randevu alın",
+        "selectDate": "Tarih Seçin",
+        "selectTime": "Saat Seçin",
+        "yourDetails": "Bilgileriniz",
+        "name": "Ad Soyad",
+        "email": "E-posta Adresi",
+        "phone": "Telefon Numarası",
+        "notes": "Ek Notlar",
+        "notesPlaceholder": "Özel sorularınız veya istekleriniz?",
+        "confirm": "Randevuyu Onayla",
+        "back": "Geri",
+        "next": "İleri",
+        "step": "Adım {current} / {total}",
+        "available": "Müsait",
+        "unavailable": "Dolu",
+        "morning": "Sabah",
+        "afternoon": "Öğleden Sonra",
+        "evening": "Akşam",
+        "confirmation": {
+            "title": "Randevu Onaylandı!",
+            "message": "Geziniz planlandı. E-postanıza onay göndereceğiz.",
+            "property": "Emlak",
+            "date": "Tarih",
+            "time": "Saat",
+            "close": "Kapat",
+            "addToCalendar": "Takvime Ekle"
+        },
+        "errors": {
+            "selectDate": "Lütfen bir tarih seçin",
+            "selectTime": "Lütfen bir saat seçin",
+            "fillDetails": "Lütfen tüm zorunlu alanları doldurun"
+        }
+    },
+    "Chat": {
+        "online": "Çevrimiçi",
+        "preChatTitle": "Sohbet Başlat",
+        "preChatSubtitle": "Size mükemmel emlağı bulmanızda yardımcı olmak için buradayız",
+        "name": "Adınız",
+        "email": "E-postanız",
+        "startChat": "Sohbeti Başlat",
+        "or": "veya",
+        "chatOnWhatsApp": "WhatsApp'ta Yazın",
+        "typePlaceholder": "Mesajınızı yazın...",
+        "welcomeMessage": "Hoş geldiniz, {name}! Size bugün nasıl yardımcı olabiliriz?",
+        "initialMessage": "Emlaklar hakkındaki sorularınızda size yardımcı olmak için buradayım. Ne öğrenmek istersiniz?",
+        "defaultResponse": "Mesajınız için teşekkürler. Temsilcilerimizden biri en kısa sürede size dönecektir. Başka bir konuda yardımcı olabilir miyim?",
+        "priceResponse": "Fiyatlandırma hakkında memnuniyetle bilgi verebilirim. Hangi emlakla ilgilendiğinizi veya bütçe aralığınızı söyleyebilir misiniz?",
+        "viewingResponse": "Harika! Bir gezi planlamanıza yardımcı olabilirim. Hangi emlağı ziyaret etmek istersiniz ve hangi tarihler size uygun?",
+        "agentResponse": "Sizi emlak uzmanlarımızdan biriyle bağlayacağım. Mesai saatlerinde genellikle birkaç dakika içinde yanıt verirler.",
+        "financingResponse": "Banka ortaklıkları ve taksit planları dahil çeşitli finansman seçenekleri sunuyoruz. Daha fazla detay vermemi ister misiniz?",
+        "whatsappMessage": "Merhaba, emlakleriniz hakkında bilgi almak istiyorum."
+    },
+    "Neighborhood": {
+        "guideTitle": "{name} Semt Rehberi",
+        "guideSubtitle": "Bu bölge hakkında bilmeniz gereken her şey",
+        "walkability": "Yürünebilirlik Skoru",
+        "walkabilityDesc": "Yürüyerek günlük işler",
+        "transit": "Ulaşım Skoru",
+        "transitDesc": "Toplu taşıma erişimi",
+        "safety": "Güvenlik Skoru",
+        "safetyDesc": "Yerel istatistiklere göre",
+        "marketStats": "Emlak Piyasası",
+        "avgPrice": "Ortalama Fiyat",
+        "perSqm": "m² başına",
+        "priceChange": "Fiyat Değişimi",
+        "yearOverYear": "Yıllık",
+        "nearbyAmenities": "Yakındaki Olanaklar",
+        "lifestyle": "Yaşam Tarzı & Atmosfer",
+        "lifestyleDesc": "Tarihi cazibe ve modern konforu mükemmel şekilde harmanlayan canlı bir mahalle. Yerel kafeler, butik dükkanlar ve kültürel mekanlara kolay erişimin tadını çıkarın.",
+        "categories": {
+            "schools": "Okullar & Eğitim",
+            "restaurants": "Restoranlar & Yemek",
+            "transport": "Toplu Taşıma",
+            "parks": "Parklar & Rekreasyon",
+            "healthcare": "Sağlık Hizmetleri",
+            "shopping": "Alışveriş",
+            "fitness": "Spor & Fitness"
+        },
+        "amenityCount": "{count} yakında",
+        "noAmenities": "Bu kategoride olanak bulunamadı"
+    },
+    "ROI": {
+        "title": "Yatırım Getiri Hesaplayıcı",
+        "subtitle": "Potansiyel yatırım getirinizi hesaplayın",
+        "purchasePrice": "Satın Alma Fiyatı",
+        "downPayment": "Peşinat",
+        "downPaymentPercent": "Satın alma fiyatının %{percent}'i",
+        "closingCosts": "Kapanış Maliyetleri",
+        "monthlyRent": "Beklenen Aylık Kira",
+        "annualAppreciation": "Yıllık Değer Artışı",
+        "annualExpenses": "Yıllık Giderler",
+        "expenses": {
+            "propertyTax": "Emlak Vergisi",
+            "insurance": "Sigorta",
+            "maintenance": "Bakım",
+            "management": "Mülk Yönetimi",
+            "vacancy": "Boşluk Rezervi"
+        },
+        "results": {
+            "title": "Yatırım Analizi",
+            "cashOnCash": "Nakit Getiri Oranı",
+            "capRate": "Kapitalizasyon Oranı",
+            "monthlyFlow": "Aylık Nakit Akışı",
+            "annualFlow": "Yıllık Nakit Akışı",
+            "totalInvestment": "Toplam Nakit Yatırım",
+            "netOperatingIncome": "Net İşletme Geliri"
+        },
+        "projection": {
+            "title": "5 Yıllık Projeksiyon",
+            "year": "Yıl",
+            "propertyValue": "Emlak Değeri",
+            "equity": "Öz Sermaye",
+            "cashFlow": "Nakit Akışı",
+            "totalReturn": "Toplam Getiri"
+        },
+        "tips": {
+            "title": "Yatırım İpuçları",
+            "tip1": "İyi bir nakit getiri oranı genellikle %8-12 arasındadır",
+            "tip2": "Konut emlakları için %4-10 kapitalizasyon oranı yaygındır",
+            "tip3": "Değer artışı için konumun büyüme potansiyelini değerlendirin"
+        }
+    },
+    "VirtualTour": {
+        "title": "Sanal Tur",
+        "start": "Sanal Turu Başlat",
+        "fullscreen": "Tam Ekran",
+        "exitFullscreen": "Tam Ekrandan Çık",
+        "loading": "Sanal tur yükleniyor...",
+        "notSupported": "Tarayıcınızda sanal turlar desteklenmiyor",
+        "instructions": "Etrafı görmek için fareyi kullanın. Gezinmek için tıklayıp sürükleyin."
+    },
+    "DocumentRequest": {
+        "title": "Belge Talep Et",
+        "subtitle": "Almak istediğiniz belgeleri seçin",
+        "documents": {
+            "floorPlan": "Kat Planı",
+            "titleDeed": "Tapu Örneği",
+            "energyCert": "Enerji Kimlik Belgesi",
+            "buildingPermit": "Yapı Ruhsatı",
+            "taxRecord": "Emlak Vergisi Kaydı",
+            "photos": "Yüksek Çözünürlüklü Fotoğraflar"
+        },
+        "contactMethod": "Tercih Edilen İletişim Yöntemi",
+        "methods": {
+            "email": "E-posta",
+            "phone": "Telefon",
+            "whatsapp": "WhatsApp"
+        },
+        "submit": "Belge Talep Et",
+        "success": "Talebiniz alındı. Belgeleri en kısa sürede göndereceğiz.",
+        "selectAtLeast": "Lütfen en az bir belge seçin"
+    },
+    "Share": {
+        "title": "Emlağı Paylaş",
+        "shareVia": "Paylaş",
+        "copyLink": "Linki Kopyala",
+        "copied": "Link kopyalandı!",
+        "qrCode": "QR Kod",
+        "qrCodeDesc": "Emlağı görüntülemek için tarayın",
+        "downloadQR": "QR İndir",
+        "emailSubject": "Bu emlağa bir göz atın: {title}",
+        "emailBody": "Bu emlağı ilginizi çekebileceğini düşündüm:\n\n{title}\n{price}\n\n{url}",
+        "whatsappText": "Bu harika emlağa bir göz atın: {title} - {price}\n{url}",
+        "twitterText": "Harika bir emlak buldum! {title} {url}",
+        "shareSuccess": "Başarıyla paylaşıldı!"
+    },
+    "Print": {
+        "title": "Emlak Detaylarını Yazdır",
+        "print": "Yazdır",
+        "propertyDetails": "Emlak Detayları",
+        "features": "Özellikler & Olanaklar",
+        "location": "Konum",
+        "contactInfo": "İletişim Bilgileri",
+        "scanQR": "Çevrimiçi görüntülemek için tarayın",
+        "generatedOn": "{date} tarihinde oluşturuldu",
+        "disclaimer": "Bilgilerin doğru olduğuna inanılmaktadır ancak garanti edilmez. Karar vermeden önce tüm detayları doğrulayın."
+    },
+    "Comparison": {
+        "title": "Emlak Karşılaştırma",
+        "subtitle": "{count} emlağı yan yana karşılaştırın",
+        "noProperties": "Karşılaştırılacak Emlak Yok",
+        "noPropertiesDesc": "Yan yana görmek için karşılaştırma listesine emlak ekleyin",
+        "browseProperties": "Emlakları İncele",
+        "removeProperty": "Kaldır",
+        "addAnother": "Başka Ekle",
+        "sections": {
+            "basicInfo": "Temel Bilgiler",
+            "specifications": "Özellikler",
+            "features": "Özellikler & Olanaklar",
+            "location": "Konum"
+        },
+        "fields": {
+            "price": "Fiyat",
+            "pricePerSqm": "m² Fiyatı",
+            "type": "Tip",
+            "status": "Durum",
+            "bedrooms": "Yatak Odası",
+            "bathrooms": "Banyo",
+            "size": "Alan",
+            "yearBuilt": "Yapım Yılı",
+            "parking": "Otopark",
+            "neighborhood": "Mahalle",
+            "address": "Adres"
+        },
+        "bestValue": "En İyi Değer",
+        "largest": "En Büyük",
+        "newest": "En Yeni",
+        "export": "Karşılaştırmayı Dışa Aktar",
+        "share": "Karşılaştırmayı Paylaş"
+    },
+    "SearchAutocomplete": {
+        "placeholder": "Emlak, mahalle ara...",
+        "recentSearches": "Son Aramalar",
+        "clearRecent": "Temizle",
+        "suggestions": "Öneriler",
+        "properties": "Emlaklar",
+        "neighborhoods": "Mahalleler",
+        "noResults": "Sonuç bulunamadı",
+        "tryDifferent": "Farklı anahtar kelimeler deneyin",
+        "searching": "Aranıyor..."
+    },
+    "AdvancedFilters": {
+        "title": "Gelişmiş Filtreler",
+        "apply": "Filtreleri Uygula",
+        "reset": "Tümünü Sıfırla",
+        "saveSearch": "Bu Aramayı Kaydet",
+        "searchName": "Arama Adı",
+        "searchNamePlaceholder": "örn. Sahil Villaları",
+        "save": "Kaydet",
+        "sections": {
+            "priceRange": "Fiyat Aralığı",
+            "propertyDetails": "Emlak Detayları",
+            "features": "Özellikler & Olanaklar",
+            "more": "Diğer Seçenekler"
+        },
+        "quickFilters": {
+            "title": "Hızlı Filtreler",
+            "luxury": "Lüks",
+            "newBuilding": "Yeni Bina",
+            "seaView": "Deniz Manzarası",
+            "investment": "Yatırım"
+        },
+        "min": "Min",
+        "max": "Max",
+        "any": "Hepsi",
+        "yearBuilt": "Yapım Yılı",
+        "from": "Başlangıç",
+        "to": "Bitiş",
+        "activeFilters": "{count} aktif filtre"
+    },
+    "Admin": {
+        "analytics": {
+            "title": "Analiz Paneli",
+            "overview": "Genel Bakış",
+            "visitors": "Ziyaretçiler",
+            "leads": "Müşteri Adayları",
+            "conversions": "Dönüşümler",
+            "revenue": "Gelir",
+            "topProperties": "En Çok İlgi Gören Emlaklar",
+            "trafficSources": "Trafik Kaynakları",
+            "conversionFunnel": "Dönüşüm Hunisi",
+            "export": "Veriyi Dışa Aktar"
+        },
+        "leads": {
+            "title": "Müşteri Adayı Yönetimi",
+            "pipeline": "Müşteri Adayı Hattı",
+            "new": "Yeni",
+            "contacted": "İletişime Geçildi",
+            "viewing": "Gezi",
+            "negotiating": "Müzakere",
+            "closed": "Kapandı",
+            "timeline": "Aktivite Zaman Çizelgesi"
+        },
+        "email": {
+            "title": "E-posta Şablonları",
+            "newTemplate": "Yeni Şablon",
+            "editTemplate": "Şablonu Düzenle",
+            "preview": "Önizle",
+            "send": "E-posta Gönder",
+            "variables": "Kullanılabilir Değişkenler"
+        },
+        "bulk": {
+            "title": "Toplu İşlemler",
+            "selected": "{count} öğe seçildi",
+            "publish": "Yayınla",
+            "unpublish": "Yayından Kaldır",
+            "delete": "Sil",
+            "updatePrice": "Fiyat Güncelle",
+            "assignAgent": "Temsilci Ata"
+        },
+        "logs": {
+            "title": "Aktivite Kayıtları",
+            "action": "İşlem",
+            "entity": "Varlık",
+            "user": "Kullanıcı",
+            "timestamp": "Zaman",
+            "details": "Detaylar"
+        },
+        "roles": {
+            "title": "Rol Yönetimi",
+            "permissions": "İzinler",
+            "createRole": "Rol Oluştur",
+            "editRole": "Rolü Düzenle",
+            "deleteRole": "Rolü Sil"
+        }
+    },
+    "Newsletter": {
+        "title": "Bülten",
+        "subscribe": "Abone Ol",
+        "subscribeTitle": "Güncel Kalın",
+        "subscribeDesc": "En son emlak ilanlarını ve piyasa analizlerini alın",
+        "emailPlaceholder": "E-postanızı girin",
+        "preferences": {
+            "title": "İlgi alanlarınız neler?",
+            "newListings": "Yeni Emlak İlanları",
+            "priceDrops": "Fiyat Düşüşü Uyarıları",
+            "marketReports": "Piyasa Raporları & Analizler"
+        },
+        "success": "Abone olduğunuz için teşekkürler!",
+        "successDesc": "İlk bülteninizi yakında alacaksınız."
+    },
+    "PropertyOfWeek": {
+        "title": "Haftanın Emlağı",
+        "featured": "Öne Çıkan Emlak",
+        "viewProperty": "Emlağı Görüntüle",
+        "scheduleViewing": "Gezi Planla",
+        "countdown": {
+            "days": "Gün",
+            "hours": "Saat",
+            "mins": "Dk"
+        }
+    },
+    "PriceDrop": {
+        "title": "Fiyat Düştü",
+        "reducedBy": "Fiyat %{percent} Düştü!",
+        "save": "{amount} Tasarruf Edin",
+        "getAlerts": "Fiyat Uyarısı Al",
+        "alertSet": "Uyarı Ayarlandı"
+    },
+    "MarketReports": {
+        "title": "Piyasa Raporları",
+        "subtitle": "Kapsamlı piyasa analizlerimizle bilgi sahibi olun",
+        "filters": {
+            "all": "Tüm Raporlar",
+            "quarterly": "Çeyreklik Rapor",
+            "annual": "Yıllık Rapor",
+            "neighborhood": "Semt Rehberi",
+            "special": "Özel Rapor"
+        },
+        "download": "Raporu İndir",
+        "subscribeCTA": "Şimdi Abone Ol",
+        "subscribeTitle": "Raporları E-postanıza Alın"
+    },
+    "Referral": {
+        "title": "Referans Programı",
+        "subtitle": "Arkadaşlarınızı Davet Edin, Ödül Kazanın",
+        "description": "Lüks emlak deneyimini paylaşın ve ödüller kazanın",
+        "yourCode": "Referans Kodunuz",
+        "shareLink": "Linkinizi Paylaşın",
+        "inviteByEmail": "E-posta ile Davet Et",
+        "sendInvite": "Davet Gönder",
+        "inviteSent": "Davet başarıyla gönderildi!",
+        "stats": {
+            "total": "Toplam Referanslar",
+            "successful": "Başarılı Referanslar",
+            "pending": "Beklemede",
+            "rewards": "Toplam Ödüller"
+        },
+        "tiers": {
+            "title": "Ödül Seviyeleri",
+            "achieved": "Kazanıldı",
+            "moreToReach": "{tier} seviyesine ulaşmak için {count} referans daha"
+        },
+        "terms": {
+            "title": "Program Koşulları",
+            "item1": "Ödüller başarılı emlak satışından sonra hesaba aktarılır",
+            "item2": "Referans yeni müşteri olmalıdır",
+            "item3": "Ödüller hizmet kredisi olarak kullanılabilir",
+            "item4": "Program koşulları değişebilir"
+        }
+    },
+    "WhatsApp": {
+        "chatWithUs": "Bize yazın",
+        "online": "Çevrimiçi",
+        "send": "Gönder",
+        "typePlaceholder": "Mesajınızı yazın...",
+        "welcome": "Merhaba! Size bugün nasıl yardımcı olabiliriz?",
+        "poweredBy": "WhatsApp Business ile desteklenmektedir"
+    },
+    "Calendar": {
+        "addToCalendar": "Takvime Ekle",
+        "googleCalendar": "Google Takvim",
+        "outlook": "Outlook.com",
+        "office365": "Office 365",
+        "yahoo": "Yahoo Takvim",
+        "downloadICS": "ICS İndir",
+        "viewingScheduled": "Gezi Planlandı!",
+        "confirmed": "Emlak geziniz onaylandı."
+    },
+    "Payment": {
+        "title": "Ödeme Detayları",
+        "selectMethod": "Ödeme Yöntemi Seçin",
+        "card": "Kart",
+        "bankTransfer": "Havale/EFT",
+        "crypto": "Kripto",
+        "cardNumber": "Kart Numarası",
+        "expiry": "Son Kullanma Tarihi",
+        "cvc": "CVC",
+        "cardholderName": "Kart Sahibinin Adı",
+        "pay": "{amount} Öde",
+        "processing": "İşleniyor...",
+        "success": "Ödeme Başarılı!",
+        "successDesc": "Ödemeniz işlendi.",
+        "demoMode": "Demo Modu - Gerçek ödeme alınmayacaktır",
+        "secure": "Ödeme bilgileriniz şifrelenerek korunmaktadır",
+        "status": {
+            "pending": "Beklemede",
+            "processing": "İşleniyor",
+            "completed": "Tamamlandı",
+            "failed": "Başarısız",
+            "refunded": "İade Edildi"
+        }
+    },
+    "Maps": {
+        "zoomIn": "Yakınlaştır",
+        "zoomOut": "Uzaklaştır",
+        "fullscreen": "Tam Ekran",
+        "exitFullscreen": "Tam Ekrandan Çık",
+        "getDirections": "Yol Tarifi Al",
+        "drive": "Araç",
+        "transit": "Toplu Taşıma",
+        "walk": "Yürüyüş",
+        "viewProperty": "Emlağı Görüntüle",
+        "nearbyAmenities": "Yakındaki Olanaklar"
+    },
+    "Error": {
+        "title": "Bir hata oluştu",
+        "notFound": "Sayfa bulunamadı",
+        "notFoundDesc": "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
+        "serverError": "Sunucu Hatası",
+        "serverErrorDesc": "Teknik sorunlar yaşıyoruz. Lütfen daha sonra tekrar deneyin.",
+        "tryAgain": "Tekrar dene",
+        "goHome": "Ana Sayfaya Git",
+        "browseProperties": "Emlakları İncele",
+        "contactSupport": "Destek ile İletişime Geç"
+    },
+    "PWA": {
+        "install": "Uygulamayı Yükle",
+        "installTitle": "Maison d'Orient'i Yükleyin",
+        "installDesc": "Hızlı erişim için ana ekranınıza ekleyin",
+        "later": "Belki Daha Sonra",
+        "offline": "Çevrimdışısınız",
+        "offlineDesc": "Bazı özellikler sınırlı olabilir",
+        "updateAvailable": "Güncelleme Mevcut",
+        "updateDesc": "Yeni bir sürüm mevcut",
+        "updateNow": "Şimdi Güncelle"
     }
 }

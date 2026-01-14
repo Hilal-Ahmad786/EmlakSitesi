@@ -7,7 +7,15 @@ import { routing } from '@/i18n/routing';
 import { CurrencyProvider } from '@/context/CurrencyContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
 import { CompareProvider } from '@/context/CompareContext';
+import { AlertsProvider } from '@/context/AlertsContext';
+import { AppointmentsProvider } from '@/context/AppointmentsContext';
+import { SavedSearchProvider } from '@/context/SavedSearchContext';
+import { RecentlyViewedProvider } from '@/context/RecentlyViewedContext';
+import { AnalyticsProvider } from '@/context/AnalyticsContext';
 import { CompareBar } from '@/components/features/tools/CompareBar';
+import { WhatsAppButton } from '@/components/features/whatsapp/WhatsAppButton';
+import { NewsletterPopup } from '@/components/features/newsletter/NewsletterPopup';
+import { InstallPrompt, OfflineBanner, UpdatePrompt } from '@/components/pwa/InstallPrompt';
 import "../globals.css";
 
 const inter = Inter({
@@ -58,10 +66,33 @@ export default async function RootLayout({
           <CurrencyProvider>
             <FavoritesProvider>
               <CompareProvider>
-                <ConditionalLayout>
-                  {children}
-                </ConditionalLayout>
-                <CompareBar />
+                <AlertsProvider>
+                  <AppointmentsProvider>
+                    <SavedSearchProvider>
+                      <RecentlyViewedProvider>
+                        <AnalyticsProvider>
+                          <ConditionalLayout>
+                            {children}
+                          </ConditionalLayout>
+                          <CompareBar />
+                          {/* WhatsApp floating button */}
+                          <WhatsAppButton
+                            phoneNumber="+905324610574"
+                            defaultMessage="Hello! I'm interested in your properties."
+                            agentName="Property Advisor"
+                            agentTitle="Online"
+                          />
+                          {/* Newsletter popup (shows after delay) */}
+                          <NewsletterPopup delay={15000} showOnExitIntent={true} />
+                          {/* PWA components */}
+                          <InstallPrompt />
+                          <OfflineBanner />
+                          <UpdatePrompt />
+                        </AnalyticsProvider>
+                      </RecentlyViewedProvider>
+                    </SavedSearchProvider>
+                  </AppointmentsProvider>
+                </AlertsProvider>
               </CompareProvider>
             </FavoritesProvider>
           </CurrencyProvider>
