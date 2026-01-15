@@ -59,11 +59,21 @@
             "priceAsc": "Fiyat: Artan",
             "priceDesc": "Fiyat: Azalan",
             "featured": "Öne Çıkan"
+        },
+        "options": {
+            "all": "Tümü",
+            "apartment": "Daire",
+            "villa": "Villa",
+            "yali": "Yalı",
+            "sale": "Satılık",
+            "rent": "Kiralık"
         }
     },
     "FeaturedCollections": {
-        "title": "Özel Koleksiyonlar",
+        "title": "Yaşam tarzınıza uygun mülkü bulun",
         "subtitle": "Benzersiz özelliklere göre gayrimenkulleri keşfedin",
+        "collection": "Öne Çıkan Koleksiyonlar",
+        "viewAll": "Tüm Koleksiyonları Görüntüle",
         "properties": "mülk",
         "items": {
             "mansions": "Tarihi Yalılar",
@@ -797,9 +807,23 @@
         "title": "Fiyat Düştü",
         "reducedBy": "Fiyat %{percent} Düştü!",
         "save": "{amount} Tasarruf Edin",
-        "getAlerts": "Fiyat Uyarısı Al",
-        "alertSet": "Uyarı Ayarlandı"
+        "getAlerts": "Fiyat Uyarısı Al"
     },
+    "PromoMosaic": {
+        "title": "İSTANBUL'DA LÜKS YAŞAMIN ADRESİ",
+        "description1": "İstanbul'un en prestijli semtlerinde, size özel seçilmiş gayrimenkul portföyümüzle hizmetinizdeyiz. Boğaz'ın eşsiz manzarasından, Nişantaşı'nın modern yaşamına, Galata'nın tarihi dokusundan, şehrin en seçkin villalarına kadar hayallerinizdeki evi bulmanızda size rehberlik ediyoruz.",
+        "description2": "Profesyonel ekibimiz ve geniş portföy ağımız ile gayrimenkul yatırımlarınızı en doğru şekilde değerlendirmeniz için buradayız.",
+        "sellRent": "Mülkümü satmak/kiralama istiyorum",
+        "overseas": "Yurt Dışı Yatırımlar",
+        "buyRent": "Mülk satın almak/kiralama istiyorum",
+        "moreInfo": "Detaylı Bilgi",
+        "discoverGlobal": "Global fırsatları keşfedin",
+        "findDreamHome": "Hayalinizdeki evi bulun"
+    },
+    "ReferenceShowcase": {
+        "title": "Referanslar"
+    },
+    "alertSet": "Uyarı Ayarlandı",
     "MarketReports": {
         "title": "Piyasa Raporları",
         "subtitle": "Kapsamlı piyasa analizlerimizle bilgi sahibi olun",

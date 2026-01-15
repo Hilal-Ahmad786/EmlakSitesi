@@ -1,10 +1,11 @@
 import { HeroSlider } from '@/components/features/home/HeroSlider';
-import { SearchBar } from '@/components/features/home/SearchBar';
+// SearchBar integrated into HeroSlider
 import { FeaturedCollections } from '@/components/features/home/FeaturedCollections';
 import { LatestProperties } from '@/components/features/home/LatestProperties';
-import { NeighborhoodSpotlight } from '@/components/features/home/NeighborhoodSpotlight';
 import { PropertyOfTheWeek } from '@/components/features/home/PropertyOfTheWeek';
-import { ReviewsList } from '@/components/features/reviews/ReviewsList';
+import { PromoMosaic } from '@/components/features/home/PromoMosaic';
+import { ReferenceShowcase } from '@/components/features/home/ReferenceShowcase';
+// Removed NeighborhoodSpotlight and ReviewsList from main flow
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -70,22 +71,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen pb-20">
       <HeroSlider />
-      <SearchBar />
-      <PropertyOfTheWeek />
-      <FeaturedCollections />
+      <FeaturedCollections />{/* Now acting as Lifestyle Categories */}
       <LatestProperties />
-      <NeighborhoodSpotlight />
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl md:text-4xl text-primary mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto">
-            Trusted by discerning buyers from around the world
-          </p>
-        </div>
-        <ReviewsList reviews={testimonialReviews} showFilters={false} />
-      </div>
+      <PropertyOfTheWeek />
+      <PromoMosaic />
+      <ReferenceShowcase />
     </div>
   );
 }

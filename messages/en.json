@@ -59,11 +59,21 @@
             "priceAsc": "Price: Low to High",
             "priceDesc": "Price: High to Low",
             "featured": "Featured"
+        },
+        "options": {
+            "all": "All",
+            "apartment": "Apartment",
+            "villa": "Villa",
+            "yali": "Mansion (Yali)",
+            "sale": "For Sale",
+            "rent": "For Rent"
         }
     },
     "FeaturedCollections": {
-        "title": "Curated Collections",
-        "subtitle": "Discover properties by unique characteristics",
+        "title": "Find the property that suits your lifestyle",
+        "subtitle": "Discover properties based on unique features",
+        "collection": "Featured Collection",
+        "viewAll": "View All Collections",
         "properties": "properties",
         "items": {
             "mansions": "Historic Yalı Mansions",
@@ -797,9 +807,23 @@
         "title": "Price Reduced",
         "reducedBy": "Price Reduced by {percent}%!",
         "save": "Save {amount}",
-        "getAlerts": "Get Price Alerts",
-        "alertSet": "Alert Set"
+        "getAlerts": "Get Price Alerts"
     },
+    "PromoMosaic": {
+        "title": "THE ADDRESS OF LUXURY LIVING IN ISTANBUL",
+        "description1": "We are at your service with our real estate portfolio specially selected for you in the most prestigious districts of Istanbul. We guide you to find the house of your dreams, from the unique view of the Bosphorus to the modern life of Nişantaşı, from the historical texture of Galata to the most exclusive villas of the city.",
+        "description2": "We are here for you to evaluate your real estate investments in the most accurate way with our professional team and wide portfolio network.",
+        "sellRent": "I want to sell/rent my property",
+        "overseas": "Overseas Investments",
+        "buyRent": "I want to buy/rent a property",
+        "moreInfo": "More Info",
+        "discoverGlobal": "Discover global opportunities",
+        "findDreamHome": "Find your dream home"
+    },
+    "ReferenceShowcase": {
+        "title": "References"
+    },
+    "alertSet": "Alert Set",
     "MarketReports": {
         "title": "Market Reports",
         "subtitle": "Stay informed with our comprehensive market analysis",
