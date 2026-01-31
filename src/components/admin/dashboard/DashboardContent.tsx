@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn, formatCurrency, formatRelativeTime, statusColors, priorityColors } from '@/lib/admin/utils';
 import { Card, CardHeader, CardTitle, Badge, Button } from '@/components/admin/common';
+import { dashboardApi } from '@/lib/admin/api';
 import {
   Building2,
   Users,
@@ -17,6 +18,7 @@ import {
   DollarSign,
   MapPin,
   Clock,
+  Loader2,
 } from 'lucide-react';
 
 // Stats Card Component
@@ -171,38 +173,88 @@ function PropertyRow({ title, location, price, views, inquiries, status }: Prope
   );
 }
 
+// Helper to get localized string from JSON
+function getLoc(json: any): string {
+  if (!json) return '';
+  if (typeof json === 'string') return json;
+  return json.en || json.tr || '';
+}
+
 // Main Dashboard Component
 export function DashboardContent({ locale }: { locale: string }) {
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
-    totalProperties: 48,
-    publishedProperties: 42,
-    totalLeads: 156,
-    newLeads: 12,
-    totalViews: 8543,
-    monthlyViews: 1234,
+    totalProperties: 0,
+    activeProperties: 0,
+    totalLeads: 0,
+    recentLeads: 0,
+    totalViews: 0,
   });
+  const [recentActivities, setRecentActivities] = useState<ActivityItemProps[]>([]);
+  const [recentLeads, setRecentLeads] = useState<LeadRowProps[]>([]);
+  const [topProperties, setTopProperties] = useState<PropertyRowProps[]>([]);
 
-  const recentActivities = [
-    { action: 'created', entity: 'Property', entityName: 'Historic Yalı in Bebek', user: 'Ahmet Y.', time: '5 minutes ago' },
-    { action: 'updated', entity: 'Lead', entityName: 'John Smith', user: 'Elif D.', time: '15 minutes ago' },
-    { action: 'published', entity: 'Blog Post', entityName: 'Market Outlook 2024', user: 'Admin', time: '1 hour ago' },
-    { action: 'assigned', entity: 'Lead', entityName: 'Sarah Johnson', user: 'Mehmet K.', time: '2 hours ago' },
-    { action: 'uploaded', entity: 'Images', entityName: 'Penthouse Gallery', user: 'Ayşe Ç.', time: '3 hours ago' },
-  ];
+  useEffect(() => {
+    async function fetchDashboard() {
+      try {
+        const data = await dashboardApi.getStats();
+        const d = data as any;
 
-  const recentLeads = [
-    { name: 'Michael Chen', email: 'michael@email.com', property: 'Bosphorus View Villa', status: 'NEW', priority: 'HIGH', createdAt: '2024-01-10' },
-    { name: 'Elena Petrova', email: 'elena@email.com', property: 'Galata Penthouse', status: 'CONTACTED', priority: 'MEDIUM', createdAt: '2024-01-09' },
-    { name: 'James Wilson', email: 'james@email.com', status: 'QUALIFIED', priority: 'HIGH', createdAt: '2024-01-08' },
-    { name: 'Sophia Laurent', email: 'sophia@email.com', property: 'Nişantaşı Apartment', status: 'VIEWING_SCHEDULED', priority: 'MEDIUM', createdAt: '2024-01-07' },
-  ];
+        setStats({
+          totalProperties: d.totalProperties || 0,
+          activeProperties: d.activeProperties || 0,
+          totalLeads: d.totalLeads || 0,
+          recentLeads: d.recentLeads || 0,
+          totalViews: d.totalViews || 0,
+        });
 
-  const topProperties = [
-    { title: 'Historic Yalı Mansion', location: 'Bebek', price: 12500000, views: 1234, inquiries: 23, status: 'PUBLISHED' },
-    { title: 'Luxury Penthouse', location: 'Galata', price: 2850000, views: 892, inquiries: 18, status: 'PUBLISHED' },
-    { title: 'Modern Villa', location: 'Sarıyer', price: 4500000, views: 756, inquiries: 12, status: 'PUBLISHED' },
-    { title: 'Historic Apartment', location: 'Cihangir', price: 850000, views: 643, inquiries: 9, status: 'PUBLISHED' },
-  ];
+        if (d.recentActivities) {
+          setRecentActivities(d.recentActivities.map((a: any) => ({
+            action: a.action?.toLowerCase() || '',
+            entity: a.entityType || '',
+            entityName: typeof a.details === 'object' ? (a.details?.title || a.details?.name || a.entityId || '') : (a.details || ''),
+            user: a.user?.name || 'System',
+            time: formatRelativeTime(a.createdAt),
+          })));
+        }
+
+        if (d.recentLeadsList) {
+          setRecentLeads(d.recentLeadsList.map((l: any) => ({
+            name: l.name,
+            email: l.email,
+            property: l.property ? getLoc(l.property.title) : undefined,
+            status: l.status,
+            priority: l.priority,
+            createdAt: l.createdAt,
+          })));
+        }
+
+        if (d.topProperties) {
+          setTopProperties(d.topProperties.map((p: any) => ({
+            title: getLoc(p.title),
+            location: p.neighborhood || p.city || '',
+            price: p.price,
+            views: p.viewCount || 0,
+            inquiries: p.inquiryCount || 0,
+            status: p.status,
+          })));
+        }
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDashboard();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="animate-spin text-primary" size={32} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -226,28 +278,24 @@ export function DashboardContent({ locale }: { locale: string }) {
         <StatCard
           title="Total Properties"
           value={stats.totalProperties}
-          change={8}
           icon={<Building2 size={24} />}
           href={`/${locale}/admin/properties`}
         />
         <StatCard
           title="Published"
-          value={stats.publishedProperties}
-          change={5}
+          value={stats.activeProperties}
           icon={<Eye size={24} />}
           href={`/${locale}/admin/properties?status=PUBLISHED`}
         />
         <StatCard
           title="Total Leads"
           value={stats.totalLeads}
-          change={12}
           icon={<MessageSquare size={24} />}
           href={`/${locale}/admin/leads`}
         />
         <StatCard
-          title="New Leads"
-          value={stats.newLeads}
-          change={-3}
+          title="New Leads (7d)"
+          value={stats.recentLeads}
           icon={<Users size={24} />}
           href={`/${locale}/admin/leads?status=NEW`}
         />
@@ -266,9 +314,13 @@ export function DashboardContent({ locale }: { locale: string }) {
             </Link>
           </CardHeader>
           <div>
-            {recentLeads.map((lead, index) => (
-              <LeadRow key={index} {...lead} />
-            ))}
+            {recentLeads.length === 0 ? (
+              <p className="text-sm text-gray-500 py-4 text-center">No leads yet</p>
+            ) : (
+              recentLeads.map((lead, index) => (
+                <LeadRow key={index} {...lead} />
+              ))
+            )}
           </div>
         </Card>
 
@@ -278,9 +330,13 @@ export function DashboardContent({ locale }: { locale: string }) {
             <CardTitle>Recent Activity</CardTitle>
           </CardHeader>
           <div>
-            {recentActivities.map((activity, index) => (
-              <ActivityItem key={index} {...activity} />
-            ))}
+            {recentActivities.length === 0 ? (
+              <p className="text-sm text-gray-500 py-4 text-center">No activity yet</p>
+            ) : (
+              recentActivities.map((activity, index) => (
+                <ActivityItem key={index} {...activity} />
+              ))
+            )}
           </div>
         </Card>
       </div>
@@ -296,9 +352,13 @@ export function DashboardContent({ locale }: { locale: string }) {
           </Link>
         </CardHeader>
         <div>
-          {topProperties.map((property, index) => (
-            <PropertyRow key={index} {...property} />
-          ))}
+          {topProperties.length === 0 ? (
+            <p className="text-sm text-gray-500 py-4 text-center">No properties yet</p>
+          ) : (
+            topProperties.map((property, index) => (
+              <PropertyRow key={index} {...property} />
+            ))
+          )}
         </div>
       </Card>
 
@@ -328,7 +388,7 @@ export function DashboardContent({ locale }: { locale: string }) {
             </div>
             <div>
               <h3 className="font-semibold">Manage Leads</h3>
-              <p className="text-sm text-white/70 mt-0.5">{stats.newLeads} new inquiries</p>
+              <p className="text-sm text-white/70 mt-0.5">{stats.recentLeads} new inquiries</p>
             </div>
           </div>
           <Link href={`/${locale}/admin/leads`}>

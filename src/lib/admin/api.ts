@@ -11,107 +11,47 @@ import type {
 const API_BASE = '/api/admin';
 
 // Generic fetch wrapper with error handling
-// Generic fetch wrapper with error handling - MOCKED VERSION
 async function fetchApi<T>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
-  // SIMULATE NETWORK DELAY
-  await new Promise(resolve => setTimeout(resolve, 600));
+  const url = `${API_BASE}${endpoint}`;
 
-  console.log(`[MOCK API] ${options?.method || 'GET'} ${endpoint}`);
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options?.headers,
+    },
+    credentials: 'include',
+  });
 
-  // MOCK ROUTING
-  if (endpoint.includes('/analytics/dashboard')) {
-    return {
-      totalProperties: 12,
-      activeProperties: 8,
-      totalLeads: 45,
-      totalViews: 1250,
-      recentLeads: 5,
-    } as any;
+  if (!res.ok) {
+    const errorBody = await res.json().catch(() => ({ error: res.statusText }));
+    throw new Error(errorBody.error || `API Error: ${res.status}`);
   }
 
-  if (endpoint.includes('/properties') && !options?.method) {
-    if (endpoint.includes('/properties/')) {
-      // Single property
-      return DUMMY_PROPERTIES[0] as any;
-    }
-    // List
-    return {
-      data: DUMMY_PROPERTIES,
-      pagination: {
-        page: 1,
-        limit: 10,
-        total: DUMMY_PROPERTIES.length,
-        totalPages: 1
-      }
-    } as any;
+  // Handle 204 No Content
+  if (res.status === 204) {
+    return {} as T;
   }
 
-  if (endpoint.includes('/auth/me')) {
-    return {
-      id: 'dummy-admin',
-      name: 'Dummy Admin',
-      email: 'admin@test.com',
-      role: 'SUPER_ADMIN',
-      status: 'ACTIVE'
-    } as any;
-  }
-
-  // Default fallback for any other GET/list
-  if (!options?.method || options.method === 'GET') {
-    return { data: [], pagination: { total: 0 } } as any;
-  }
-
-  // Default success for mutations
-  return {} as T;
+  return res.json();
 }
-
-const DUMMY_PROPERTIES = [
-  {
-    id: '1',
-    title: { en: 'Luxury Bosphorus Villa', tr: 'Lüks Boğaz Villası' },
-    slug: { en: 'luxury-bosphorus-villa', tr: 'luks-bogaz-villasi' },
-    price: 5000000,
-    currency: 'USD',
-    status: 'PUBLISHED',
-    type: 'VILLA',
-    location: { city: 'Istanbul', district: 'Besiktas' },
-    featuredImage: { url: 'https://images.unsplash.com/photo-1600596542815-9ad4dc7553e8?auto=format&fit=crop&w=800&q=80' },
-    createdAt: new Date().toISOString(),
-    views: 120,
-    isFeatured: true
-  },
-  {
-    id: '2',
-    title: { en: 'Modern Apartment in Sisli', tr: 'Şişli Modern Daire' },
-    slug: { en: 'modern-apartment-sisli', tr: 'sisli-modern-daire' },
-    price: 450000,
-    currency: 'USD',
-    status: 'DRAFT',
-    type: 'APARTMENT',
-    location: { city: 'Istanbul', district: 'Sisli' },
-    featuredImage: { url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80' },
-    createdAt: new Date().toISOString(),
-    views: 45,
-    isFeatured: false
-  }
-];
 
 // ============================================================================
 // DASHBOARD
 // ============================================================================
 
 export const dashboardApi = {
-  getStats: () => fetchApi<DashboardStats>('/analytics/dashboard'),
+  getStats: () => fetchApi<DashboardStats>('/dashboard'),
 
   getRecentActivities: (limit?: number) =>
-    fetchApi<any[]>(`/analytics/activities${limit ? `?limit=${limit}` : ''}`),
+    fetchApi<any[]>(`/dashboard?type=activities${limit ? `&limit=${limit}` : ''}`),
 
-  getPropertyStats: () => fetchApi<any>('/analytics/properties'),
+  getPropertyStats: () => fetchApi<any>('/dashboard?type=properties'),
 
-  getLeadStats: () => fetchApi<any>('/analytics/leads'),
+  getLeadStats: () => fetchApi<any>('/dashboard?type=leads'),
 };
 
 // ============================================================================

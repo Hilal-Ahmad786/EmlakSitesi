@@ -5,72 +5,7 @@ import { useRouter } from 'next/navigation';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
 import { BlogList, BlogForm, BlogPost } from '@/components/admin/blog/BlogComponents';
 import { Plus } from 'lucide-react';
-
-// Mock data for blog posts
-const mockPosts: BlogPost[] = [
-    {
-        id: '1',
-        title: 'Investment Opportunities in Istanbul Real Estate 2024',
-        slug: 'investment-opportunities-istanbul-2024',
-        excerpt: 'Discover the best investment opportunities in Istanbul real estate market this year.',
-        content: 'Full article content here...',
-        featuredImage: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800',
-        author: { id: '1', name: 'Ahmet Yilmaz' },
-        category: 'Investment Tips',
-        tags: ['investment', 'istanbul', '2024'],
-        status: 'published',
-        publishedAt: '2024-12-10',
-        createdAt: '2024-12-08',
-        updatedAt: '2024-12-10',
-        views: 1245,
-    },
-    {
-        id: '2',
-        title: 'Guide to Bebek: Istanbul\'s Most Prestigious Neighborhood',
-        slug: 'guide-to-bebek-istanbul',
-        excerpt: 'Everything you need to know about living in Bebek, one of Istanbul\'s most exclusive areas.',
-        content: 'Full article content here...',
-        featuredImage: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=800',
-        author: { id: '1', name: 'Ahmet Yilmaz' },
-        category: 'Neighborhood Guide',
-        tags: ['bebek', 'neighborhood', 'lifestyle'],
-        status: 'published',
-        publishedAt: '2024-11-25',
-        createdAt: '2024-11-20',
-        updatedAt: '2024-11-25',
-        views: 892,
-    },
-    {
-        id: '3',
-        title: 'Turkish Citizenship by Investment: Complete Guide',
-        slug: 'turkish-citizenship-investment-guide',
-        excerpt: 'Learn about the requirements and process for obtaining Turkish citizenship through real estate investment.',
-        content: 'Full article content here...',
-        featuredImage: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800',
-        author: { id: '2', name: 'Elif Kaya' },
-        category: 'Legal & Finance',
-        tags: ['citizenship', 'investment', 'legal'],
-        status: 'draft',
-        createdAt: '2024-12-01',
-        updatedAt: '2024-12-05',
-        views: 0,
-    },
-    {
-        id: '4',
-        title: 'Market Report: Q4 2024 Istanbul Property Prices',
-        slug: 'market-report-q4-2024',
-        excerpt: 'Quarterly analysis of Istanbul property market trends and price movements.',
-        content: 'Full article content here...',
-        author: { id: '1', name: 'Ahmet Yilmaz' },
-        category: 'Market Insights',
-        tags: ['market', 'prices', 'analysis'],
-        status: 'scheduled',
-        scheduledAt: '2024-12-20T09:00:00',
-        createdAt: '2024-12-05',
-        updatedAt: '2024-12-05',
-        views: 0,
-    },
-];
+import { blogApi } from '@/lib/admin/api';
 
 export default function BlogPage(props: { params: Promise<{ locale: string }> }) {
     const params = use(props.params);
@@ -91,10 +26,33 @@ export default function BlogPage(props: { params: Promise<{ locale: string }> })
 
     const fetchPosts = async () => {
         setLoading(true);
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setPosts(mockPosts);
-        setPagination((prev) => ({ ...prev, totalPages: 1 }));
+        try {
+            const result = await blogApi.getAll({ page: pagination.page, pageSize: 10 });
+            const postsData = (result as any).posts || (result as any).data || [];
+            setPosts(postsData.map((p: any) => ({
+                id: p.id,
+                title: typeof p.title === 'object' ? (p.title.en || p.title.tr || '') : p.title,
+                slug: p.slug,
+                excerpt: typeof p.excerpt === 'object' ? (p.excerpt?.en || p.excerpt?.tr || '') : (p.excerpt || ''),
+                content: typeof p.content === 'object' ? (p.content.en || p.content.tr || '') : p.content,
+                featuredImage: p.featuredImage,
+                author: p.author || { id: '', name: '' },
+                category: p.category || '',
+                tags: Array.isArray(p.tags) ? p.tags : [],
+                status: p.status === 'PUBLISHED' ? 'published' : p.status === 'DRAFT' ? 'draft' : p.status?.toLowerCase() || 'draft',
+                publishedAt: p.publishedAt,
+                createdAt: p.createdAt,
+                updatedAt: p.updatedAt,
+                views: p.viewCount || 0,
+            })));
+            const pag = (result as any).pagination;
+            if (pag) {
+                setPagination((prev) => ({ ...prev, totalPages: pag.totalPages || 1 }));
+            }
+        } catch (error) {
+            console.error('Failed to fetch posts:', error);
+            setPosts([]);
+        }
         setLoading(false);
     };
 
@@ -108,17 +66,30 @@ export default function BlogPage(props: { params: Promise<{ locale: string }> })
 
     const handleDelete = async (id: string) => {
         if (!confirm('Are you sure you want to delete this post?')) return;
-        setPosts(posts.filter((p) => p.id !== id));
+        try {
+            await blogApi.delete(id);
+            setPosts(posts.filter((p) => p.id !== id));
+        } catch (error) {
+            console.error('Failed to delete post:', error);
+        }
     };
 
     const handleTogglePublish = async (id: string) => {
-        setPosts(
-            posts.map((p) =>
-                p.id === id
-                    ? { ...p, status: p.status === 'published' ? 'draft' : 'published' }
-                    : p
-            )
-        );
+        const post = posts.find((p) => p.id === id);
+        if (!post) return;
+        const newStatus = post.status === 'published' ? 'DRAFT' : 'PUBLISHED';
+        try {
+            await blogApi.update(id, { status: newStatus } as any);
+            setPosts(
+                posts.map((p) =>
+                    p.id === id
+                        ? { ...p, status: newStatus === 'PUBLISHED' ? 'published' : 'draft' }
+                        : p
+                )
+            );
+        } catch (error) {
+            console.error('Failed to toggle publish:', error);
+        }
     };
 
     const handleView = (id: string) => {
@@ -130,26 +101,27 @@ export default function BlogPage(props: { params: Promise<{ locale: string }> })
 
     const handleFormSubmit = async (data: any) => {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        if (editingPost) {
-            setPosts(
-                posts.map((p) =>
-                    p.id === editingPost.id
-                        ? { ...p, ...data, updatedAt: new Date().toISOString() }
-                        : p
-                )
-            );
-        } else {
-            const newPost: BlogPost = {
-                id: String(Date.now()),
-                ...data,
-                author: { id: '1', name: 'Admin User' },
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                views: 0,
+        try {
+            const payload: any = {
+                title: data.title,
+                slug: data.slug,
+                content: data.content,
+                excerpt: data.excerpt,
+                featuredImage: data.featuredImage,
+                category: data.category,
+                tags: data.tags,
+                status: data.status === 'published' ? 'PUBLISHED' : 'DRAFT',
             };
-            setPosts([newPost, ...posts]);
+
+            if (editingPost) {
+                await blogApi.update(editingPost.id, payload);
+            } else {
+                await blogApi.create(payload);
+            }
+
+            await fetchPosts();
+        } catch (error) {
+            console.error('Failed to save post:', error);
         }
 
         setShowForm(false);

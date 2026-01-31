@@ -36,6 +36,7 @@ const slides = [
 
 export function HeroSlider() {
     const t = useTranslations('Search');
+    const tHero = useTranslations('Hero');
     const router = useRouter();
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -85,6 +86,39 @@ export function HeroSlider() {
                         className="absolute inset-0 bg-cover bg-center"
                         style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
                     />
+
+                    {/* Text Content */}
+                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-4">
+                        <motion.h1
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="font-serif text-4xl md:text-6xl text-white mb-4 drop-shadow-lg max-w-4xl"
+                        >
+                            {tHero(`slides.${slides[currentSlide].id}.title`)}
+                        </motion.h1>
+                        <motion.p
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                            className="text-lg md:text-2xl text-white/90 mb-8 max-w-2xl font-light drop-shadow-md"
+                        >
+                            {tHero(`slides.${slides[currentSlide].id}.subtitle`)}
+                        </motion.p>
+                        <motion.div
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.7 }}
+                            className="flex flex-col sm:flex-row gap-4"
+                        >
+                            <Button size="lg" className="bg-primary hover:bg-primary-dark text-white border-none min-w-[180px]">
+                                {tHero('cta')}
+                            </Button>
+                            <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/50 hover:border-white backdrop-blur-sm min-w-[180px]">
+                                {tHero('ctaSecondary')}
+                            </Button>
+                        </motion.div>
+                    </div>
                 </motion.div>
             </AnimatePresence>
 

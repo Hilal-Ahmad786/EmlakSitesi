@@ -4,35 +4,24 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 
-const collections = [
-    {
-        id: 'manzara',
-        title: 'Manzara',
-        image: '/images/home/collection-bosphorus.jpg', // Using existing bosphorus image as proxy
-        link: '/properties?feature=view',
-    },
-    {
-        id: 'bahceli',
-        title: 'Bahçeli Ev',
-        image: '/images/home/collection-levent.jpg', // Using levent image as proxy
-        link: '/properties?feature=garden',
-    },
-    {
-        id: 'mustakil',
-        title: 'Müstakil Ev & Villa',
-        image: '/images/home/collection-mansions.jpg', // Mansion/Villa image
-        link: '/properties?type=villa',
-    },
-    {
-        id: 'bogaz',
-        title: 'Boğaz',
-        image: '/images/home/collection-galata.jpg', // Another strong image
-        link: '/properties?view=bosphorus',
-    }
-];
+interface Collection {
+    id: string;
+    title: string;
+    image: string;
+    link: string;
+}
 
-export function FeaturedCollections() {
+interface FeaturedCollectionsProps {
+    collections: Collection[];
+}
+
+export function FeaturedCollections({ collections = [] }: FeaturedCollectionsProps) {
     const t = useTranslations('FeaturedCollections');
+
+    // If no collections, we might want to hide or show empty.
+    if (!collections || collections.length === 0) {
+        return null;
+    }
 
     return (
         <section className="py-16 bg-white">

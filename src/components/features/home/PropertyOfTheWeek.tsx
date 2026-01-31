@@ -6,95 +6,79 @@ import { useTranslations } from 'next-intl';
 import { Star, MapPin, Bed, Bath, Square, ChevronRight, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+// We reuse the transformed property type or a similar shape
 interface FeaturedProperty {
   id: string;
   title: string;
   location: string;
-  price: number;
-  currency: string;
+  price: string; // The service returns formatted string, but we might want raw if we reformat. Service returns formatted.
+  rawPrice?: number; // Optional if we want to pass it
+  currency?: string;
   bedrooms: number;
   bathrooms: number;
   size: number;
   images: string[];
-  description: string;
-  featuredUntil: string;
-}
-
-// Fixed end date - 5 days from a fixed point (avoids hydration mismatch)
-const FEATURED_END_DATE = '2026-01-20T00:00:00.000Z';
-
-// Mock featured property
-const mockFeaturedProperty: FeaturedProperty = {
-  id: 'featured-1',
-  title: 'Exclusive Bosphorus Waterfront Villa',
-  location: 'Bebek, Istanbul',
-  price: 5500000,
-  currency: 'EUR',
-  bedrooms: 6,
-  bathrooms: 5,
-  size: 650,
-  images: [
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
-  ],
-  description: 'A rare opportunity to own this magnificent waterfront villa with breathtaking Bosphorus views. Features include private dock, infinity pool, and landscaped gardens.',
-  featuredUntil: FEATURED_END_DATE,
-};
-
-function formatPrice(price: number, currency: string): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(price);
-}
-
-function getTimeRemaining(endDate: string): { days: number; hours: number; minutes: number } {
-  const total = new Date(endDate).getTime() - Date.now();
-  return {
-    days: Math.floor(total / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((total / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((total / (1000 * 60)) % 60),
-  };
+  description?: string;
+  featuredUntil?: string; // Optional
 }
 
 interface PropertyOfTheWeekProps {
   className?: string;
+  property?: FeaturedProperty | null;
 }
 
-export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
+export function PropertyOfTheWeek({ className, property }: PropertyOfTheWeekProps) {
   const t = useTranslations('PropertyOfTheWeek');
-  const [property] = useState<FeaturedProperty>(mockFeaturedProperty);
+
+  if (!property) return null;
+
+  // We can default to a date if featuredUntil is missing, or hide countdown
+  // For demo, let's keep the countdown effect using a dynamic date
+  const [featuredUntil] = useState(() => {
+    return property.featuredUntil || new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString();
+  });
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0, minutes: 0 });
 
+  function getTimeRemaining(endDate: string): { days: number; hours: number; minutes: number } {
+    const total = new Date(endDate).getTime() - Date.now();
+    return {
+      days: Math.max(0, Math.floor(total / (1000 * 60 * 60 * 24))),
+      hours: Math.max(0, Math.floor((total / (1000 * 60 * 60)) % 24)),
+      minutes: Math.max(0, Math.floor((total / (1000 * 60)) % 60)),
+    };
+  }
+
   // Set mounted state and initial time on client only (avoids hydration mismatch)
   useEffect(() => {
     setIsMounted(true);
-    setTimeRemaining(getTimeRemaining(property.featuredUntil));
-  }, [property.featuredUntil]);
+    setTimeRemaining(getTimeRemaining(featuredUntil));
+  }, [featuredUntil]);
 
   // Update countdown every minute
   useEffect(() => {
     if (!isMounted) return;
 
     const timer = setInterval(() => {
-      setTimeRemaining(getTimeRemaining(property.featuredUntil));
+      setTimeRemaining(getTimeRemaining(featuredUntil));
     }, 60000);
 
     return () => clearInterval(timer);
-  }, [property.featuredUntil, isMounted]);
+  }, [featuredUntil, isMounted]);
 
   // Auto-rotate images
   useEffect(() => {
+    if (!property.images || property.images.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [property.images.length]);
+  }, [property.images?.length]);
+
+  const images = property.images && property.images.length > 0 ? property.images : ['/images/placeholder-property.jpg'];
 
   return (
     <section className={cn('py-16 bg-gradient-to-b from-gray-50 to-white', className)}>
@@ -136,7 +120,7 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Image Gallery */}
             <div className="relative h-80 lg:h-auto">
-              {property.images.map((image, index) => (
+              {images.map((image, index) => (
                 <div
                   key={index}
                   className={cn(
@@ -160,7 +144,7 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
 
               {/* Image Indicators */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {property.images.map((_, index) => (
+                {images.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
@@ -189,12 +173,12 @@ export function PropertyOfTheWeek({ className }: PropertyOfTheWeekProps) {
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-primary">
-                    {formatPrice(property.price, property.currency)}
+                    {property.price}
                   </p>
                 </div>
               </div>
 
-              <p className="text-gray-600 mb-6">{property.description}</p>
+              <p className="text-gray-600 mb-6 line-clamp-3">{property.description || t('noDescription')}</p>
 
               {/* Property Features */}
               <div className="flex items-center gap-6 py-6 border-y border-gray-100">

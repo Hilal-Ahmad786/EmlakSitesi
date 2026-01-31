@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { PropertyCard } from '@/components/ui/PropertyCard';
@@ -27,119 +26,17 @@ interface Property {
     isFeatured?: boolean;
 }
 
-// Fallback properties for when API is not available
-const fallbackProperties: Property[] = [
-    {
-        id: '1',
-        title: '7 Storey Historical Building in Pera',
-        location: 'Pera, Istanbul',
-        price: '€2,500,000',
-        image: '/images/home/property-1.jpg',
-        beds: 7,
-        baths: 5,
-        size: 450,
-        type: 'sale',
-        isNew: true,
-        isFeatured: true
-    },
-    {
-        id: '2',
-        title: '6 Storey Historical Atlas Apartments',
-        location: 'Asmalımescit, Istanbul',
-        price: '€6,500,000',
-        image: '/images/home/property-2.jpg',
-        beds: 12,
-        baths: 10,
-        size: 800,
-        type: 'sale',
-        isNew: true
-    },
-    {
-        id: '3',
-        title: '3+1 Apartment in Historical Pamuk Apt',
-        location: 'Nişantaşı, Istanbul',
-        price: '€1,300,000',
-        image: '/images/home/property-3.jpg',
-        beds: 3,
-        baths: 2,
-        size: 140,
-        type: 'sale'
-    },
-    {
-        id: '4',
-        title: 'Historical Building with Bosphorus View',
-        location: 'Galata, Istanbul',
-        price: '€3,500,000',
-        image: '/images/home/property-4.jpg',
-        beds: 5,
-        baths: 4,
-        size: 350,
-        type: 'sale'
-    },
-    {
-        id: '5',
-        title: 'Luxury Penthouse in Bebek',
-        location: 'Bebek, Istanbul',
-        price: '€4,200,000',
-        image: '/images/home/property-5.jpg',
-        beds: 4,
-        baths: 3,
-        size: 280,
-        type: 'sale',
-        isNew: true
-    },
-    {
-        id: '6',
-        title: 'Modern Villa in Etiler',
-        location: 'Etiler, Istanbul',
-        price: '€5,800,000',
-        image: '/images/home/property-6.jpg',
-        beds: 6,
-        baths: 5,
-        size: 520,
-        type: 'sale',
-        isFeatured: true
-    }
-];
+interface LatestPropertiesProps {
+    properties: Property[];
+}
 
-export function LatestProperties() {
+export function LatestProperties({ properties = [] }: LatestPropertiesProps) {
     const t = useTranslations('LatestProperties');
-    const [properties, setProperties] = useState<Property[]>(fallbackProperties);
-    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchProperties() {
-            try {
-                const response = await fetch('/api/properties?limit=10&sort=newest');
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.properties && data.properties.length > 0) {
-                        // Transform API data to match component interface
-                        const transformed = data.properties.map((p: any) => ({
-                            id: p.id,
-                            title: typeof p.title === 'object' ? p.title.en : p.title,
-                            location: `${p.neighborhood}, ${p.city}`,
-                            price: `€${p.price.toLocaleString()}`,
-                            image: p.images?.[0]?.url || '/images/placeholder-property.jpg',
-                            beds: p.bedrooms,
-                            baths: p.bathrooms,
-                            size: p.size,
-                            type: p.listingType === 'RENT' ? 'rent' : 'sale',
-                            isNew: p.isNew,
-                            isFeatured: p.isFeatured
-                        }));
-                        setProperties(transformed);
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to fetch properties:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        fetchProperties();
-    }, []);
+    // If no real properties, show empty state or nothing (user preference was "everything real")
+    if (!properties || properties.length === 0) {
+        return null; // Don't show the section if no data
+    }
 
     return (
         <section className="py-20 bg-background">
