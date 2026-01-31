@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, '../data');
 const PUBLIC_UPLOADS_DIR = path.join(__dirname, '../public/uploads');
 
-const TARGET_DIRECTORIES = ['Satilik', 'Kiralik', 'Kapali'];
+const TARGET_DIRECTORIES = ['Satilik', 'Kiralik', 'Kapali', 'properties'];
 
 async function ensureDir(dir) {
     if (!fs.existsSync(dir)) {
