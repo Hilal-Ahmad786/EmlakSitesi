@@ -521,7 +521,9 @@ function findAndCopyImage(filename: string): string | null {
       if (!fs.existsSync(destPath)) {
         fs.copyFileSync(srcPath, destPath);
       }
-      return `/uploads/properties/${filename}`;
+      // Use .webp extension in DB URLs (images are converted to webp post-import)
+      const webpFilename = filename.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+      return `/uploads/properties/${webpFilename}`;
     }
   }
   return null;

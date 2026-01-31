@@ -164,8 +164,17 @@ export const neighborhoodsApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
-  // ...
-  // ...
+
+  update: (id: string, data: Partial<Neighborhood>) =>
+    fetchApi<Neighborhood>(`/neighborhoods/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
+  delete: (id: string) =>
+    fetchApi<void>(`/neighborhoods/${id}`, {
+      method: 'DELETE',
+    }),
 };
 
 // ... lines omitted ...

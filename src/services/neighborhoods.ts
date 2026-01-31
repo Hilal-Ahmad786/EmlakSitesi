@@ -2,6 +2,43 @@
 
 import { prisma } from '@/lib/prisma';
 
+export async function getFeaturedNeighborhoods(limit = 4) {
+  try {
+    const neighborhoods = await prisma.neighborhood.findMany({
+      where: { isActive: true },
+      orderBy: [{ isFeatured: 'desc' }, { propertyCount: 'desc' }, { order: 'asc' }],
+      take: limit,
+      include: {
+        _count: {
+          select: { properties: true },
+        },
+        properties: {
+          where: { status: 'PUBLISHED' },
+          take: 1,
+          orderBy: { createdAt: 'desc' },
+          include: { images: { where: { isPrimary: true }, take: 1 } },
+        },
+      },
+    });
+
+    return neighborhoods.map((n) => {
+      const primaryImage = n.properties[0]?.images[0]?.url;
+      const name = typeof n.name === 'object' && n.name !== null
+        ? (n.name as any).en || (n.name as any).tr || ''
+        : String(n.name);
+      return {
+        id: n.slug,
+        name,
+        image: n.image || primaryImage || '/images/placeholder.jpg',
+        propertyCount: n._count?.properties || n.propertyCount || 0,
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching featured neighborhoods:', error);
+    return [];
+  }
+}
+
 export async function getNeighborhoods() {
   try {
     const neighborhoods = await prisma.neighborhood.findMany({

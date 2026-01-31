@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
 import {
@@ -11,7 +11,7 @@ import {
     SettingsTabs,
 } from '@/components/admin/settings/SettingsComponents';
 
-// Default settings data
+// Default settings used as fallback when DB has no values yet
 const defaultGeneralSettings = {
     siteName: "Maison d'Orient",
     siteDescription: 'Luxury Real Estate in Istanbul',
@@ -56,6 +56,58 @@ const defaultAnalyticsSettings = {
     cookieConsent: true,
 };
 
+async function fetchSettingsByGroup(group: string): Promise<Record<string, any>> {
+    try {
+        const res = await fetch(`/api/admin/settings?group=${group}`, {
+            credentials: 'include',
+        });
+        if (res.ok) {
+            return await res.json();
+        }
+    } catch (err) {
+        console.error(`Failed to fetch ${group} settings:`, err);
+    }
+    return {};
+}
+
+async function saveSettings(settings: Record<string, any>): Promise<boolean> {
+    try {
+        const res = await fetch('/api/admin/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(settings),
+        });
+        return res.ok;
+    } catch (err) {
+        console.error('Failed to save settings:', err);
+        return false;
+    }
+}
+
+function applyDbValues<T extends Record<string, any>>(
+    defaults: T,
+    dbValues: Record<string, any>,
+    prefix: string
+): T {
+    const result = { ...defaults };
+    for (const key of Object.keys(defaults)) {
+        const dbKey = `${prefix}_${key}`;
+        if (dbValues[dbKey] !== undefined) {
+            (result as any)[key] = dbValues[dbKey];
+        }
+    }
+    return result;
+}
+
+function toDbKeys(settings: Record<string, any>, prefix: string): Record<string, any> {
+    const result: Record<string, any> = {};
+    for (const [key, value] of Object.entries(settings)) {
+        result[`${prefix}_${key}`] = value;
+    }
+    return result;
+}
+
 export default function SettingsPage(props: { params: Promise<{ locale: string }> }) {
     const params = use(props.params);
     const { locale } = params;
@@ -63,6 +115,7 @@ export default function SettingsPage(props: { params: Promise<{ locale: string }
     const tabParam = searchParams.get('tab');
     const [activeTab, setActiveTab] = useState(tabParam || 'general');
     const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
 
     // Settings state
     const [generalSettings, setGeneralSettings] = useState(defaultGeneralSettings);
@@ -70,31 +123,50 @@ export default function SettingsPage(props: { params: Promise<{ locale: string }
     const [socialSettings, setSocialSettings] = useState(defaultSocialSettings);
     const [analyticsSettings, setAnalyticsSettings] = useState(defaultAnalyticsSettings);
 
+    useEffect(() => {
+        async function loadAllSettings() {
+            setInitialLoading(true);
+            const [generalDb, contactDb, socialDb, analyticsDb] = await Promise.all([
+                fetchSettingsByGroup('general'),
+                fetchSettingsByGroup('contact'),
+                fetchSettingsByGroup('social'),
+                fetchSettingsByGroup('analytics'),
+            ]);
+
+            setGeneralSettings(applyDbValues(defaultGeneralSettings, generalDb, 'general'));
+            setContactSettings(applyDbValues(defaultContactSettings, contactDb, 'contact'));
+            setSocialSettings(applyDbValues(defaultSocialSettings, socialDb, 'social'));
+            setAnalyticsSettings(applyDbValues(defaultAnalyticsSettings, analyticsDb, 'analytics'));
+            setInitialLoading(false);
+        }
+        loadAllSettings();
+    }, []);
+
     const handleGeneralSubmit = async (data: typeof defaultGeneralSettings) => {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setGeneralSettings(data);
+        const ok = await saveSettings(toDbKeys(data, 'general'));
+        if (ok) setGeneralSettings(data);
         setLoading(false);
     };
 
     const handleContactSubmit = async (data: typeof defaultContactSettings) => {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setContactSettings(data);
+        const ok = await saveSettings(toDbKeys(data, 'contact'));
+        if (ok) setContactSettings(data);
         setLoading(false);
     };
 
     const handleSocialSubmit = async (data: typeof defaultSocialSettings) => {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setSocialSettings(data);
+        const ok = await saveSettings(toDbKeys(data, 'social'));
+        if (ok) setSocialSettings(data);
         setLoading(false);
     };
 
     const handleAnalyticsSubmit = async (data: typeof defaultAnalyticsSettings) => {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setAnalyticsSettings(data);
+        const ok = await saveSettings(toDbKeys(data, 'analytics'));
+        if (ok) setAnalyticsSettings(data);
         setLoading(false);
     };
 
@@ -122,7 +194,7 @@ export default function SettingsPage(props: { params: Promise<{ locale: string }
                     <GeneralSettings
                         defaultValues={generalSettings}
                         onSubmit={handleGeneralSubmit}
-                        loading={loading}
+                        loading={loading || initialLoading}
                     />
                 )}
 
@@ -130,7 +202,7 @@ export default function SettingsPage(props: { params: Promise<{ locale: string }
                     <ContactSettings
                         defaultValues={contactSettings}
                         onSubmit={handleContactSubmit}
-                        loading={loading}
+                        loading={loading || initialLoading}
                     />
                 )}
 
@@ -138,7 +210,7 @@ export default function SettingsPage(props: { params: Promise<{ locale: string }
                     <SocialSettings
                         defaultValues={socialSettings}
                         onSubmit={handleSocialSubmit}
-                        loading={loading}
+                        loading={loading || initialLoading}
                     />
                 )}
 
@@ -146,7 +218,7 @@ export default function SettingsPage(props: { params: Promise<{ locale: string }
                     <AnalyticsSettings
                         defaultValues={analyticsSettings}
                         onSubmit={handleAnalyticsSubmit}
-                        loading={loading}
+                        loading={loading || initialLoading}
                     />
                 )}
             </div>

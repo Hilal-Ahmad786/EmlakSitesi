@@ -18,10 +18,23 @@ export default function UsersPage(props: UsersPageProps) {
     const [users, setUsers] = useState<User[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [currentUserId, setCurrentUserId] = useState<string>('');
 
     useEffect(() => {
         fetchUsers();
+        fetchCurrentUser();
     }, []);
+
+    const fetchCurrentUser = async () => {
+        try {
+            const user = await adminApi.auth.getCurrentUser();
+            if (user?.id) {
+                setCurrentUserId(user.id);
+            }
+        } catch {
+            // Session might not be accessible via this endpoint
+        }
+    };
 
     const fetchUsers = async () => {
         setLoading(true);
@@ -89,20 +102,19 @@ export default function UsersPage(props: UsersPageProps) {
                     <UserList
                         users={users}
                         loading={loading}
-                        currentUserId="dummy-admin-id"
+                        currentUserId={currentUserId}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                         onToggleActive={async (id) => {
                             const user = users.find(u => u.id === id);
                             if (user) {
-                                // Toggle logic would go here
                                 await adminApi.users.update(id, { status: user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE' } as any);
                                 fetchUsers();
                             }
                         }}
                         onResetPassword={async (id) => {
                             await adminApi.users.resetPassword(id);
-                            alert('Password reset link sent (dummy)');
+                            alert('Password reset link has been sent.');
                         }}
                     />
                 </div>

@@ -4,9 +4,11 @@ import { LatestProperties } from '@/components/features/home/LatestProperties';
 import { PropertyOfTheWeek } from '@/components/features/home/PropertyOfTheWeek';
 import { PromoMosaic } from '@/components/features/home/PromoMosaic';
 import { ReferenceShowcase } from '@/components/features/home/ReferenceShowcase';
+import { NeighborhoodSpotlight } from '@/components/features/home/NeighborhoodSpotlight';
 import { Metadata } from 'next';
 import { getProperties } from '@/services/properties';
 import { getCollections } from '@/services/collections';
+import { getFeaturedNeighborhoods } from '@/services/neighborhoods';
 
 export const metadata: Metadata = {
   title: "Maison d'Orient | Luxury Real Estate in Istanbul",
@@ -18,11 +20,13 @@ export default async function HomePage() {
   const [
     latestPropertiesRes,
     featuredPropertiesRes,
-    collections
+    collections,
+    featuredNeighborhoods
   ] = await Promise.all([
     getProperties({ limit: 6, status: 'PUBLISHED' }),
     getProperties({ limit: 1, featured: true, status: 'PUBLISHED' }),
-    getCollections()
+    getCollections(),
+    getFeaturedNeighborhoods(4)
   ]);
 
   const latestProperties = latestPropertiesRes.data;
@@ -50,6 +54,7 @@ export default async function HomePage() {
       <LatestProperties properties={latestProperties} />
       <PropertyOfTheWeek property={formattedFeaturedProperty as any} />
       {/* Type assertion used because PropertyOfTheWeek expects a specific shape that might slightly differ from Property grid */}
+      <NeighborhoodSpotlight neighborhoods={featuredNeighborhoods} />
       <PromoMosaic />
       <ReferenceShowcase />
     </div>
