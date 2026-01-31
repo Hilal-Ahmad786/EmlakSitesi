@@ -48,3 +48,4 @@ data/Satilik*/
 
 # uploads
 public/uploads/
+!public/uploads/**/*.webp
