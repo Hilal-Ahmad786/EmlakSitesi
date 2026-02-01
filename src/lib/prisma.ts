@@ -4,31 +4,14 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// Check if we're in a build environment without database
-const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL;
-
-// Create a mock client for build time only
-const createMockClient = () => {
-  return new Proxy({} as PrismaClient, {
-    get: (target, prop) => {
-      if (prop === '$connect' || prop === '$disconnect') {
-        return () => Promise.resolve();
-      }
-      return new Proxy(() => Promise.resolve(null), {
-        get: () => () => Promise.resolve([]),
-      });
-    },
+// Reuse client across hot reloads in dev AND across invocations in production serverless
+export const prisma: PrismaClient =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
-};
 
-// Use real Prisma client in runtime, mock only during build without DB
-export const prisma: PrismaClient = isBuildTime
-  ? createMockClient()
-  : globalForPrisma.prisma ??
-    new PrismaClient({
-      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-    });
-
-if (process.env.NODE_ENV !== 'production') {
+// Cache in all environments to prevent connection pool exhaustion on serverless
+if (!globalForPrisma.prisma) {
   globalForPrisma.prisma = prisma;
 }
