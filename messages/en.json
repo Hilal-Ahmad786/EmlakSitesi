@@ -142,7 +142,11 @@
             "bathrooms": "Bathrooms",
             "features": "Features",
             "apply": "Apply Filters",
-            "reset": "Reset"
+            "reset": "Reset",
+            "allLocations": "All Locations",
+            "allTypes": "All Types",
+            "min": "Min",
+            "max": "Max"
         },
         "sort": {
             "label": "Sort by:",
@@ -337,7 +341,9 @@
     },
     "Common": {
         "loading": "Loading...",
-        "error": "Something went wrong"
+        "error": "Something went wrong",
+        "next": "Next",
+        "previous": "Previous"
     },
     "Dashboard": {
         "title": "My Dashboard",

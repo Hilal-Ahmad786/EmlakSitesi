@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 
-export async function getCollections() {
+export async function getCollections(locale: string = 'tr') {
     try {
         const collections = await prisma.collection.findMany({
             where: {
@@ -24,7 +24,7 @@ export async function getCollections() {
                     image = representativeImage;
                 }
 
-                return transformCollection({ ...col, image });
+                return transformCollection({ ...col, image }, locale);
             })
         );
 
@@ -70,11 +70,11 @@ async function findCollectionImage(link: string): Promise<string | null> {
     }
 }
 
-function transformCollection(item: any) {
+function transformCollection(item: any, locale: string) {
     const getLoc = (json: any) => {
         if (!json) return '';
         if (typeof json === 'string') return json;
-        return json.tr || json.en || '';
+        return json[locale] || json.tr || json.en || '';
     };
 
     return {

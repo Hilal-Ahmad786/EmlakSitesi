@@ -16,7 +16,7 @@ export default function AboutPage() {
     return (
         <div className="min-h-screen bg-background">
             {/* Hero */}
-            <div className="relative h-[50vh] min-h-[400px]">
+            <div className="relative h-[50vh] min-h-[400px] mt-[120px]">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2670&auto=format&fit=crop)' }}

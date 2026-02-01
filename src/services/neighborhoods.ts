@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 
-export async function getFeaturedNeighborhoods(limit = 4) {
+export async function getFeaturedNeighborhoods(limit = 4, locale: string = 'tr') {
   try {
     const neighborhoods = await prisma.neighborhood.findMany({
       where: { isActive: true },
@@ -24,7 +24,7 @@ export async function getFeaturedNeighborhoods(limit = 4) {
     return neighborhoods.map((n) => {
       const primaryImage = n.properties[0]?.images[0]?.url;
       const name = typeof n.name === 'object' && n.name !== null
-        ? (n.name as any).en || (n.name as any).tr || ''
+        ? (n.name as any)[locale] || (n.name as any).tr || (n.name as any).en || ''
         : String(n.name);
       return {
         id: n.slug,
@@ -39,7 +39,7 @@ export async function getFeaturedNeighborhoods(limit = 4) {
   }
 }
 
-export async function getNeighborhoods() {
+export async function getNeighborhoods(locale: string = 'tr') {
   try {
     const neighborhoods = await prisma.neighborhood.findMany({
       where: { isActive: true },
@@ -51,14 +51,14 @@ export async function getNeighborhoods() {
       },
     });
 
-    return neighborhoods.map(transformNeighborhood);
+    return neighborhoods.map(n => transformNeighborhood(n, locale));
   } catch (error) {
     console.error('Error fetching neighborhoods:', error);
     return [];
   }
 }
 
-export async function getNeighborhoodBySlug(slug: string) {
+export async function getNeighborhoodBySlug(slug: string, locale: string = 'tr') {
   try {
     const neighborhood = await prisma.neighborhood.findUnique({
       where: { slug },
@@ -82,18 +82,18 @@ export async function getNeighborhoodBySlug(slug: string) {
       return null;
     }
 
-    return transformNeighborhoodDetail(neighborhood);
+    return transformNeighborhoodDetail(neighborhood, locale);
   } catch (error) {
     console.error('Error fetching neighborhood:', error);
     return null;
   }
 }
 
-function transformNeighborhood(item: any) {
+function transformNeighborhood(item: any, locale: string) {
   const getLoc = (json: any) => {
     if (!json) return '';
     if (typeof json === 'string') return json;
-    return json.tr || json.en || '';
+    return json[locale] || json.tr || json.en || '';
   };
 
   return {
@@ -106,15 +106,15 @@ function transformNeighborhood(item: any) {
   };
 }
 
-function transformNeighborhoodDetail(item: any) {
+function transformNeighborhoodDetail(item: any, locale: string) {
   const getLoc = (json: any) => {
     if (!json) return '';
     if (typeof json === 'string') return json;
-    return json.tr || json.en || '';
+    return json[locale] || json.tr || json.en || '';
   };
 
   const formatPrice = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat(locale === 'tr' ? 'tr-TR' : 'en-US', {
       style: 'currency',
       currency: currency,
       maximumFractionDigits: 0,

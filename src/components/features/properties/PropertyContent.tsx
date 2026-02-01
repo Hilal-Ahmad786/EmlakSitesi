@@ -29,6 +29,7 @@ interface PropertyContentProps {
 
 export function PropertyContent({ initialProperties, pagination, filters }: PropertyContentProps) {
     const t = useTranslations('Search.filters');
+    const tCommon = useTranslations('Common');
     const router = useRouter();
     const searchParams = useSearchParams();
     const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
@@ -126,7 +127,7 @@ export function PropertyContent({ initialProperties, pagination, filters }: Prop
                             className="flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                         >
                             <ChevronLeft size={16} />
-                            Previous
+                            {tCommon('previous')}
                         </button>
 
                         <div className="flex items-center gap-1">
@@ -139,11 +140,10 @@ export function PropertyContent({ initialProperties, pagination, filters }: Prop
                                     <button
                                         key={pageNum}
                                         onClick={() => navigateToPage(pageNum as number)}
-                                        className={`min-w-[40px] h-10 rounded-lg text-sm font-medium transition-colors ${
-                                            pageNum === currentPage
-                                                ? 'bg-primary text-white shadow-sm'
-                                                : 'border border-gray-300 hover:bg-gray-50'
-                                        }`}
+                                        className={`min-w-[40px] h-10 rounded-lg text-sm font-medium transition-colors ${pageNum === currentPage
+                                            ? 'bg-primary text-white shadow-sm'
+                                            : 'border border-gray-300 hover:bg-gray-50'
+                                            }`}
                                     >
                                         {pageNum}
                                     </button>
@@ -156,7 +156,7 @@ export function PropertyContent({ initialProperties, pagination, filters }: Prop
                             disabled={currentPage >= totalPages}
                             className="flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                         >
-                            Next
+                            {tCommon('next')}
                             <ChevronRight size={16} />
                         </button>
                     </nav>

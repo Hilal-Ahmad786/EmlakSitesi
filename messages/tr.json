@@ -337,7 +337,9 @@
     },
     "Common": {
         "loading": "Yükleniyor...",
-        "error": "Bir hata oluştu"
+        "error": "Bir hata oluştu",
+        "next": "Sonraki",
+        "previous": "Önceki"
     },
     "Dashboard": {
         "title": "Panelim",

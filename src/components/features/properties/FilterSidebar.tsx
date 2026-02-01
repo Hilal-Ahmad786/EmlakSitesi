@@ -41,7 +41,7 @@ export function FilterSidebar({ className, isOpen, onClose }: FilterSidebarProps
                     <Select
                         label={t('location')}
                         options={[
-                            { value: '', label: 'All Locations' },
+                            { value: '', label: t('allLocations') },
                             { value: 'bebek', label: 'Bebek' },
                             { value: 'galata', label: 'Galata' },
                             { value: 'nisantasi', label: 'Nişantaşı' },
@@ -55,7 +55,7 @@ export function FilterSidebar({ className, isOpen, onClose }: FilterSidebarProps
                     <Select
                         label={t('type')}
                         options={[
-                            { value: '', label: 'All Types' },
+                            { value: '', label: t('allTypes') },
                             { value: 'apartment', label: 'Apartment' },
                             { value: 'villa', label: 'Villa' },
                             { value: 'yali', label: 'Yalı' },
@@ -72,13 +72,13 @@ export function FilterSidebar({ className, isOpen, onClose }: FilterSidebarProps
                     <div className="flex gap-2 items-center">
                         <Input
                             type="number"
-                            placeholder="Min"
+                            placeholder={t('min')}
                             className="w-full"
                         />
                         <span className="text-text-secondary">-</span>
                         <Input
                             type="number"
-                            placeholder="Max"
+                            placeholder={t('max')}
                             className="w-full"
                         />
                     </div>

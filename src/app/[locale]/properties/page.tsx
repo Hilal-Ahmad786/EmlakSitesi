@@ -4,9 +4,12 @@ import { PropertyContent } from '@/components/features/properties/PropertyConten
 
 export default async function PropertiesPage({
     searchParams,
+    params
 }: {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+    params: Promise<{ locale: string }>
 }) {
+    const { locale } = await params;
     const t = await getTranslations('Search.filters');
     const resolvedParams = await searchParams;
 
@@ -21,12 +24,13 @@ export default async function PropertiesPage({
         location,
         status: 'PUBLISHED',
         page,
-        limit: 12
+        limit: 12,
+        locale
     });
 
     return (
         <div className="min-h-screen bg-background pb-20">
-            <div className="bg-primary-dark text-white py-12 mb-8">
+            <div className="bg-primary-dark text-white py-12 mb-8 mt-[120px]">
                 <div className="container mx-auto px-4">
                     <h1 className="font-serif text-3xl md:text-4xl mb-4">Properties</h1>
                     <p className="text-gray-300 max-w-2xl">

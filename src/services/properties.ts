@@ -10,6 +10,7 @@ export interface PropertyFilter {
     location?: string;
     page?: number;
     limit?: number;
+    locale?: string;
 }
 
 export async function getProperties(params: PropertyFilter = {}) {
@@ -19,7 +20,8 @@ export async function getProperties(params: PropertyFilter = {}) {
         type,
         location,
         page = 1,
-        limit = 12
+        limit = 12,
+        locale = 'tr' // Default to TR if not specified
     } = params;
 
     const where: any = {
@@ -33,7 +35,7 @@ export async function getProperties(params: PropertyFilter = {}) {
     if (type) {
         where.propertyType = {
             equals: type,
-            mode: 'insensitive' // Requires Prisma feature flag or specific collation, default PostgreSQL usually case sensitive without mode
+            mode: 'insensitive'
         };
     }
 
@@ -62,7 +64,7 @@ export async function getProperties(params: PropertyFilter = {}) {
         ]);
 
         return {
-            data: items.map(transformProperty),
+            data: items.map(item => transformProperty(item, locale)),
             pagination: {
                 page,
                 limit,
@@ -77,11 +79,13 @@ export async function getProperties(params: PropertyFilter = {}) {
 }
 
 // Helper to transform Prisma Property to Frontend Property
-function transformProperty(item: any) {
-    // Helper to get localized string (defaulting to 'en' or first available)
+function transformProperty(item: any, locale: string = 'tr') {
+    // Helper to get localized string
     const getLoc = (json: any) => {
         if (!json) return '';
         if (typeof json === 'string') return json;
+        // Try requested locale, fallback to other, then empty
+        if (locale === 'en') return json.en || json.tr || '';
         return json.tr || json.en || '';
     };
 

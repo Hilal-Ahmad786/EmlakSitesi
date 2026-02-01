@@ -15,7 +15,9 @@ export const metadata: Metadata = {
   description: "Discover exclusive luxury properties in Istanbul's most prestigious neighborhoods. Your trusted partner for premium real estate investment in Turkey.",
 };
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
   // Fetch data in parallel
   const [
     latestPropertiesRes,
@@ -23,10 +25,10 @@ export default async function HomePage() {
     collections,
     featuredNeighborhoods
   ] = await Promise.all([
-    getProperties({ limit: 6, status: 'PUBLISHED' }),
-    getProperties({ limit: 1, featured: true, status: 'PUBLISHED' }),
-    getCollections(),
-    getFeaturedNeighborhoods(4)
+    getProperties({ limit: 6, status: 'PUBLISHED', locale }),
+    getProperties({ limit: 1, featured: true, status: 'PUBLISHED', locale }),
+    getCollections(locale),
+    getFeaturedNeighborhoods(4, locale)
   ]);
 
   const latestProperties = latestPropertiesRes.data;

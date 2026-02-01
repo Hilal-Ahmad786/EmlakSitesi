@@ -121,7 +121,7 @@ export default function ContactPage() {
 
     return (
         <div className="min-h-screen bg-background pb-20">
-            <div className="bg-primary-dark text-white py-20 mb-12">
+            <div className="bg-primary-dark text-white py-20 mb-12 mt-[120px]">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="font-serif text-4xl md:text-5xl mb-4">{t('title')}</h1>
                     <p className="text-gray-300 text-lg max-w-2xl mx-auto">{t('subtitle')}</p>
@@ -284,9 +284,8 @@ export default function ContactPage() {
                                     {t('form.message')}
                                 </label>
                                 <textarea
-                                    className={`w-full min-h-[150px] rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                                        errors.message ? 'border-red-500' : 'border-border'
-                                    }`}
+                                    className={`w-full min-h-[150px] rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${errors.message ? 'border-red-500' : 'border-border'
+                                        }`}
                                     placeholder="How can we help you?"
                                     value={formData.message}
                                     onChange={handleInputChange('message')}
