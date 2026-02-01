@@ -13,12 +13,14 @@ export default async function PropertiesPage({
     // Convert search params to service filters
     const type = typeof resolvedParams.type === 'string' ? resolvedParams.type : undefined;
     const location = typeof resolvedParams.location === 'string' ? resolvedParams.location : undefined;
+    const page = typeof resolvedParams.page === 'string' ? parseInt(resolvedParams.page) || 1 : 1;
 
     // Fetch initial data
-    const { data: properties } = await getProperties({
+    const { data: properties, pagination } = await getProperties({
         type,
         location,
         status: 'PUBLISHED',
+        page,
         limit: 12
     });
 
@@ -34,7 +36,11 @@ export default async function PropertiesPage({
             </div>
 
             <div className="container mx-auto px-4">
-                <PropertyContent initialProperties={properties} />
+                <PropertyContent
+                    initialProperties={properties}
+                    pagination={pagination}
+                    filters={{ type, location }}
+                />
             </div>
         </div>
     );
